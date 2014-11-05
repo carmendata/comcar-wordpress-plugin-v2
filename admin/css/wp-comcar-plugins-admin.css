@@ -1,0 +1,69 @@
+div.WPComcar_error{
+	padding:1em;
+	float:left;
+	width:100%;
+
+	-webkit-box-sizing:border-box;
+	   -moz-box-sizing:border-box;
+			box-sizing:border-box;
+
+	clear:left;
+}
+
+.WPComcar_clickable{
+	cursor:pointer;
+	cursor:hand;
+	border-top:1px solid #CCC;
+	padding-top:1em;
+}
+
+.WPComcar_disableSubTab{
+	background-color:#e4e4e4;
+	cursor: default;
+}
+
+.WPComcar_disableSubTab:hover{
+	background-color:#e4e4e4;
+	cursor:default;
+}
+
+.WPComcar_disableSubTab:focus{
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+.WPComcar_inline{
+	display:inline;
+}
+
+.WPComcar_sizeOfOptionText{
+	height:50px;
+	width:300px;
+}
+.WPComcar_sizeOfCheckBox{
+	height:50px;
+	width:50px;
+	padding:0;
+	margin:0;
+	vertical-align: middle;
+	text-align: center;
+}
+.WPComcar_float{
+	float:left;
+}
+
+.WPComcar_formRow{
+	float: left;
+	width: 100%;
+	clear: left;
+}
+
+.WPComcar_formRow .WPComcar_checkBoxWrap{
+	font-size: 0.8em;
+	float: left;
+}
+
+.WPComcar_subTab{
+	cursor:pointer;
+}
