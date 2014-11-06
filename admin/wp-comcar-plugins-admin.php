@@ -409,6 +409,7 @@ class WPComcarPlugin_admin_configuration
 
 		$arrOptions["cars_subpages"]=$arrCarsSubPages;
 		$arrOptions["vans_subpages"]=$arrVansSubPages;
+
 		return $arrOptions;
 	}
 	/*************************************************************************************/

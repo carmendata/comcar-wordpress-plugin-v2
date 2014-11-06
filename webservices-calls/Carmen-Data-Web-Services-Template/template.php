@@ -9,3 +9,4 @@
 	$WPComcar_theMessageOfTheWebservice= strlen($WPComcar_msg) ?'<p>'.$WPComcar_msg.'</p>' : '';
 	$WPComcar_theResultOfTheWebservice=$WPComcar_resultsCSS.$WPComcar_resultsJS."<div id='WPComcar_container'>".$WPComcar_theMessage.$WPComcar_resultsHTML."</div>";
 ?>
+<!-- Comcar Tools plugin for WordPress version <?php print WPComcar_PLUGINVERSION ?> -->
