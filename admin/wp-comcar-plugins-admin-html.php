@@ -129,6 +129,11 @@ class WPComcarPlugin_admin_configuration_html
 		}
 	}
 
+
+
+	/**
+	 Generates a HTML selector with a list of pages on the WordPress site 
+	*/
 	function plugin_create_selector_with_list_of_pages($args){
 
 		$name=$args["name"]; //name of the textbox
@@ -147,6 +152,7 @@ class WPComcarPlugin_admin_configuration_html
 		$theDropDownArguments["selected"]=$theSelectedOptions;
 		$theDropDownArguments['show_option_none']=' ';
 		$theDropDownArguments["option_none_value"]="0"; 
+		$theDropDownArguments["sort_column"]="menu_order"; 
 		wp_dropdown_pages($theDropDownArguments); 
 
 
@@ -155,6 +161,7 @@ class WPComcarPlugin_admin_configuration_html
 			echo "<p class='description'> $explanation </p>";
 		}
 	}
+
 
 	function plugin_create_textbox($args){
 		$name=$args["name"]; //name of the textbox
