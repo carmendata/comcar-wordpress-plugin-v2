@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:  Comcar plugins
+ * Plugin Name:  Comcar Tools
  * Plugin URI: http://URI_Carmen DataOf_Page_Describing_Plugin_and_Updates
- * Description: Comcar plugins: footprint-calculator, comparator and tax calculator.
- * Version: 0.2
+ * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
+ * Version: 0.6
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2

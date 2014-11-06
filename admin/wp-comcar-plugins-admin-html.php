@@ -36,10 +36,8 @@ class WPComcarPlugin_admin_configuration_html
 													23 => array( "doors", "Doors" ),
 													24 => array( "insfifty", "Insurance Group" ),
 													25 => array( "ps", "Power" ));
+
 	//option, default value, description, array of options
-	public static $arrOfTextsToPrintGeneralTaxCalculator=array(
-															0 => array("tabulated","true","Display results as a table.", array("true"=>"HTML Table", "false"=>"HTML Div")),
-															1 => array("modelTitleElemType","h4","Header html type of the model."));
 	public static $arrOfTextsToPrintCarTaxCalculator=array( 
 															0 => array("capCon","Capital Contributions","&quot;Capital Contributions&quot; field label"),
 															1 => array("annCon","Annual contributions","&quot;Annual contributions&quot; field label"),
@@ -51,13 +49,10 @@ class WPComcarPlugin_admin_configuration_html
 
 	//COMPARATOR OPTIONS AND TEXTS
 	//option, default value, description, array of options
-	public static $arrOfTextsToPrintGeneralComparator=array(
-															0 => array("typicalMonthPriceInDetails","true","Typical month price", array("true"=>"Show", "false"=>"Don't show")),
-															1 => array("cchAnchorAsSpan","true","Include link to comparecontracthire contract page",array("true"=>"Yes", "false"=>"No")),
-															2 => array("defaultAnnualMileage","","Default annual mileage",array("10000"=>"10000", "20000"=>"20000")));
+	public static $arrOfTextsToPrintGeneralComparator=array( 	array("typicalMonthPriceInDetails","true","Typical month price", array("true"=>"Show", "false"=>"Don't show")),
+																array("defaultAnnualMileage","","Default annual mileage",array("10000"=>"10000", "20000"=>"20000"))
+															);
 
-	function __construct(){
-	}
 
 	/*********************** FUNCTIONS THAT PRINT HTML INPUTS ******************/
 
@@ -181,6 +176,7 @@ class WPComcarPlugin_admin_configuration_html
 		}
 	}
 
+
 	function plugin_setting_string_plugins_to_use_general($args) {
 		$name=$args["name"];
 		$arrOptions = get_option('WPComcar_plugin_options_general');
@@ -200,8 +196,8 @@ class WPComcarPlugin_admin_configuration_html
 				echo "<input type='checkbox' name='WPComcar_plugin_options_general[$name][]' value='$index' class='WPComcar_subTabs'> $checkBoxDescription <br/>";
 			}
 		}
-		echo "<p class='description'> Select as many plugins as you want to install in your wordpress site  </p>";
 	}
+
 	
 	function plugin_tax_calculator_print_the_options($args,$vehicleType){
 		$name=$args["name"]; //name of the textbox
@@ -236,7 +232,7 @@ class WPComcarPlugin_admin_configuration_html
 
 		echo "</select>";
 	    
-	    echo "<p class='description'> Select the options to request in each tax calculator webservice request </p><br/>";
+	    echo "<p class='description'>Select options from list to add them to the box below. Repeat several times to build a list.</p><br>";
 
 
 	    $thisDefaultWebRequest=WPComcarPlugin_admin_configuration_html::$defaultTaxCalculatorWebRequest[$vehicleType];
@@ -246,11 +242,11 @@ class WPComcarPlugin_admin_configuration_html
 
 	    $thisValue=isset($arrOptions[$name]["tax_calculator_".$vehicleType."_request"]) ? $arrOptions[$name]["tax_calculator_".$vehicleType."_request"] : ""; 
 	    echo "<input id='jquery_request_".$vehicleType."' name='WPComcar_plugin_options_".$section."[$name][tax_calculator_".$vehicleType."_request]' size='40' type='text' value='$thisValue' placeholder='$thisDefaultWebRequest' title='$thisDefaultWebRequest' />";
-	    echo "<p class='description'> Request to the webservice </p><br/>";
+	    echo "<p class='description'>List of fields to include in the table of results. Must match database names exactly.</p><br>";
 
 	    $thisValue=isset($arrOptions[$name]["tax_calculator_".$vehicleType."_headers"]) ? $arrOptions[$name]["tax_calculator_".$vehicleType."_headers"] : ""; 
 	    echo "<input id='jquery_headers_".$vehicleType."' name='WPComcar_plugin_options_".$section."[$name][tax_calculator_".$vehicleType."_headers]' size='40' type='text' value='$thisValue' placeholder='$thisDefaultWebRequestHeaders' title='$thisDefaultWebRequestHeaders' />";
-		echo "<p class='description'> Headers of the table in the results page </p><br/>";	
+		echo "<p class='description'>Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.</p><br>";	
 	}
 
 	function plugin_tax_calculator_print_text_subsection($arrayOfOptions, $args){
@@ -318,11 +314,6 @@ class WPComcarPlugin_admin_configuration_html
 		$this->plugin_tax_calculator_print_text_subsection(WPComcarPlugin_admin_configuration_html::$arrOfTextsToPrintGeneralComparator, $args);
 	}
 
-	//TAX CALCULATOR
-	function plugin_tax_calculator_print_general_texts($args){
-		$this->plugin_tax_calculator_print_text_subsection(WPComcarPlugin_admin_configuration_html::$arrOfTextsToPrintGeneralTaxCalculator, $args);
-	}
-
 	function plugin_tax_calculator_print_cars_texts($args){
 		$this->plugin_tax_calculator_print_the_options($args,"cars");
 		$this->plugin_tax_calculator_print_text_subsection(WPComcarPlugin_admin_configuration_html::$arrOfTextsToPrintCarTaxCalculator, $args);
@@ -355,17 +346,24 @@ class WPComcarPlugin_admin_configuration_html
 	/****************************** HEADERS OF THE SUBSECTIONS ***************************/
 	//DESCRIPTIONS OF THE HEADERS
 	function plugin_section_description_general() {
-		echo '<p>Please introduce the channel id and public hash for both vans and cars. In case you want to get a licence refer to <a href="http://comparecontracthire.com">Compare contract hire</a></p>';
-		echo '<p>Otherwise, the plugins may <b>not work</b></p>';
+		echo '<p>Please insert the <em>ID</em> and <em>public hash</em> for your own car and/or van channel.</p> 
+				<p><small>
+					By default these will be set to our demo channels of [TODO: CARS DEMO] for car and [TODO: DEMO VANS] for van. 
+					These demo channels should not be used for anything other than testing.</small><p>
+				<p><small>Channels are available to customers of Carmen Data Ltd. To become a customer see  
+						<a target="_blank" href="http://carmendata.co.uk/">carmendata.co.uk</a>
+				</small></p>';
 	}
 	function plugin_section_description_footprint() {
-		echo '<p>The footprint calculator pages shows information about CO2 emissions and... For more information, refer to <a href="http://comparecontracthire.com">Compare contract hire</a> </p>';
+		echo '<p>The Footprint Calculator tool is a simple way to allow users to calculate their CO<sub>2</sub> tailpipe 
+				emissions based on fuel used, cost of fuel or distance travelled.</p>';
 	}
 	function plugin_section_description_comparator() {
-		echo '<p>The comparator plugin is an useful tool for displaying...</p>';
+		echo '<p>The Comparator allows users to compare several different vehicle across several contract terms and mileages. 
+				Calculations can be viewed from the point of view of the driver and the company.</p>';
 	}
 	function plugin_section_description_tax_calculator() {
-		echo '<p>With the tax calculator plugin, you can compare among...</p>';
+		echo '<p>The Tax Calculator tool allows users to calculate how much company car tax they will incur.</p>';
 	}
 	/*************************************************************************************/
 }

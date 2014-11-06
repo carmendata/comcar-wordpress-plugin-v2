@@ -14,21 +14,21 @@ class WPComcarPlugin_admin_configuration
 														"tax_calculator" 	=> "WPComcar_plugin_options_tax_calculator");
 
 	//sets the order of the plugins. KEEP ALWAYS GENERAL AT THE TOP
-	public static $arrOrderOfPlugins= 			array( 	0 	=> array( "general", "Main settings", ""),
-										  				1	=> array( "footprint", "Footprint calculator settings", "Footprint calculator"),
-										  				2 	=> array( "tax_calculator", "Tax calculator settings", "Tax calculator"),
-														3	=> array( "comparator", "Comparator settings", "Comparator"));
+	public static $arrOrderOfPlugins = array( 	array( "general", "Main settings", ""),
+												array( "tax_calculator", "Tax calculator settings", "Tax calculator"),
+												array( "comparator", "Comparator settings", "Comparator"),
+												array( "footprint", "Footprint calculator settings", "Footprint calculator")
+											);
 
-	public static $arrOfTaxCalculatorSubPages= 	array( 	"select" 	=> "Type the title name of the <b>page</b> where you want to load the plugin 'Select' subpage. ",
-														"model" 	=> "'Model' subpage.",
-														"options"	=> "'Options' subpage.",
-														"calc" 		=> "'Calculate' subpage."
+	public static $arrOfTaxCalculatorSubPages = array( 	"select" 	=> "The <b>Select</b> page (the first page in the calculation process).",
+														"model" 	=> "The <b>Model</b> page.",
+														"options"	=> "The <b>Options</b> page.",
+														"calc" 		=> "And finally the <b>Calculate</b> page (the last page)."
 														);
 
-	public static $arrOfComparatorSubPages= 	array( 	"select" 	=> "Type the title name of the <b>page</b> where you want to load the plugin 'Select' subpage. ",
-														"details" 	=> "'Details' subpage.",
-														"callback"	=> "'Callback' subpage.",
-														"calc" 		=> "'Calculate' subpage."
+	public static $arrOfComparatorSubPages = 	array( 	"select" 	=> "The <b>Select</b> (the first page in the comparison process).",
+														"details" 	=> "The <b>Details</b> page.",
+														"callback"	=> "The <b>Callback</b> page (This never gets seen by users but is crucial to user flow)."
 														);
 
 	function __construct(){
@@ -127,16 +127,16 @@ class WPComcarPlugin_admin_configuration
 
 	function plugin_comparator_admin_options(){
 
-		add_settings_field('pages', 'Select the vehicle type', array($this->objHtmlAdmin,'plugin_create_checkboxes'), 'WPComcar_plugin', 'plugin_comparator',
+		add_settings_field('pages', 'Enable Comparator', array($this->objHtmlAdmin,'plugin_create_checkboxes'), 'WPComcar_plugin', 'plugin_comparator',
 							 array( 	"name" 			=> "pages",
 							 		 	"description" 	=> "",
 							 		 	"section" 		=> "comparator",
-							 		 	"options"		=>	array("cars" => "Enable comparator for cars", "vans" => "Enable comparator for vans")));
+							 		 	"options"		=>	array("cars" => "For car channel", "vans" => "For van channel")));
 		//parent page
-		add_settings_field('comparator_cars_page', 'Cars comparator', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_comparator',
+		add_settings_field('comparator_cars_page', 'Car channel comparator', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_comparator',
 							 array( 	"name" 			=> 	"comparator_cars_page",
 							 			"section"		=> 	"comparator",
-							 			"explanation"	=>	"<b>Parent page</b> where you want the cars comparator plugin to appear."));
+							 			"explanation"	=>	"Select which page the Car Comparator <b>Parent page</b> will be loaded into."));
 
 		foreach($this::$arrOfComparatorSubPages as $index=>$description){
 				add_settings_field("comparator_cars_subpage_$index", "", array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_comparator',
@@ -146,7 +146,7 @@ class WPComcarPlugin_admin_configuration
 		}
 
 		//parent page
-		add_settings_field('comparator_vans_page', 'Vans comparator', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_comparator',
+		add_settings_field('comparator_vans_page', 'Van channel comparator', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_comparator',
 							 array( 	"name" 			=> 	"comparator_vans_page",
 							 			"section"		=> 	"comparator",
 							 			"explanation"	=>	"<b>Parent page</b> where you want the vans comparator plugin to appear."));
@@ -169,16 +169,16 @@ class WPComcarPlugin_admin_configuration
 	
     function plugin_tax_calculator_admin_options(){
 
-    	add_settings_field('pages', 'Select the vehicle type', array($this->objHtmlAdmin,'plugin_create_checkboxes'), 'WPComcar_plugin', 'plugin_tax_calculator',
+    	add_settings_field('pages', 'Enable tax calculator', array($this->objHtmlAdmin,'plugin_create_checkboxes'), 'WPComcar_plugin', 'plugin_tax_calculator',
     						 array( 	"name" 			=> "pages",
     						 		 	"description" 	=> "",
     						 		 	"section" 		=> "tax_calculator",
-    						 		 	"options"		=>	array("cars" => "Enable tax calculator for cars", "vans" => "Enable tax calculator for vans")));
-    	//parent page
-    	add_settings_field('tax_calculator_cars_page', 'Cars tax calculator pages', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_tax_calculator',
+    						 		 	"options"		=>	array("cars" => "For car channel", "vans" => "For van channel")));
+    
+    	add_settings_field('tax_calculator_cars_page', 'Car tax calculator pages', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_tax_calculator',
     						 array( 	"name" 			=> 	"tax_calculator_cars_page",
     						 			"section"		=> 	"tax_calculator",
-    						 			"explanation"	=>	"<b>Parent page</b> where you want the cars tax calculator plugin to appear."));
+    						 			"explanation"	=>	"Select which page the car Tax Calculator <b>Parent Page</b> should be loaded into."));
     	
     	foreach($this::$arrOfTaxCalculatorSubPages as $index=>$description){
 				add_settings_field("tax_calculator_cars_subpage_$index", "", array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_tax_calculator',
@@ -188,10 +188,10 @@ class WPComcarPlugin_admin_configuration
     						 			"class" 		=>  "WPComcar_inline"));
     	}
 
-    	add_settings_field('tax_calculator_vans_page', 'Vans tax calculator pages', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_tax_calculator',
+    	add_settings_field('tax_calculator_vans_page', 'Van tax calculator pages', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_tax_calculator',
     						 array( 	"name" 			=> 	"tax_calculator_vans_page",
     						 	    	"section"		=>	"tax_calculator",
-    						 			"explanation"	=>	"<b>Parent page</b> where you want the vans tax calculator plugin to appear."));
+    						 			"explanation"	=>	"Select which page the van tax calculator <b>Parent page</b> should be loaded into."));
 
 
     	foreach($this::$arrOfTaxCalculatorSubPages as $index=>$description){
@@ -202,13 +202,13 @@ class WPComcarPlugin_admin_configuration
     	}
 
     	//Now, let us print the GENERAL, the VANS and the CARS SETTINGS
-    	add_settings_field('tax_calculator_general_texts', '<b>General settings</b> model page', array($this->objHtmlAdmin,'plugin_tax_calculator_print_general_texts'), 'WPComcar_plugin', 'plugin_tax_calculator',
-					 array( 	"name" 			=> 	"tax_calculator_general_texts",
-					 	    	"section"		=>	"tax_calculator",
-					 			"explanation"	=>	"<b>General settings </b> for the tax calculator plugin.",
-					 			"class" 		=> "WPComcar_tax_calculator_options"));
+    	// add_settings_field('tax_calculator_general_texts', '<b>General settings</b> model page', array($this->objHtmlAdmin,'plugin_tax_calculator_print_general_texts'), 'WPComcar_plugin', 'plugin_tax_calculator',
+					//  array( 	"name" 			=> 	"tax_calculator_general_texts",
+					//  	    	"section"		=>	"tax_calculator",
+					//  			"explanation"	=>	"<b>General settings </b> for the tax calculator plugin.",
+					//  			"class" 		=> "WPComcar_tax_calculator_options"));
 
-    	add_settings_field('tax_calculator_cars_texts', '<b>Cars settings</b> model page', array($this->objHtmlAdmin,'plugin_tax_calculator_print_cars_texts'), 'WPComcar_plugin', 'plugin_tax_calculator',
+    	add_settings_field('tax_calculator_cars_texts', 'Car Tax Calculator <b>Model</b> page settings', array($this->objHtmlAdmin,'plugin_tax_calculator_print_cars_texts'), 'WPComcar_plugin', 'plugin_tax_calculator',
 					 array( 	"name" 			=> 	"tax_calculator_cars_texts",
 					 	    	"section"		=>	"tax_calculator",
 					 			"explanation"	=>	""));
@@ -225,33 +225,33 @@ class WPComcarPlugin_admin_configuration
     	add_settings_field('footprint_page', 'Footprint calculator page', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_footprint',
     						 array( 	"name" 			=> 	"footprint_page",
     						 			"section"		=> 	"footprint",
-    						 			"explanation"	=>	"Enter the title of the page where you want to load the footprint calculator"));
+    						 			"explanation"	=>	"Select which page the Footprint Calculator should be loaded on."));
     }
 
     //GENERAL OPTIONS
     function plugin_general_admin_options(){
 
 
-    	add_settings_field('clkCars', 'Cars clk', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
+    	add_settings_field('clkCars', 'Car Channel ID', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
 					 array( 	"name" 			=> 	"clkCars",
 					 			"section"		=> 	"general",
 					 			"explanation"	=>	""));
-    	add_settings_field('pushCars', 'Cars public hash', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
+    	add_settings_field('pushCars', 'Car Channel Public hash', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
 					 array( 	"name" 			=> 	"pushCars",
 					 			"section"		=> 	"general",
-					 			"explanation"	=>	"The public hash delivered with the cars channel"));
+					 			"explanation"	=>	"The public hash delivered with the car channel"));
 
-       	add_settings_field('clkVans', 'Vans clk', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
+       	add_settings_field('clkVans', 'Van Channel ID', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
 					 array( 	"name" 			=> 	"clkVans",
 					 			"section"		=> 	"general",
 					 			"explanation"	=>	""));
 
-        add_settings_field('pushVans', 'Vans public hash', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
+        add_settings_field('pushVans', 'Van Channel Public hash', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
 					 array( 	"name" 			=> 	"pushVans",
 					 			"section"		=> 	"general",
-					 			"explanation"	=>	"The public hash delivered with the vans channel"));
+					 			"explanation"	=>	"The public hash delivered with the van channel"));
 
-    	add_settings_field('pluginsToUse','Plugins to use',  array($this->objHtmlAdmin,'plugin_setting_string_plugins_to_use_general'), 'WPComcar_plugin', 'plugin_general',  array( "name" => "pluginsOptions"));
+    	add_settings_field('pluginsToUse','Enable tools',  array($this->objHtmlAdmin,'plugin_setting_string_plugins_to_use_general'), 'WPComcar_plugin', 'plugin_general',  array( "name" => "pluginsOptions"));
     }
 
 

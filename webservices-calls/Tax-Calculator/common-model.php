@@ -32,17 +32,19 @@
 		if(!isset($_GET['orderDir']))  {  $_GET['orderDir']="";  }
 		$WPComcar_objConfig['orderBy']  = $_GET['orderBy'];
 		$WPComcar_objConfig['orderDir'] = $_GET['orderDir'];
-		$WPComcar_objConfig['tabulated'] = true;  			// default=false 	: Markup the list of models as a HTML table? If not true, data will be marked up as an HTML list
-		$WPComcar_objConfig['modelTitleElemType'] = 'h1'; 	// default='h4' 	: On the model page, what type of HTML element should the vehicle name be (Defaults to h4 if unspecified)
-		//$WPComcar_objConfig['jQueryVersion'] = '1.9.0'; 	// default='0'		: If your page template uses JQuery, enter the version number, only numbers and decimal points (eg. 1.9.0)
-		
+
 		//get the values from the options for the webservice
 		$WPComcar_webServiceRequest=$WPComcar_arrOptions["tax_calculator_general_texts"];
 		foreach($WPComcar_webServiceRequest as $key=>$value){
 			if (strlen($value)>0){
 				$WPComcar_objConfig[$key]=$value;
 			}				
-		}		
+		}
+
+
+		// Hard code some options to the new modern standards	
+		$WPComcar_objConfig['modelTitleElemType'] = 'h1'; 
+		$WPComcar_objConfig['tabulated'] = true;  	
 
 
 		if( $WPComcar_vehicleType=='Car' ){
