@@ -1,35 +1,23 @@
-#Comcar plugin from Carmen Data
+#Comcar Tools plugin for WordPress 
 
-The comcar plugin is a project created for developing a new set of functionalities that comcar clients are demanding. 
-Specifically, clients were demanding a wordpress plugin to use the webservices that the comcar product can offer, such as:
+## What does it do?
 
-1. Tax calculator:
-  * Cars: the tax calculator for cars
-  * Vans: the tax calculator for vans
-2. Comparator: 
-  * Cars: comparator for cars
-  * Vans: comparator for vans
-3. Footprint
+This plugin includes 3 tools
 
+### Tax calculator
 
-##Quick installation
+The Tax Calculator tool allows users to calculate how much company car tax they will incur.
 
-In this section, it is shown how to do a quick and neat installation of the plugin.
+### Comparator
 
-###General settings
+The Comparator allows users to compare several different vehicle across several contract terms and mileages. Calculations can be viewed from the point of view of the driver and the company.
 
-A demo channel and password for both cars and vans are set as a default in the Comcar plugin.
-If you want to purchase a cars or vans channel and password, please refer to http://comcar.co.uk and get the licence.
+### Footprint Calculator
 
-###Tax calculator
+The Footprint Calculator tool is a simple way to allow users to calculate their CO2 tailpipe emissions based on fuel used, cost of fuel or distance travelled.
 
-The tax calculator tool helps clients when it comes to...
+## Installation
 
-###Comparator
-
-###Footprint
-
-
-
+For a step-by-step tutorial visit [github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial](https://github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial) 
 
 
