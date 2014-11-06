@@ -19,7 +19,7 @@
 		<div id="WPComcar_sections">
 			<?php do_settings_sections("WPComcar_plugin"); ?>
 		</div>
-		<?php submit_button("Save"); ?>	
+		<?php submit_button("Save Changes"); ?>	
 	</form>	
 
 </div>
