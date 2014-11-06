@@ -249,6 +249,9 @@ class WPComcarPlugin_admin_configuration_html
 		echo "<p class='description'>Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.</p><br>";	
 	}
 
+
+
+
 	function plugin_tax_calculator_print_text_subsection($arrayOfOptions, $args){
 		$name=$args["name"]; //name of the section
 		$section=$args["section"]; //tax_calculator, comparator etc
@@ -305,11 +308,12 @@ class WPComcarPlugin_admin_configuration_html
 			
 		}
 	}
-	/***************************************************************************/
 
 
-	/********************** ARGUMENTS FOR THE WEBSERVICES BACKEND *****************************/	
-	//COMPARATOR
+
+
+	/* -------------------------- ARGUMENTS FOR THE WEBSERVICES BACKEND -------------------------- */	
+
 	function plugin_comparator_print_texts($args){
 		$this->plugin_tax_calculator_print_text_subsection(WPComcarPlugin_admin_configuration_html::$arrOfTextsToPrintGeneralComparator, $args);
 	}
@@ -319,17 +323,14 @@ class WPComcarPlugin_admin_configuration_html
 		$this->plugin_tax_calculator_print_text_subsection(WPComcarPlugin_admin_configuration_html::$arrOfTextsToPrintCarTaxCalculator, $args);
 	}
 
-
 	function plugin_tax_calculator_print_vans_texts($args){
 		$this->plugin_tax_calculator_print_the_options($args,"vans");
 	}
 
 
 
-	/*************************************************************************/
 
-
-	/******************** INTERNAL FUNCTIONS ********************************/
+	/* ----------------------------------- INTERNAL FUNCTIONS ----------------------------------- */
 
     function theOptionIsSelected($arrOfValuesSelected,$value){
     	if (is_array($arrOfValuesSelected)){
@@ -340,31 +341,40 @@ class WPComcarPlugin_admin_configuration_html
     	}
     	return false;
     }
-	/************************************************************************/
 
 
-	/****************************** HEADERS OF THE SUBSECTIONS ***************************/
-	//DESCRIPTIONS OF THE HEADERS
+
+
+	/* --------------------------------- HEADERS OF THE SUBSECTIONS --------------------------------- */
+
 	function plugin_section_description_general() {
-		echo '<p>Please insert the <em>ID</em> and <em>public hash</em> for your own car and/or van channel.</p> 
-				<p><small>
-					By default these will be set to our demo channels of [TODO: CARS DEMO] for car and [TODO: DEMO VANS] for van. 
-					These demo channels should not be used for anything other than testing.</small><p>
-				<p><small>Channels are available to customers of Carmen Data Ltd. To become a customer see  
-						<a target="_blank" href="http://carmendata.co.uk/">carmendata.co.uk</a>
-				</small></p>';
+		echo '<p>
+				Please insert the <em>ID</em> and <em>public hash</em> for your own car and/or van channel. 
+				Channels are available to customers of Carmen Data Ltd. To become a customer see  
+				<a target="_blank" href="http://carmendata.co.uk/">carmendata.co.uk</a>
+			</p> 
+			<p>
+				<small>
+					Note: If the <em>ID</em> and <em>public hash</em> fields are left blank the plugin will default to use our demo channels.
+					These demo channels will only provide data on a limited selection of vehicle manufacturers. Which manufacturers are included 
+					will change randomly each month.
+				</small>
+			<p>';
 	}
+
 	function plugin_section_description_footprint() {
 		echo '<p>The Footprint Calculator tool is a simple way to allow users to calculate their CO<sub>2</sub> tailpipe 
 				emissions based on fuel used, cost of fuel or distance travelled.</p>';
 	}
+
 	function plugin_section_description_comparator() {
 		echo '<p>The Comparator allows users to compare several different vehicle across several contract terms and mileages. 
 				Calculations can be viewed from the point of view of the driver and the company.</p>';
 	}
+
 	function plugin_section_description_tax_calculator() {
 		echo '<p>The Tax Calculator tool allows users to calculate how much company car tax they will incur.</p>';
 	}
-	/*************************************************************************************/
+
 }
 ?>

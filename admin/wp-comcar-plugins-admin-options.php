@@ -1,5 +1,4 @@
 
-
 <div class="wrap">
 	
 	<h2 class="nav-tab-wrapper">
@@ -22,5 +21,5 @@
 		</div>
 		<?php submit_button("Save"); ?>	
 	</form>	
-</div>
 
+</div>
