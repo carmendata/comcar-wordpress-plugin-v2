@@ -3,7 +3,7 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 0.7
+ * Version: 0.8
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
@@ -19,7 +19,7 @@
 	defined( 'ABSPATH' ) OR exit;
 
 	//global constants
-	define("WPComcar_PLUGINVERSION","0.7");
+	define("WPComcar_PLUGINVERSION","0.8");
 	define("WPComcar_WEBSERVICESCALLSPATH",dirname(__FILE__)."/webservices-calls/");
 	define("WPComcar_FUNCTIONSPREFIX", "WPComcar_");
 	define("WPComcar_PLUGINNAME", "WPComcarPlugin");
@@ -60,9 +60,9 @@
 				}
 
 			    //hooks for the activation, deactivation and uninstalling
-			    register_activation_hook 	(__FILE__, array($this,'activate'));
-				register_deactivation_hook	(__FILE__, array($this,'deactivate'));
-				register_uninstall_hook		(__FILE__, array($this,'uninstall'));
+			    register_activation_hook 	(__FILE__, array('WPComcarPlugin','activate'));
+				register_deactivation_hook	(__FILE__, array('WPComcarPlugin','deactivate'));
+				register_uninstall_hook		(__FILE__, array('WPComcarPlugin','uninstall'));
 
 				//in every post we call this function that will be encharged of loading only those pluggings that are neccesary
 				add_action("the_post", array($this,'activate_page_plugins'));
@@ -117,12 +117,21 @@
 					}
 					//options of the current plugin
 					$arrOptions = get_option('WPComcar_plugin_options_'.$thisPluginName);
+					if (!isset($arrOptions)){
+						continue;
+					}
+
+
 
 
 					//page where we should load the plugin
 					//BEWARE! If we are in the tax_calculator, maybe we should look into $thisPluginName_cars/vans_page
+					global $post;
+
 					$idOfTheCurrentPage = get_post( $post )->ID;
-					$idPageWhereShouldBeLoadedThePlugin=$arrOptions[$thisPluginName.'_page'];
+					$idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName.'_page']) ? $arrOptions[$thisPluginName.'_page']: "";
+
+
 
 					//LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
 					/********************* TAX CALCULATOR AND COMPARATOR *************************/
@@ -193,47 +202,71 @@
 				add_filter('the_content', array($this,'addTheContentOfTheFootprintWebservice'));
 			}
 
-			function addTheContentOfTheFootprintWebservice($content){		
-				// lets include the code
-				include_once(WPComcar_WEBSERVICESCALLSPATH."Footprint-Calculator/Footprint-Calculator.php");
-				//attach the content of the webservice to the post
-				$content=$content.$WPComcar_theResultOfTheWebservice;
-				return $content;
+			function addTheContentOfTheFootprintWebservice($content){
+
+				if( is_page() && is_main_query() ) {	
+					// lets include the code
+					include_once(WPComcar_WEBSERVICESCALLSPATH."Footprint-Calculator/Footprint-Calculator.php");
+					//attach the content of the webservice to the post
+					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+					$content=$content.$WPComcar_theResultOfTheWebservice;
+					return $content;
+				}
+				
 			}
 
 			//create tax calculator with input hidden and load one or another depending on the user action
 			//set form here, and process the info inside car-select always. Call one or another
-			function addTheContentOfTheCarsTaxCalculatorWebservice($content){		
-				// lets include the code
-				include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
-				//attach the content of the webersive to the post
-				$content=$content.$WPComcar_theResultOfTheWebservice;
-				return $content;
+			function addTheContentOfTheCarsTaxCalculatorWebservice($content){	
+
+				if( is_page() && is_main_query() ) {	
+					// lets include the code
+					include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
+					//attach the content of the webersive to the post
+					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+					$content=$content.$WPComcar_theResultOfTheWebservice;
+					return $content;
+				}				
 			}
 
-			function addTheContentOfTheVansTaxCalculatorWebservice($content){		
-				// lets include the code
-				include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-tax-calculator.php");
-				//attach the content of the webersive to the post
-				$content=$content.$WPComcar_theResultOfTheWebservice;
-				return $content;
+			function addTheContentOfTheVansTaxCalculatorWebservice($content){	
+
+				if( is_page() && is_main_query() ) {	
+					// lets include the code
+					include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-tax-calculator.php");
+					//attach the content of the webersive to the post
+					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+					$content=$content.$WPComcar_theResultOfTheWebservice;
+					return $content;
+				}
+
+
 			}
 
 
-			function addTheContentOfTheCarsComparatorWebservice($content){		
-				// lets include the code
-				include_once(WPComcar_WEBSERVICESCALLSPATH."Comparator/Car-comparator.php");
-				//attach the content of the webersive to the post
-				$content=$content.$WPComcar_theResultOfTheWebservice;
-				return $content;
+			function addTheContentOfTheCarsComparatorWebservice($content){	
+				if( is_page() && is_main_query() ) {	
+					// lets include the code
+					include_once(WPComcar_WEBSERVICESCALLSPATH."Comparator/Car-comparator.php");
+					//attach the content of the webersive to the post
+					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+					$content=$content.$WPComcar_theResultOfTheWebservice;
+					return $content;
+				}	
+
 			}
 
 			function addTheContentOfTheVansComparatorWebservice($content){		
-				// lets include the code
-				include_once(WPComcar_WEBSERVICESCALLSPATH."Comparator/Van-comparator.php");
-				//attach the content of the webersive to the post
-				$content=$content.$WPComcar_theResultOfTheWebservice;
-				return $content;
+
+				if( is_page() && is_main_query() ) {	
+					// lets include the code
+					include_once(WPComcar_WEBSERVICESCALLSPATH."Comparator/Van-comparator.php");
+					//attach the content of the webersive to the post
+					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+					$content=$content.$WPComcar_theResultOfTheWebservice;
+					return $content;
+				}
+				
 			}
 
 			function getParentId(){
@@ -250,19 +283,19 @@
 
 
 			/********************* UNINSTALL, DEACTIVATE AND ACTIVATE PLUGIN *****************/
-			function uninstall(){
+			static function uninstall(){
 			    if ( ! current_user_can( 'activate_plugins' ) )
 			        return;			   
 				//get rid of the database tables
 			}
 
 
-			function deactivate(){
+			static function deactivate(){
 			    if ( ! current_user_can( 'activate_plugins' ) )
 			        return;
 			}
 
-			function activate(){
+			static function activate(){
 
 				if ( ! current_user_can( 'activate_plugins' ) )
 			        return;

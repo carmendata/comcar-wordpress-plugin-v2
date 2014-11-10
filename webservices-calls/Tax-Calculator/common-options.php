@@ -8,7 +8,7 @@
 	if(!isset($_GET['anncon']))  {  $_GET['anncon'] = '';  }
 
 	// defaults in case the page is visited without a form submission from stage 2 
-	if(!isset($_POST['car']))    {  $_POST['car'] = $_GET['id'];  }
+	if(!isset($_POST['car']))    {  $_POST['car'] = isset($_GET['id']) ? $_GET['id'] : "" ;  }
 	if(!isset($_POST['capcon'])) {  $_POST['capcon'] = $_GET['capcon'];  }
 	if(!isset($_POST['anncon'])) {  $_POST['anncon'] = $_GET['anncon'];  }
 

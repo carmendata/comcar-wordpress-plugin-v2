@@ -34,7 +34,7 @@
 		$WPComcar_objConfig['orderDir'] = $_GET['orderDir'];
 
 		//get the values from the options for the webservice
-		$WPComcar_webServiceRequest=$WPComcar_arrOptions["tax_calculator_general_texts"];
+		$WPComcar_webServiceRequest=isset($WPComcar_arrOptions["tax_calculator_general_texts"]) ? $WPComcar_arrOptions["tax_calculator_general_texts"] : array() ;
 		foreach($WPComcar_webServiceRequest as $key=>$value){
 			if (strlen($value)>0){
 				$WPComcar_objConfig[$key]=$value;

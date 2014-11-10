@@ -58,11 +58,12 @@ class WPComcarPlugin_admin_configuration_html
 
 
 	function plugin_create_checkboxes($args){
-		$name=$args["name"]; //name of the checkbox
-		$description=$args["description"]; //description of the checkbox
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
-		$options=$args["options"];
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
+		$description=isset($args["description"]) ? $args["description"] : ""; //description of the checkbox
+		$options=isset($args["options"]) ? $args["options"]:"";
 
 		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
 		$theSelectedOptions=$arrOptions[$name];
@@ -82,11 +83,13 @@ class WPComcarPlugin_admin_configuration_html
 
 	function plugin_create_radio_buttons($args){
 
-		$name=$args["name"]; //name of the checkbox
-		$description=$args["description"]; //description of the checkbox
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
-		$options=$args["options"];
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
+		$description=isset($args["description"]) ? $args["description"] : ""; //description of the checkbox
+		$options=isset($args["options"]) ? $args["options"]:"";
+
 
 		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
 		$theSelectedOptions=$arrOptions[$name];
@@ -105,10 +108,15 @@ class WPComcarPlugin_admin_configuration_html
 	}
 
 	function plugin_create_selector($args){
-		$name=$args["name"]; //name of the selector
+
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
+
+
 		$options=$args["options"]; //description of the checkbox
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
+
 
 		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
 		$theSelectedOptions=$arrOptions[$name];
@@ -136,13 +144,12 @@ class WPComcarPlugin_admin_configuration_html
 	*/
 	function plugin_create_selector_with_list_of_pages($args){
 
-		$name=$args["name"]; //name of the textbox
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
-		$class=$args["class"];
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
 
 
-		$arrPages= $this->thePagesOfWordPress;
 		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
 		$theSelectedOptions=$arrOptions[$name];
 
@@ -164,18 +171,23 @@ class WPComcarPlugin_admin_configuration_html
 
 
 	function plugin_create_textbox($args){
-		$name=$args["name"]; //name of the textbox
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
-		
-		$class=$args["class"];
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
 
 
 		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
+
+		$thisValue="";
+		if (isset($arrOptions[$name])){
+			$thisValue=$arrOptions[$name];
+		}
+
 		if (strlen($class)>0){
-			echo "<input id='$name' name='WPComcar_plugin_options_".$section."[$name]' size='40' type='text' value='{$arrOptions[$name]}' class='$class' />";
+			echo "<input id='$name' name='WPComcar_plugin_options_".$section."[$name]' size='40' type='text' value='$thisValue' class='$class' />";
 		}else{
-			echo "<input id='$name' name='WPComcar_plugin_options_".$section."[$name]' size='40' type='text' value='{$arrOptions[$name]}' />";
+			echo "<input id='$name' name='WPComcar_plugin_options_".$section."[$name]' size='40' type='text' value='$thisValue' />";
 		}
 
 		if (isset($explanation)){
@@ -185,7 +197,9 @@ class WPComcarPlugin_admin_configuration_html
 
 
 	function plugin_setting_string_plugins_to_use_general($args) {
-		$name=$args["name"];
+
+		$name=isset($args["name"]) ? $args["name"] : "";
+
 		$arrOptions = get_option('WPComcar_plugin_options_general');
 		$theSelectedOptions=$arrOptions[$name];
 
@@ -207,10 +221,12 @@ class WPComcarPlugin_admin_configuration_html
 
 	
 	function plugin_tax_calculator_print_the_options($args,$vehicleType){
-		$name=$args["name"]; //name of the textbox
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
-		$class=$args["class"];
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
+		$description=isset($args["description"]) ? $args["description"] : ""; //description of the checkbox
+		$options=isset($args["options"]) ? $args["options"]:"";
 
 	    //if there is any explanation
 	    if (isset($explanation)){
@@ -260,12 +276,13 @@ class WPComcarPlugin_admin_configuration_html
 
 
 	function plugin_tax_calculator_print_text_subsection($arrayOfOptions, $args){
-		$name=$args["name"]; //name of the section
-		$section=$args["section"]; //tax_calculator, comparator etc
-		$explanation=$args["explanation"];//explanation of the field OPTIONAL
-		$class=$args["class"];
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+		$explanation=isset($args["explanation"]) ? $args["explanation"] : "";	
+		$class=isset($args["class"]) ? $args["class"] : "" ;
+		$description=isset($args["description"]) ? $args["description"] : ""; //description of the checkbox
+		$options=isset($args["options"]) ? $args["options"]:"";
 
-		$arrPages= $this->thePagesOfWordPress;
 		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
 		$theSelectedOptions=$arrOptions[$name];
 
