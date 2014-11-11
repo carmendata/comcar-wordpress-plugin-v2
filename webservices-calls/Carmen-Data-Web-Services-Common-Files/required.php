@@ -1,5 +1,6 @@
 <?php
 
+
 	$WPComcar_webServiceBaseURL = WPComcar_WEBSERVICEBASEURL;
 	
 
@@ -11,6 +12,8 @@
 	$WPComcar_services['fuelBenefit']	= $WPComcar_webServiceBaseURL . 'FuelBenefit.cfc?wsdl';
 	$WPComcar_services['comparator']	= $WPComcar_webServiceBaseURL . 'Comparator.cfc?wsdl';
 	
+
+
 	// Only for debugging purposes
 	$WPComcar_msg = '';
 

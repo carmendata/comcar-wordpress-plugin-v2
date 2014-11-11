@@ -8,7 +8,11 @@
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
  */
-	
+	//global constants
+	define("WPComcar_PLUGINVERSION","0.8");
+
+	include_once(__DIR__."/wp-comcar-constants.php");
+
 	// don't load directly
 	if (!function_exists('is_admin')) {
 	    header('Status: 403 Forbidden');
@@ -18,25 +22,13 @@
 
 	defined( 'ABSPATH' ) OR exit;
 
-	//global constants
-	define("WPComcar_PLUGINVERSION","0.8");
-	define("WPComcar_WEBSERVICESCALLSPATH",dirname(__FILE__)."/webservices-calls/");
-	define("WPComcar_FUNCTIONSPREFIX", "WPComcar_");
-	define("WPComcar_PLUGINNAME", "WPComcarPlugin");
-	define("WPComcar_PLUGINADMINNAME", "WPComcarPlugin_admin_configuration");
-	define("WPComcar_PLUGINADMINHTMLNAME", "WPComcarPlugin_admin_configuration_html");
-	//default channels and pubhash if not specified by the user
-	define("WPComcar_CLKDEFAULTCARS", "44");
-	define("WPComcar_PUBHASHDEFAULTCARS", "465C8B81AF089A09A88F4882AA52853B099483B1A9210ACA8943C37974BB8C832F85E0");
-	define("WPComcar_CLKDEFAULTVANS", "45");
-	define("WPComcar_PUBHASHDEFAULTVANS", "6C789D3B29BE9A17E8279ECCBE20D15B99F48858BBDD0F022F34D1C584B09CB966566A");
-	//URL of the webservices
-	define("WPComcar_WEBSERVICEBASEURL",'http://comcar.co.uk/webservices/');
 
-	$WPComcar_exitMsg="Comcar plugins requires Wordpress 2.6 or newer.";
+
+	//using the is_main_call in the plugin
+	$WPComcar_exitMsg="Comcar plugins requires Wordpress 3.3 or newer.";
 	global $wp_version;
 
-	if (version_compare($wp_version, "2.6","<")){
+	if (version_compare($wp_version, "3.3","<")){
 		exit($WPComcar_exitMsg);
 	}
 
@@ -68,7 +60,9 @@
 				add_action("the_post", array($this,'activate_page_plugins'));
 				//enqueue scripts and css for the front end
 				add_action("wp_enqueue_scripts", array($this,'css_and_scripts'));
-				add_action("wp_head", array($this,"include_jquery_trick"));
+				//add_action("wp_head", array($this,"include_jquery_trick"));
+				//flush the content in case we call the callback page
+				add_action("get_header", array($this,"flush_if_callback"));
 			}
 
 			/************************** JAVASCRIPT AND CSS ******************************************/
@@ -84,10 +78,55 @@
 				wp_enqueue_style('comcar-style');
 			}
 
-			//we include the jquery trick to make it work
-			function include_jquery_trick(){
-				echo "<script> $=jQuery; </script>";
+			//be aware that we need to flush the content of the page in case it is a callback request
+			function flush_if_callback(){
+				//if it is not defined, we need to access the variables in the admin part 
+				if (!class_exists(WPComcar_PLUGINADMINNAME)){
+					require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-admin.php");
+				}
+
+				$arrGeneralSettings=get_option("WPComcar_plugin_options_general");
+				//for all the plugins in comcar but for the general
+
+				$numberOfPlugins=count(WPComcarPlugin_admin_configuration::$arrOrderOfPlugins);
+				for($i=1;$i<$numberOfPlugins;$i++){
+					//name of the plugin (footprint, comparator, tax_calculator)
+					$thisPluginName=WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];					
+					//not activated
+					if (!isset($arrGeneralSettings["pluginsOptions"][$thisPluginName])){
+						continue;
+					}
+
+					//options of the current plugin
+					$arrOptions = get_option('WPComcar_plugin_options_'.$thisPluginName);
+					if (!isset($arrOptions)){
+						continue;
+					}
+
+					//page where we should load the plugin
+					//BEWARE! If we are in the tax_calculator, maybe we should look into $thisPluginName_cars/vans_page
+					global $post;
+					$idOfTheCurrentPage = get_post( $post )->ID;
+					
+					/********************* TAX CALCULATOR AND COMPARATOR *************************/
+					if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"])){
+						//foreach vans and cars...
+						foreach($arrOptions["pages"] as $key=>$page){
+							$thisCallbackPage=isset($arrOptions[$thisPluginName.'_'.$page.'_subpage_callback']) ? $arrOptions[$thisPluginName.'_'.$page.'_subpage_callback'] : 0 ;
+							//if this is the callbackpage, start loggin the output and flush it in the callback page
+							if ($thisCallbackPage==$idOfTheCurrentPage){
+								ob_start();
+								return;
+							}
+						}
+					}
+				}				
 			}
+
+			// //we include the jquery trick to make it work
+			// function include_jquery_trick(){
+			// 	//echo "<script> $=jQuery; </script>";
+			// }
 			/****************************************************************************************/
 
 
@@ -122,16 +161,12 @@
 					}
 
 
-
-
 					//page where we should load the plugin
 					//BEWARE! If we are in the tax_calculator, maybe we should look into $thisPluginName_cars/vans_page
 					global $post;
 
 					$idOfTheCurrentPage = get_post( $post )->ID;
 					$idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName.'_page']) ? $arrOptions[$thisPluginName.'_page']: "";
-
-
 
 					//LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
 					/********************* TAX CALCULATOR AND COMPARATOR *************************/

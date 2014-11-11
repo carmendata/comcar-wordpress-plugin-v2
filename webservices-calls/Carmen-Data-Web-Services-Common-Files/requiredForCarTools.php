@@ -7,8 +7,9 @@
 
 	//here we need to access the cars information of the user
 	//in case there is no one, use the demo one
-	
+
 	$WPComcar_options = get_option('WPComcar_plugin_options_general');
+
 
 	$WPComcar_clk = WPComcar_CLKDEFAULTCARS;
 	$WPComcar_pubhash = WPComcar_PUBHASHDEFAULTCARS;
