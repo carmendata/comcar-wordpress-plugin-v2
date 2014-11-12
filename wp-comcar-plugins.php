@@ -3,13 +3,13 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 0.9
+ * Version: 0.10
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
  */
 	//global constants
-	define("WPComcar_PLUGINVERSION","0.9");
+	define("WPComcar_PLUGINVERSION","0.10");
 
 	include_once(__DIR__."/wp-comcar-constants.php");
 
@@ -56,13 +56,17 @@
 				register_deactivation_hook	(__FILE__, array('WPComcarPlugin','deactivate'));
 				register_uninstall_hook		(__FILE__, array('WPComcarPlugin','uninstall'));
 
-				//in every post we call this function that will be encharged of loading only those pluggings that are neccesary
-				add_action("the_post", array($this,'activate_page_plugins'));
+				//in every head loading we call this function that will be in charge of loading only those tools that are necessary.
+				//be aware! call the head instead of the_post, because other plugins may have conflicts when creating a new WP_Query
+				add_action("wp_head", array($this,'activate_page_plugins'));	
+
+				//flush the content in case we call the callback page
+				add_action("get_header", array($this,"flush_if_callback"));
+
 				//enqueue scripts and css for the front end
 				add_action("wp_enqueue_scripts", array($this,'css_and_scripts'));
 				add_action("wp_head", array($this,"include_jquery_trick"));
-				//flush the content in case we call the callback page
-				add_action("get_header", array($this,"flush_if_callback"));
+
 			}
 
 			/************************** JAVASCRIPT AND CSS ******************************************/
@@ -107,7 +111,7 @@
 					//BEWARE! If we are in the tax_calculator, maybe we should look into $thisPluginName_cars/vans_page
 					global $post;
 					$idOfTheCurrentPage = get_post( $post )->ID;
-					
+
 					/********************* TAX CALCULATOR AND COMPARATOR *************************/
 					if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"])){
 						//foreach vans and cars...
@@ -125,7 +129,7 @@
 
 			//we include the jquery trick to make it work
 			function include_jquery_trick(){
-				//needed by the carmendata plugins jquery
+				//needed by the carmendata plugins jquery. If it is still not loaded, load it cause otherwise the webservices jQuery wont work
 				echo "<script>!window.jQuery && document.write('<script type=\"text/javascript\" language=\"javascript\" src=\"http://comcar.co.uk/page/external/jquery/1.8.2/jquery-1.8.2.min.js\"><\/script>');</script>";
 				echo "<script> $=jQuery; </script>";
 			}
@@ -134,7 +138,7 @@
 
 			/******************************** MAIN ACTION **************************************/
 			//this function is called once every post and will call the desired plugin function
-			function activate_page_plugins(){
+			function activate_page_plugins(){			
 
 				$loadCssAndJavascript=false;
 				//if it is a page the one that is being loaded (not a POST)
@@ -147,10 +151,14 @@
 				}
 
 				$numberOfPlugins=count(WPComcarPlugin_admin_configuration::$arrOrderOfPlugins);
+
+				global $post;
+				$idOfTheCurrentPage = get_post( $post )->ID;
+				$idOfTheCurrentPageParent=$this->getParentId();
+
 				for($i=1;$i<$numberOfPlugins;$i++){
 					//name of the plugin (footprint, comparator, tax_calculator)
-					$thisPluginName=WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];					
-
+					$thisPluginName=WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];	
 
 					//not activated
 					if (!isset($arrGeneralSettings["pluginsOptions"][$thisPluginName])){
@@ -161,13 +169,9 @@
 					if (!isset($arrOptions)){
 						continue;
 					}
-
+					
 
 					//page where we should load the plugin
-					//BEWARE! If we are in the tax_calculator, maybe we should look into $thisPluginName_cars/vans_page
-					global $post;
-
-					$idOfTheCurrentPage = get_post( $post )->ID;
 					$idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName.'_page']) ? $arrOptions[$thisPluginName.'_page']: "";
 
 					//LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
@@ -179,10 +183,11 @@
 							if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
 								if (in_array($idOfTheCurrentPage, $arrOptions[$page."_subpages"])){									
 									//if the parent id is thePageWhereShouldBeLoadedThePlugin, then load
-									if (strcmp($this->getParentId(), $idPageWhereShouldBeLoadedThePlugin)==0){
+									if (strcmp($idOfTheCurrentPageParent, $idPageWhereShouldBeLoadedThePlugin)==0){
 										$loadCssAndJavascript=true;
 										$theFunctionName=$thisPluginName.'_'.$page."_execute";
 										$this->$theFunctionName();
+										break;
 									}
 								}
 							}
@@ -191,6 +196,7 @@
 								$loadCssAndJavascript=true;
 								$theFunctionName=$thisPluginName.'_'.$page."_execute";
 								$this->$theFunctionName();
+								break;
 							}
 						}
 					}else{
@@ -240,7 +246,8 @@
 			}
 
 			function addTheContentOfTheFootprintWebservice($content){
-
+				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
+				// http://codex.wordpress.org/Function_Reference/is_main_query
 				if( is_page() && is_main_query() ) {	
 					// lets include the code
 					include_once(WPComcar_WEBSERVICESCALLSPATH."Footprint-Calculator/Footprint-Calculator.php");
@@ -248,14 +255,14 @@
 					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
 					$content=$content.$WPComcar_theResultOfTheWebservice;
 					return $content;
-				}
-				
+				}				
 			}
 
 			//create tax calculator with input hidden and load one or another depending on the user action
 			//set form here, and process the info inside car-select always. Call one or another
 			function addTheContentOfTheCarsTaxCalculatorWebservice($content){	
-
+				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
+				// http://codex.wordpress.org/Function_Reference/is_main_query
 				if( is_page() && is_main_query() ) {	
 					// lets include the code
 					include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
@@ -267,7 +274,8 @@
 			}
 
 			function addTheContentOfTheVansTaxCalculatorWebservice($content){	
-
+				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
+				// http://codex.wordpress.org/Function_Reference/is_main_query
 				if( is_page() && is_main_query() ) {	
 					// lets include the code
 					include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-tax-calculator.php");
@@ -281,7 +289,9 @@
 			}
 
 
-			function addTheContentOfTheCarsComparatorWebservice($content){	
+			function addTheContentOfTheCarsComparatorWebservice($content){
+				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
+				// http://codex.wordpress.org/Function_Reference/is_main_query
 				if( is_page() && is_main_query() ) {	
 					// lets include the code
 					include_once(WPComcar_WEBSERVICESCALLSPATH."Comparator/Car-comparator.php");
@@ -294,7 +304,8 @@
 			}
 
 			function addTheContentOfTheVansComparatorWebservice($content){		
-
+				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
+				// http://codex.wordpress.org/Function_Reference/is_main_query
 				if( is_page() && is_main_query() ) {	
 					// lets include the code
 					include_once(WPComcar_WEBSERVICESCALLSPATH."Comparator/Van-comparator.php");
