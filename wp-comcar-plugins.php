@@ -60,7 +60,7 @@
 				add_action("the_post", array($this,'activate_page_plugins'));
 				//enqueue scripts and css for the front end
 				add_action("wp_enqueue_scripts", array($this,'css_and_scripts'));
-				//add_action("wp_head", array($this,"include_jquery_trick"));
+				add_action("wp_head", array($this,"include_jquery_trick"));
 				//flush the content in case we call the callback page
 				add_action("get_header", array($this,"flush_if_callback"));
 			}
@@ -123,10 +123,12 @@
 				}				
 			}
 
-			// //we include the jquery trick to make it work
-			// function include_jquery_trick(){
-			// 	//echo "<script> $=jQuery; </script>";
-			// }
+			//we include the jquery trick to make it work
+			function include_jquery_trick(){
+				//needed by the carmendata plugins jquery
+				echo "<script>!window.jQuery && document.write('<script type=\"text/javascript\" language=\"javascript\" src=\"http://comcar.co.uk/page/external/jquery/1.8.2/jquery-1.8.2.min.js\"><\/script>');</script>";
+				echo "<script> $=jQuery; </script>";
+			}
 			/****************************************************************************************/
 
 
