@@ -29,6 +29,5 @@
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the selector<br />';
 	}
 	
-	$WPComcar_pageTitle = 'CO2 Footprint Calculator';
-	include(WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
+	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>

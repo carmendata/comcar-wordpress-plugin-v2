@@ -37,6 +37,5 @@
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the Options configurator<br />';
 	}
 
-	$WPComcar_pageTitle = "Options";
 	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>

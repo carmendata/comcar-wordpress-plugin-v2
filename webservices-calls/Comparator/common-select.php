@@ -29,7 +29,5 @@
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the selector<br />';
 	}
 
-	$WPComcar_pageTitle = 'Select a vehicle to start comparison';
-
 	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>

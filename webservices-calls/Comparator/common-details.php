@@ -34,10 +34,6 @@
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["callback"];
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
-		// $WPComcar_actionName= plugin_dir_url(__DIR__).WPComcar_COMCARCALLBACK;
-		// $WPComcar_actionName=str_replace("Car-",$WPComcar_vehicleType."-",$WPComcar_actionName);
-		//exit(var_dump($WPComcar_actionName)); 
-
 		$WPComcar_resultsJS   = $WPComcar_ws -> GetJS   ( $WPComcar_pubhash, $WPComcar_clk, 'details', $WPComcar_actionName);
 		$WPComcar_resultsCSS  = $WPComcar_ws -> GetCSS  ( $WPComcar_pubhash, $WPComcar_clk, 'details');
 
@@ -51,6 +47,5 @@
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the Details page<br />';
 	}
 	
-	$WPComcar_pageTitle = 'Vehicle comparator';
 	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>

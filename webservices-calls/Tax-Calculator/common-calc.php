@@ -31,6 +31,6 @@
 		// Error handling code if soap request fails
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the Calculation<br />';
 	}
-	$WPComcar_pageTitle = 'Calculation';	
+
 	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>

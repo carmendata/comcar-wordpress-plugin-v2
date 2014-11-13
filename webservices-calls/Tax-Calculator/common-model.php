@@ -133,8 +133,5 @@
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the Model list<br />';
 	}
 	
-	
-	$WPComcar_pageTitle = 'Models';
-
 	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>
