@@ -19,5 +19,3 @@ The Footprint Calculator tool is a simple way to allow users to calculate their 
 ## Installation
 
 For a step-by-step tutorial visit [github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial](https://github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial) 
-
-
