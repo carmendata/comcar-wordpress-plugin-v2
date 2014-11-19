@@ -44,7 +44,11 @@
 
 		// Hard code some options to the new modern standards	
 		$WPComcar_objConfig['modelTitleElemType'] = 'h1'; 
-		$WPComcar_objConfig['tabulated'] = true;  	
+		$WPComcar_objConfig['tabulated'] = true; 
+
+		//the jQuery version of the wordpress installation must be compatible with jQuery 1.7 (.on event instead of .live)
+		$WPComcar_objConfig['jQueryVersion'] = "1.7"; 
+
 
 
 		if( $WPComcar_vehicleType=='Car' ){

@@ -3,14 +3,14 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 0.11
+ * Version: 0.12
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
  */
 
 	//global constants
-	define("WPComcar_PLUGINVERSION","0.11");
+	define("WPComcar_PLUGINVERSION","0.12");
 	include_once(__DIR__."/wp-comcar-constants.php");
 
 	// don't load directly
