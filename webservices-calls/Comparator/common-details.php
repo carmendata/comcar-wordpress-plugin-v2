@@ -15,8 +15,17 @@
 	
 	$_POST['thisPage'] = $WPComcar_actionName;
 
-	$_POST['pageTaxcalc'] = '../Tax-Calculator/'.$WPComcar_vehicleType.'-calc.php';
 
+	$WPComcar_arrOptionsTaxCalculator=get_option("WPComcar_plugin_options_tax_calculator");
+	$WPComcar_theCurrentTaxCalcPage="tax_calculator_".$WPComcar_vehicleTypeForIncluding."_subpage_calc";
+	if (isset($WPComcar_arrOptionsTaxCalculator) && isset($WPComcar_arrOptionsTaxCalculator[$WPComcar_theCurrentTaxCalcPage])){
+		//tax calculator link page
+		//get the calculator subpage link
+		$WPComcar_theLink=get_permalink( $WPComcar_arrOptionsTaxCalculator[$WPComcar_theCurrentTaxCalcPage] );
+		$_POST['pageTaxcalc'] = $WPComcar_theLink;
+	}
+
+	
 	//get the values from the options for the webservice request
 	$WPComcar_webServiceRequest=$WPComcar_arrOptions["comparator_general_texts"];
 	foreach($WPComcar_webServiceRequest as $key=>$value){
@@ -26,7 +35,6 @@
 	
 	try {
 
-	
 		// connect to the webservice
 		$WPComcar_ws = new SoapClient($WPComcar_services['comparator'], array('cache_wsdl' => 0));
 		// call the required functions and store the returned data

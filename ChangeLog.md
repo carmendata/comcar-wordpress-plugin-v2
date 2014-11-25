@@ -1,6 +1,7 @@
 ChangeLog
 =========
 
+- **0.13** Comparator fixes and development improvements
 - **0.12** Added compatibility with newer jQuery versions. Minimum jQuery version required for full compatibility 1.7
 - **0.11** Defined content-type in callback pages as 'application/json'
 - **0.10** Fixed incompatibility with some plugins.
