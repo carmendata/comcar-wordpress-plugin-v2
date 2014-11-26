@@ -182,7 +182,6 @@ function WPComcar_checkIfThereIsAnyValueAlreadySaved(){
 		//if it is a select
 		if( thisType==null){
 			$(this).parent().find(".WPComcar_checkBoxWrap").hide();
-
 		}
 	});
 }

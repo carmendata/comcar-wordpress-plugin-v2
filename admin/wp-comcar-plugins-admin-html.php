@@ -261,8 +261,6 @@ class WPComcarPlugin_admin_configuration_html
 	    $thisDefaultWebRequest=WPComcarPlugin_admin_configuration_html::$defaultTaxCalculatorWebRequest[$vehicleType];
 	    $thisDefaultWebRequestHeaders=WPComcarPlugin_admin_configuration_html::$defaultTaxCalculatorWebRequestHeaders[$vehicleType];
 
-
-
 	    $thisValue=isset($arrOptions[$name]["tax_calculator_".$vehicleType."_request"]) ? $arrOptions[$name]["tax_calculator_".$vehicleType."_request"] : ""; 
 	    echo "<input id='jquery_request_".$vehicleType."' name='WPComcar_plugin_options_".$section."[$name][tax_calculator_".$vehicleType."_request]' size='40' type='text' value='$thisValue' placeholder='$thisDefaultWebRequest' title='$thisDefaultWebRequest' />";
 	    echo "<p class='description'>List of fields to include in the table of results. Must match database names exactly.</p><br>";
@@ -273,6 +271,37 @@ class WPComcarPlugin_admin_configuration_html
 	}
 
 
+	//print the textareas for the 
+	function plugin_comparator_print_textareas_subsection($args,$vehicleType){
+
+		$name=isset($args["name"]) ? $args["name"] : "";
+		$section=isset($args["section"]) ? $args["section"] : "";
+
+		$arrOptions = get_option('WPComcar_plugin_options_'.$section);
+
+		echo '<div class="WPComcar_formRow WPComcar_separateTextAreas">
+							<div class="WPComcar_inline WPComcar_sizeOfOptionText WPComcar_float"> Block of text above the selector dropdowns. By default contains: <em>"For a comprehensive range of..."</em>. Edit as <b>HTML</b> </div>
+							<div class="WPComcar_float WPComcar_inline WPComcar_sizeOfCheckBox WPComcar_checkBoxWrap">
+								<input type="checkbox" checked class="WPComcar_inline WPComcar_jquery_click_checkbox">
+								<label for="">Default</label>
+							</div>';
+		$thisSubName="preSelectorText";
+		$thisValue=isset($arrOptions[$name][$thisSubName]) ? $arrOptions[$name][$thisSubName] : "";				
+		echo "<textarea rows='4' cols='50' name='WPComcar_plugin_options_".$section."[$name][$thisSubName]' id='$name"."_"."$thisSubName' value='$thisValue' type='textarea' class='WPComcar_inline WPComcar_jquery_editOption WPComcar_float'>$thisValue</textarea>";
+		echo "</div>";		
+
+
+		echo '<div class="WPComcar_formRow">
+							<div class="WPComcar_inline WPComcar_sizeOfOptionText WPComcar_float"> Block of text below the selector dropdowns. By default contains: <em>"Once you have selected a vehicle..." </em>. Edit as <b>HTML</b></div>
+							<div class="WPComcar_float WPComcar_inline WPComcar_sizeOfCheckBox WPComcar_checkBoxWrap">
+								<input type="checkbox" checked class="WPComcar_inline WPComcar_jquery_click_checkbox">
+								<label for="">Default</label>
+							</div>';
+		$thisSubName="postSelectorText";
+		$thisValue=isset($arrOptions[$name][$thisSubName]) ? $arrOptions[$name][$thisSubName] : "";				
+		echo "<textarea rows='4' cols='50' name='WPComcar_plugin_options_".$section."[$name][$thisSubName]' id='$name"."_"."$thisSubName' value='$thisValue' type='textarea' class='WPComcar_inline WPComcar_jquery_editOption WPComcar_float'>$thisValue</textarea>";
+		echo "</div>";
+	}
 
 
 	function plugin_tax_calculator_print_text_subsection($arrayOfOptions, $args){
@@ -309,7 +338,7 @@ class WPComcarPlugin_admin_configuration_html
 			echo '<div class="WPComcar_formRow">
 								<div class="WPComcar_inline WPComcar_sizeOfOptionText WPComcar_float"> '.$thisDescription.'</div>
 								<div class="WPComcar_float WPComcar_inline WPComcar_sizeOfCheckBox WPComcar_checkBoxWrap">
-									<input type="checkbox" checked id="" class="WPComcar_inline WPComcar_jquery_click_checkbox">
+									<input type="checkbox" checked class="WPComcar_inline WPComcar_jquery_click_checkbox">
 									<label for="">Default</label>
 								</div>';
 			if ($thisIsASelect){
@@ -341,6 +370,15 @@ class WPComcarPlugin_admin_configuration_html
 	function plugin_comparator_print_texts($args){
 		$this->plugin_tax_calculator_print_text_subsection(WPComcarPlugin_admin_configuration_html::$arrOfTextsToPrintGeneralComparator, $args);
 	}
+
+	function plugin_comparator_print_textareas($args){
+		if (strpos($args["name"],"vans")>-1){
+			$this->plugin_comparator_print_textareas_subsection($args, "vans");
+		}else{
+			$this->plugin_comparator_print_textareas_subsection($args, "cars");
+		}		
+	}
+
 
 	function plugin_tax_calculator_print_cars_texts($args){
 		$this->plugin_tax_calculator_print_the_options($args,"cars");

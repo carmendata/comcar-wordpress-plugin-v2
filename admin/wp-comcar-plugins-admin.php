@@ -158,6 +158,16 @@ class WPComcarPlugin_admin_configuration
 							 			"explanation"	=>	"$description"));
 		}
 
+		// ADRIAN
+
+    	add_settings_field('comparator_cars_selector_texts', 'Cars Selector Texts', array($this->objHtmlAdmin,'plugin_comparator_print_textareas'), 'WPComcar_plugin', 'plugin_comparator',
+					 array( 	"name" 			=> 	"comparator_cars_texts",
+					 	    	"section"		=>	"comparator"));
+
+   		add_settings_field('comparator_vans_selector_texts', 'Vans Selector Texts', array($this->objHtmlAdmin,'plugin_comparator_print_textareas'), 'WPComcar_plugin', 'plugin_comparator',
+					 array( 	"name" 			=> 	"comparator_vans_texts",
+					 	    	"section"		=>	"comparator"));
+
     	//Now, let us print the general settings, the vans and cars settings
     	add_settings_field('comparator_general_texts', '<b>General settings</b>', array($this->objHtmlAdmin,'plugin_comparator_print_texts'), 'WPComcar_plugin', 'plugin_comparator',
 					 array( 	"name" 			=> 	"comparator_general_texts",

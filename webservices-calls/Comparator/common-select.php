@@ -2,20 +2,30 @@
 	// Vehicle type ('Car' or 'Van'). The variable is defined in either 'Car-select.php' or 'Van-select.php'
 	if(!isset($WPComcar_vehicleType)){    $WPComcar_vehicleType="Car";    }
 
-	// get data from POST
+
 	$_POST['thisPage'] = 'select.php';
-	$WPComcar_jsnData = json_encode($_POST);
-	
 
 	try {
 
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_comparator");
+		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_comparator");	
 		$WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
+
+		//lets set the textareas 
+		if (isset($WPComcar_arrOptions["comparator_".$WPComcar_vehicleTypeForIncluding."_texts"])){
+			$arrOfTexts=$WPComcar_arrOptions["comparator_".$WPComcar_vehicleTypeForIncluding."_texts"];
+			foreach($arrOfTexts as $key=>$value){
+				//if it is not defined, then use the default ones
+				if (strlen($value)>0){
+					$_POST[$key]=$value;
+				}
+			}
+		}
+
+
+		$WPComcar_jsnData = json_encode($_POST);
+
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["details"];
-
-		//exit(var_dump($WPComcar_vehicleTypeForIncluding));
-
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
 

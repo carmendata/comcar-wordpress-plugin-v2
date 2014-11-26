@@ -1,3 +1,10 @@
+.WPComcar_formRow textarea {
+    resize: none;
+}
+.WPComcar_separateTextAreas{
+	margin-bottom:50px;
+}
+
 div.WPComcar_error{
 	padding:1em;
 	float:left;
