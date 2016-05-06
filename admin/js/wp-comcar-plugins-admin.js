@@ -51,10 +51,15 @@ function WPComcar_hideAllElementsAndShow(value){
 			break;
 		}
 	}	
+
 	//hide all elements
 	$("#WPComcar_sections").children().hide();
 	//get the ith element and show until the following h3
-	$("#WPComcar_sections h3:eq("+ thisId +")").nextUntil('h3').show();
+	var headerType = 'h3';
+	if( $("#WPComcar_sections h2").length ) {
+		var headerType = 'h2';
+	}
+	$("#WPComcar_sections " + headerType + ":eq("+ thisId +")").nextUntil( headerType ).show();
 }
 
 
