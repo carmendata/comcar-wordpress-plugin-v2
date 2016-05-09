@@ -1,6 +1,7 @@
 ChangeLog
 =========
 
+- **0.15** Bug Fix on newer versions of WP hiding settings
 - **0.14** Comparator custom texts above and below the car selector and fixed information buttons. 
 - **0.13** Comparator fixes and development improvements
 - **0.12** Added compatibility with newer jQuery versions. Minimum jQuery version required for full compatibility 1.7
