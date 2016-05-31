@@ -200,7 +200,7 @@ class WPComcarPlugin_admin_configuration
 
     	add_settings_field(
     		"tax_calculator_cars_calc_override", 
-    		"", 
+    		"Calculation override URL", 
     		array(
     			$this->objHtmlAdmin,
     			'plugin_create_textbox'
@@ -210,7 +210,7 @@ class WPComcarPlugin_admin_configuration
 			 array( 	
 			 	"name" 			=> 	"tax_calculator_cars_calc_override",
 	 			"section"		=> 	"tax_calculator",
-	 			"explanation"	=>	"Override URL to visit prior to calculation (refer to documentation for correct redirection to final calculation)",
+	 			"explanation"	=>	"Override URL to visit prior to the tax calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation)",
 	 			"class" 		=>  "WPComcar_inline"
 	 		)
 		);
