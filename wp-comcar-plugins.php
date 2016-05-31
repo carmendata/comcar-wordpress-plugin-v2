@@ -55,6 +55,8 @@
 				register_deactivation_hook	(__FILE__, array('WPComcarPlugin','deactivate'));
 				register_uninstall_hook		(__FILE__, array('WPComcarPlugin','uninstall'));
 
+				add_action("wp", array($this,'plugin_redirection'));	
+
 				//in every head loading we call this function that will be in charge of loading only those tools that are necessary.
 				//be aware! call the head instead of the_post, because other plugins may have conflicts when creating a new WP_Query
 				add_action("wp_head", array($this,'activate_page_plugins'));	
@@ -133,6 +135,94 @@
 				echo "<script> $=jQuery; </script>";
 			}
 			/****************************************************************************************/
+
+			/********************** ACTIONS TO TAKE BEFORE RENDERING PLUGIN**************************/
+			function plugin_redirection() {
+				// process any actions that need to be done before page rendering
+				global $pagename;
+				global $post;
+				$post_id = $post->ID;
+
+				$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
+
+				// perform early plugin processing based on page
+				switch( $post_id ) {
+					case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
+						// check for calculation redirect
+						$WPComcar_tax_calc_override= $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
+
+						if( isset($_GET['taxcalculatorcode'] ) ) {
+							// if there is encoded data put it back into the form
+							$encoded_taxcalculatorcode = htmlspecialchars( $_GET[ 'taxcalculatorcode' ] );
+
+							// echo 'tax calc code: ' . $encoded_taxcalculatorcode . '<br />';
+
+							// decode string (can't use hex2bin prior to php5.4)
+					        $cnt_code = strlen( $encoded_taxcalculatorcode ); 
+					        $unhexed_taxcalculatorcode = "";   
+					        $i = 0; 
+					        while($i < $cnt_code ) {       
+					            $a = substr( $encoded_taxcalculatorcode, $i, 2 );           
+					            $c = pack("H*",$a ); 
+					            if ( $i==0 ){
+					            	$unhexed_taxcalculatorcode = $c;
+					           	} else {
+					           		$unhexed_taxcalculatorcode .= $c;
+					           	} 
+					            $i+=2; 
+					        } 
+
+					        // echo 'unhexed code: ' . $unhexed_taxcalculatorcode . '<br />';
+
+							$decoded_taxcalculatorcode = base64_decode( $unhexed_taxcalculatorcode );
+
+							// echo 'decoded code: ' . $decoded_taxcalculatorcode . '<br />';
+
+							$arr_decoded = explode( '~', $decoded_taxcalculatorcode );
+
+							// echo '<br />';
+							// var_dump( $arr_decoded );
+							// echo '<br />';
+							// echo count( $arr_decoded );
+							// echo '<br />';		
+
+							$_POST['id'] = $arr_decoded[ 0 ];
+
+							// var_dump( $_POST );
+
+						} else if ( $WPComcar_tax_calc_override ) {
+							// if an override exists, encode data and transmit
+
+							// defaults in case the page is visited without a $_POST submission
+							if(!isset($_GET['car']))         {  $_GET['car']="";  }
+							if(!isset($_POST['car']))        {  $_POST['car']=$_GET['car'];  }
+
+							if(!isset($_GET['id']))          {  $_GET['id']=$_POST['car'];  }
+							if(!isset($_POST['id']))         {  $_POST['id']=$_GET['id'];  }
+
+							if(!isset($_POST['CapCon']))     {  $_POST['CapCon']="";  }
+							if(!isset($_POST['AnnCon']))     {  $_POST['AnnCon']="";  }
+							if(!isset($_POST['frm_listID'])) {  $_POST['frm_listID']="";  }
+							if(!isset($_POST['optTotal']))   {  $_POST['optTotal']="";  }
+
+							// create formData string to encode as base64
+							$WPComcar_formData = "";
+							$WPComcar_formData = $WPComcar_formData.$_POST['id']."~";
+							$WPComcar_formData = $WPComcar_formData.$_POST['CapCon']."~";
+							$WPComcar_formData = $WPComcar_formData.$_POST['AnnCon']."~";
+							$WPComcar_formData = $WPComcar_formData.$_POST['frm_listID']."~";
+							$WPComcar_formData = $WPComcar_formData.$_POST['optTotal'];
+
+							$WPComcar_hashedData = bin2hex( base64_encode( $WPComcar_formData ) );
+
+							header( "Location: $WPComcar_tax_calc_override?taxcalculatorcode=$WPComcar_hashedData");
+							exit(1);
+						}
+
+						break;
+				}
+
+			}
 
 
 			/******************************** MAIN ACTION **************************************/
