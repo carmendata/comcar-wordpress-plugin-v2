@@ -155,8 +155,6 @@
 							// if there is encoded data put it back into the form
 							$encoded_taxcalculatorcode = htmlspecialchars( $_GET[ 'taxcalculatorcode' ] );
 
-							// echo 'tax calc code: ' . $encoded_taxcalculatorcode . '<br />';
-
 							// decode string (can't use hex2bin prior to php5.4)
 					        $cnt_code = strlen( $encoded_taxcalculatorcode ); 
 					        $unhexed_taxcalculatorcode = "";   
@@ -172,23 +170,18 @@
 					            $i+=2; 
 					        } 
 
-					        // echo 'unhexed code: ' . $unhexed_taxcalculatorcode . '<br />';
-
 							$decoded_taxcalculatorcode = base64_decode( $unhexed_taxcalculatorcode );
-
-							// echo 'decoded code: ' . $decoded_taxcalculatorcode . '<br />';
 
 							$arr_decoded = explode( '~', $decoded_taxcalculatorcode );
 
-							// echo '<br />';
-							// var_dump( $arr_decoded );
-							// echo '<br />';
-							// echo count( $arr_decoded );
-							// echo '<br />';		
-
 							$_POST['id'] = $arr_decoded[ 0 ];
 
-							// var_dump( $_POST );
+							if( count( $arr_decoded > 1 ) ) {
+								$_POST['CapCon'] = $arr_decoded[ 1 ];
+								$_POST['AnnCon'] = $arr_decoded[ 2 ];
+								$_POST['frm_listID'] = $arr_decoded[ 3 ];
+								$_POST['optTotal'] = $arr_decoded[ 4 ];
+							}
 
 						} else if ( $WPComcar_tax_calc_override ) {
 							// if an override exists, encode data and transmit
