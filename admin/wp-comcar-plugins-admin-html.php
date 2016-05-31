@@ -137,8 +137,6 @@ class WPComcarPlugin_admin_configuration_html
 		}
 	}
 
-
-
 	/**
 	 Generates a HTML selector with a list of pages on the WordPress site 
 	*/

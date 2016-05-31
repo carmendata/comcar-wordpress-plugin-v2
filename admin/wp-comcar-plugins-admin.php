@@ -198,6 +198,23 @@ class WPComcarPlugin_admin_configuration
     						 			"class" 		=>  "WPComcar_inline"));
     	}
 
+    	add_settings_field(
+    		"tax_calculator_cars_calc_override", 
+    		"", 
+    		array(
+    			$this->objHtmlAdmin,
+    			'plugin_create_textbox'
+    		), 
+    		'WPComcar_plugin', 
+    		'plugin_tax_calculator',
+			 array( 	
+			 	"name" 			=> 	"tax_calculator_cars_calc_override",
+	 			"section"		=> 	"tax_calculator",
+	 			"explanation"	=>	"Override URL to visit prior to calculation (refer to documentation for correct redirection to final calculation)",
+	 			"class" 		=>  "WPComcar_inline"
+	 		)
+		);
+
     	add_settings_field('tax_calculator_vans_page', 'Van tax calculator pages', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_tax_calculator',
     						 array( 	"name" 			=> 	"tax_calculator_vans_page",
     						 	    	"section"		=>	"tax_calculator",
