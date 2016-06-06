@@ -1,6 +1,7 @@
 ChangeLog
 =========
 
+- **0.17** Allow redirection to external site before Tax Calculation
 - **0.16** Added sidebar file for Comcar Wordpress Widget
 - **0.15** Bug Fix on newer versions of WP hiding settings
 - **0.14** Comparator custom texts above and below the car selector and fixed information buttons. 
