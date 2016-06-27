@@ -3,15 +3,21 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 0.17
+ * Version: 0.18
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
  */
 
 	//global constants
-	define("WPComcar_PLUGINVERSION","0.17");
+	define("WPComcar_PLUGINVERSION","0.18");
 	include_once(__DIR__."/wp-comcar-constants.php");
+
+
+
+
+
+
 
 	// don't load directly
 	if (!function_exists('is_admin')) {
@@ -54,6 +60,10 @@
 			    register_activation_hook 	(__FILE__, array('WPComcarPlugin','activate'));
 				register_deactivation_hook	(__FILE__, array('WPComcarPlugin','deactivate'));
 				register_uninstall_hook		(__FILE__, array('WPComcarPlugin','uninstall'));
+
+
+
+
 
 				add_action("wp", array($this,'plugin_redirection'));	
 
@@ -134,6 +144,31 @@
 				echo "<script>!window.jQuery && document.write('<script type=\"text/javascript\" language=\"javascript\" src=\"http://comcar.co.uk/page/external/jquery/1.8.2/jquery-1.8.2.min.js\"><\/script>');</script>";
 				echo "<script> $=jQuery; </script>";
 			}
+			
+
+
+			function decodeURLParam( $str_to_decode ) {
+				// decode string (can't use hex2bin prior to php5.4)
+		        $cnt_code = strlen( $str_to_decode ); 
+		        $unhexed_taxcalculatorcode = "";   
+		        $i = 0; 
+		        while($i < $cnt_code ) {       
+		            $a = substr( $str_to_decode, $i, 2 );           
+		            $c = pack("H*",$a ); 
+		            if ( $i==0 ){
+		            	$unhexed_taxcalculatorcode = $c;
+		           	} else {
+		           		$unhexed_taxcalculatorcode .= $c;
+		           	} 
+		            $i+=2; 
+		        } 
+		        return base64_decode( $unhexed_taxcalculatorcode );
+			}
+
+
+
+
+
 			/****************************************************************************************/
 
 			/********************** ACTIONS TO TAKE BEFORE RENDERING PLUGIN**************************/
@@ -142,10 +177,11 @@
 				global $pagename;
 				global $post;
 				$post_id = $post->ID;
-
-				$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
-
-				// perform early plugin processing based on page
+		
+				$WPTax_calc_arrOptions = get_option("WPComcar_plugin_options_tax_calculator"); 
+				$WPComparator_arrOptions = get_option("WPComcar_plugin_options_comparator");
+				$WPComcar_arrOptions=array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
+		
 				switch( $post_id ) {
 					case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
 						// check for calculation redirect
@@ -155,22 +191,7 @@
 							// if there is encoded data put it back into the form
 							$encoded_taxcalculatorcode = htmlspecialchars( $_GET[ 'taxcalculatorcode' ] );
 
-							// decode string (can't use hex2bin prior to php5.4)
-					        $cnt_code = strlen( $encoded_taxcalculatorcode ); 
-					        $unhexed_taxcalculatorcode = "";   
-					        $i = 0; 
-					        while($i < $cnt_code ) {       
-					            $a = substr( $encoded_taxcalculatorcode, $i, 2 );           
-					            $c = pack("H*",$a ); 
-					            if ( $i==0 ){
-					            	$unhexed_taxcalculatorcode = $c;
-					           	} else {
-					           		$unhexed_taxcalculatorcode .= $c;
-					           	} 
-					            $i+=2; 
-					        } 
-
-							$decoded_taxcalculatorcode = base64_decode( $unhexed_taxcalculatorcode );
+							$decoded_taxcalculatorcode =   $this->decodeURLParam( $encoded_taxcalculatorcode );
 
 							$arr_decoded = explode( '~', $decoded_taxcalculatorcode );
 
@@ -207,12 +228,29 @@
 							$WPComcar_formData = $WPComcar_formData.$_POST['optTotal'];
 
 							$WPComcar_hashedData = bin2hex( base64_encode( $WPComcar_formData ) );
-
-							header( "Location: $WPComcar_tax_calc_override?taxcalculatorcode=$WPComcar_hashedData");
-							exit(1);
+  							header( "Location: $WPComcar_tax_calc_override?taxcalculatorcode=$WPComcar_hashedData");
+  							exit(1);
 						}
 
 						break;
+
+					case $WPComcar_arrOptions["comparator_cars_subpage_details"]: 	
+						$WPComcar_comparator_override= $WPComcar_arrOptions["comparator_cars_comp_override"];		
+					
+						if( isset($_GET['comparatorcode'])) {
+							$_POST =  (array) json_decode(base64_decode($_GET['comparatorcode']));	
+						} else if ( $WPComcar_comparator_override ) {
+							if( !isset( $_POST ) ) {  
+								$_POST=$_GET;  
+							}
+	
+ 							$WPComcar_hashedData = base64_encode(json_encode($_POST));
+ 							
+							header( "Location: $WPComcar_comparator_override?comparatorcode=$WPComcar_hashedData");
+	  						exit(1);
+						}
+					
+					break;
 				}
 
 			}

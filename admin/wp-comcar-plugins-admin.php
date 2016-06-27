@@ -145,6 +145,23 @@ class WPComcarPlugin_admin_configuration
 							 			"explanation"	=>	"$description"));
 		}
 
+		add_settings_field(
+		    		"comparator_cars_comp_override", 
+		    		"Comparation override URL", 
+		    		array(
+		    			$this->objHtmlAdmin,
+		    			'plugin_create_textbox'
+		    		), 
+		    		'WPComcar_plugin', 
+		    		'plugin_comparator',
+					 array( 	
+					 	"name" 			=> 	"comparator_cars_comp_override",
+			 			"section"		=> 	"comparator",
+			 			"explanation"	=>	"Override URL to visit prior to the comparation - leave blank if not needed (refer to documentation for correct redirection to final comparation)",
+			 			"class" 		=>  "WPComcar_inline"
+			 		)
+				);
+		    	
 		//parent page
 		add_settings_field('comparator_vans_page', 'Van channel comparator', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_comparator',
 							 array( 	"name" 			=> 	"comparator_vans_page",
