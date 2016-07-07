@@ -32,7 +32,7 @@ The subscription will give you the credentials required to access the core funct
 
 #### SoapClient module installed in PHP: http://php.net/manual/en/class.soapclient.php
 
-The SoapClient is reuqired to decode the information sent from the Comcar webservices that the Wordpress plugin makes use of.
+The SoapClient is required to decode the information sent from the Comcar webservices that the Wordpress plugin makes use of.
 
 Some resources for installing SoapClient:
 
