@@ -17,4 +17,25 @@
 		return get_permalink($id);
 	}
 
+
+	function fixForSsl( $url ) {
+		$fixedUrl = urlencode( $url );
+		// Is this an https request?
+		if( is_ssl() ) {
+			// Are we in a dev environment?
+			if( strLen( DEV_VM ) > 0 ) {
+				// convert from dev.media.comcar.co.uk/d51alfie/
+				// to d51alfie.media.comcar.co.uk
+				$fixedUrl = str_replace( DEV_VM.'%2F', '', $fixedUrl );
+				$fixedUrl = str_replace( 'dev', DEV_VM, $fixedUrl );
+				
+			} 		
+			$fixedUrl = str_replace( 'media.comcar.co.uk', 'secure.carmendata.co.uk', $fixedUrl  );
+			$fixedUrl = str_replace( 'comcar.co.uk', 'secure.carmendata.co.uk', $fixedUrl  );
+			$fixedUrl = str_replace( 'http', 'https', $fixedUrl  );
+			$fixedUrl = str_replace( 'httpss', 'https', $fixedUrl  );
+		}		
+		return urldecode( $fixedUrl );
+	}
+
 ?>

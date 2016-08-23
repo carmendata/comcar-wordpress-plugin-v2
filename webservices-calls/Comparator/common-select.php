@@ -32,9 +32,11 @@
 		// connect to the webservice
 		$WPComcar_ws = new SoapClient($WPComcar_services['comparator'], array('cache_wsdl' => 0));
 		// call the required functions and store the returned data
-		$WPComcar_resultsJS   = $WPComcar_ws -> GetJS   ( $WPComcar_pubhash, $WPComcar_clk, 'select');
+		// $WPComcar_resultsJS   = $WPComcar_ws -> GetJS   ( $WPComcar_pubhash, $WPComcar_clk, 'select');
 		$WPComcar_resultsHTML = $WPComcar_ws -> GetHTML ( $WPComcar_pubhash, $WPComcar_clk, 'select', $WPComcar_actionName, $WPComcar_jsnData);
+		
 	} catch (Exception $WPComcar_e) {
+
 		// Error handling code if soap request fails 
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the selector<br />';
 	}

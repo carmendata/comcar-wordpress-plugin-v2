@@ -14,6 +14,7 @@
 		// call the required functions and store the returned data
 		$WPComcar_resultsJS = $WPComcar_ws->GetJS( $WPComcar_pubhash, $WPComcar_clk, 1, '' );
 		
+
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
 		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
 		$WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
@@ -22,9 +23,12 @@
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
 
-		$WPComcar_resultsHTML = $WPComcar_ws->GetHTML( $WPComcar_pubhash, $WPComcar_clk, 1, $WPComcar_actionName, $WPComcar_jsnConfig );
+		$WPComcar_resultsHTML = fixForSsl( $WPComcar_ws->GetHTML( $WPComcar_pubhash, $WPComcar_clk, 1, $WPComcar_actionName, $WPComcar_jsnConfig ));
+
+
 
 	} catch (Exception $WPComcar_e) {
+	
 		// Error handling code if soap request fails 
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the selector<br />';
 	}

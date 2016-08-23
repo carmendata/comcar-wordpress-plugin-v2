@@ -23,13 +23,14 @@
 	define("WPComcar_CLKDEFAULTVANS", "45");
 	define("WPComcar_PUBHASHDEFAULTVANS", "6C789D3B29BE9A17E8279ECCBE20D15B99F48858BBDD0F022F34D1C584B09CB966566A");
 
-
 	//check if it is development
 	$WPComcar_currentUrl=WPComcar_curPageURL();
 	preg_match('/^d51[a-z]+/',$WPComcar_currentUrl,$WPComcar_matches);
 	if (sizeof($WPComcar_matches)==1){ //development
 		define("WPComcar_WEBSERVICEBASEURL",'http://'.$WPComcar_matches[0].'.comcar.co.uk/webservices/');
+		define("DEV_VM", $WPComcar_matches[0]);
 	}else{
 		define("WPComcar_WEBSERVICEBASEURL",'http://comcar.co.uk/webservices/');
+		define("DEV_VM", '');
 	}
 ?>
