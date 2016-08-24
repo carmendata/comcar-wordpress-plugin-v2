@@ -1,6 +1,6 @@
 ChangeLog
 =========
-
+- **0.19** Manage HTTPS
 - **0.18** Allow redirection to external site before Comparation
 - **0.17** Allow redirection to external site before Tax Calculation
 - **0.16** Added sidebar file for Comcar Wordpress Widget
