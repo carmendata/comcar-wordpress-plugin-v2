@@ -13,7 +13,9 @@
 		// connect to the webservice
 		$WPComcar_ws = new SoapClient($WPComcar_services['comparator'], array('cache_wsdl' => 0));
 		// call the required functions and store the returned data
-		$WPComcar_resultsHTML = $WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, 'callback', '', $WPComcar_jsnData);
+		$WPComcar_resultsHTML = fixForSsl($WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, 'callback', '', $WPComcar_jsnData));
+		
+
 		echo $WPComcar_resultsHTML;
 	} catch (Exception $WPComcar_e) {
 		// Error handling code if soap request fails 

@@ -42,18 +42,18 @@
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["callback"];
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
-		$WPComcar_resultsJS   = $WPComcar_ws -> GetJS   ( $WPComcar_pubhash, $WPComcar_clk, 'details', $WPComcar_actionName);
-		$WPComcar_resultsCSS  = $WPComcar_ws -> GetCSS  ( $WPComcar_pubhash, $WPComcar_clk, 'details');
-
+		$WPComcar_resultsJS   = fixForSsl($WPComcar_ws -> GetJS   ( $WPComcar_pubhash, $WPComcar_clk, 'details', $WPComcar_actionName));
+		$WPComcar_resultsCSS  = fixForSsl($WPComcar_ws -> GetCSS  ( $WPComcar_pubhash, $WPComcar_clk, 'details'));
 		//select page
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["select"];
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
-
-		$WPComcar_resultsHTML = $WPComcar_ws -> GetHTML ( $WPComcar_pubhash, $WPComcar_clk, 'details', $WPComcar_actionName, $WPComcar_jsnData);
+		
+		$WPComcar_resultsHTML =  fixForSsl($WPComcar_ws -> GetHTML ( $WPComcar_pubhash, $WPComcar_clk, 'details', $WPComcar_actionName, $WPComcar_jsnData));
 	} catch (Exception $WPComcar_e) {
+	
 		// Error handling code if soap request fails 
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the Details page<br />';
 	}
 	
-	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
+	 include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 ?>

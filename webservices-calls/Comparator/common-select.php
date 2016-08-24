@@ -34,7 +34,7 @@
 		// call the required functions and store the returned data
 		$WPComcar_resultsJS   = fixForSsl( $WPComcar_ws -> GetJS   ( $WPComcar_pubhash, $WPComcar_clk, 'select'));
 		$WPComcar_resultsHTML = fixForSsl(  $WPComcar_ws -> GetHTML ( $WPComcar_pubhash, $WPComcar_clk, 'select', $WPComcar_actionName, $WPComcar_jsnData));
-		
+
 	} catch (Exception $WPComcar_e) {
 
 		// Error handling code if soap request fails 
