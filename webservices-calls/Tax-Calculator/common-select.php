@@ -12,7 +12,7 @@
 		// connect to the webservice
 		$WPComcar_ws = new SoapClient($WPComcar_services['taxcalc'], array('cache_wsdl' => 0));
 		// call the required functions and store the returned data
-		$WPComcar_resultsJS = $WPComcar_ws->GetJS( $WPComcar_pubhash, $WPComcar_clk, 1, '' );
+		$WPComcar_resultsJS = fixForSsl($WPComcar_ws->GetJS( $WPComcar_pubhash, $WPComcar_clk, 1, '' ));
 		
 
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress

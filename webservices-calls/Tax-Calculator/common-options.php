@@ -21,8 +21,8 @@
 		// connect to the webservice
 		$WPComcar_ws = new SoapClient($WPComcar_services['taxcalc'], array('cache_wsdl' => 0));
 		// call the required functions and store the returned data
-		$WPComcar_resultsCSS 	= $WPComcar_ws->GetCSS($WPComcar_pubhash, $WPComcar_clk, 3);
-		$WPComcar_resultsJS 	= $WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, 3, '');
+		$WPComcar_resultsCSS 	= fixForSsl($WPComcar_ws->GetCSS($WPComcar_pubhash, $WPComcar_clk, 3));
+		$WPComcar_resultsJS 	= fixForSsl($WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, 3, ''));
 
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
 		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
@@ -30,7 +30,7 @@
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["calc"];
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 		
-		$WPComcar_resultsHTML	= $WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, 3,  $WPComcar_actionName, "$WPComcar_car~$WPComcar_capcon~$WPComcar_anncon");
+		$WPComcar_resultsHTML	= fixForSsl($WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, 3,  $WPComcar_actionName, "$WPComcar_car~$WPComcar_capcon~$WPComcar_anncon"));
 
 	} catch (Exception $WPComcar_e) {
 		// Error handling code if soap request fails 

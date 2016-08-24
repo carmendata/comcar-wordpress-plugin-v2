@@ -125,13 +125,13 @@
 
 
 		// call the required functions and store the returned data
-		$WPComcar_resultsHTML = $WPComcar_ws->GetHTML( $WPComcar_pubhash, $WPComcar_clk, 2, $WPComcar_actionName, "$WPComcar_MakeModel~$WPComcar_fuelType~$WPComcar_jsnConfig" );
+		$WPComcar_resultsHTML = fixForSsl($WPComcar_ws->GetHTML( $WPComcar_pubhash, $WPComcar_clk, 2, $WPComcar_actionName, "$WPComcar_MakeModel~$WPComcar_fuelType~$WPComcar_jsnConfig" ));
 		//$WPComcar_resultsJS = $WPComcar_ws->GetJS( $WPComcar_pubhash, $WPComcar_clk, 2, $WPComcar_vehicleType."-calc.php~".$WPComcar_jsnConfig );
 
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["calc"];
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
-		$WPComcar_resultsJS = $WPComcar_ws->GetJS( $WPComcar_pubhash, $WPComcar_clk, 2, $WPComcar_actionName."~".$WPComcar_jsnConfig );
+		$WPComcar_resultsJS = fixForSsl($WPComcar_ws->GetJS( $WPComcar_pubhash, $WPComcar_clk, 2, $WPComcar_actionName."~".$WPComcar_jsnConfig ));
 	} catch (Exception $WPComcar_e) {
 		// Error handling code if soap request fails 
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the Model list<br />';
