@@ -11,13 +11,15 @@ class WPComcarPlugin_admin_configuration
 	public static $arrGroupOfPluginOptions = 	array( 	"general" 			=> "WPComcar_plugin_options_general",
 										  				"footprint" 		=> "WPComcar_plugin_options_footprint",
 														"comparator" 		=> "WPComcar_plugin_options_comparator",
+                                                        "electric_comparator" => "WPComcar_plugin_options_electric_comparator",
 														"tax_calculator" 	=> "WPComcar_plugin_options_tax_calculator");
 
 	//sets the order of the plugins. KEEP ALWAYS GENERAL AT THE TOP
 	public static $arrOrderOfPlugins = array( 	array( "general", "Main settings", ""),
 												array( "tax_calculator", "Tax calculator settings", "Tax calculator"),
 												array( "comparator", "Comparator settings", "Comparator"),
-												array( "footprint", "Footprint calculator settings", "Footprint calculator")
+												array( "electric_comparator", "Electric comparator settings", "Electric comparator"),
+                                                array( "footprint", "Footprint calculator settings", "Footprint calculator")
 											);
 
 	public static $arrOfTaxCalculatorSubPages = array( 	"select" 	=> "The <b>Select</b> page (the first page in the calculation process).",
@@ -272,6 +274,17 @@ class WPComcarPlugin_admin_configuration
     						 			"explanation"	=>	"Select which page the Footprint Calculator should be loaded on."));
     }
 
+
+
+    function plugin_electric_comparator_admin_options(){
+
+        add_settings_field('electric_comparator_page', 'electric_comparator calculator page', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_electric_comparator',
+                             array(     "name"          =>  "electric_comparator_page",
+                                        "section"       =>  "electric_comparator",
+                                        "explanation"   =>  "Select which page the Electric comparator should be loaded on."));
+    }
+
+
     //GENERAL OPTIONS
     function plugin_general_admin_options(){
 
@@ -345,6 +358,18 @@ class WPComcarPlugin_admin_configuration
 		}
 		return $arrOptions;
 	}
+
+
+function plugin_options_electric_comparator_validate($input){
+        $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
+        if (isset($input["electric_comparator_page"])){
+            $arrOptions["electric_comparator_page"]=esc_attr(trim($input["electric_comparator_page"]));
+        }else{
+            $arrOptions["electric_comparator_page"]="";
+        }
+        return $arrOptions;
+    }
+
 
 	function plugin_options_comparator_validate($input){
 		

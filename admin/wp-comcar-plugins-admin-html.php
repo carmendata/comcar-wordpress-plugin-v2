@@ -422,6 +422,12 @@ class WPComcarPlugin_admin_configuration_html
 			<p>';
 	}
 
+
+	function plugin_section_description_electric_comparator() {
+		echo '<p>Add description.</p>';
+	}
+
+
 	function plugin_section_description_footprint() {
 		echo '<p>The Footprint Calculator tool is a simple way to allow users to calculate their CO<sub>2</sub> tailpipe 
 				emissions based on fuel used, cost of fuel or distance travelled.</p>';

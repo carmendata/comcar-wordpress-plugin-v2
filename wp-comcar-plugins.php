@@ -359,6 +359,27 @@
 				add_filter('the_content', array($this,'addTheContentOfTheVansTaxCalculatorWebservice'));			
 			}
 			
+
+			function electric_comparator_execute() {
+
+				add_filter('the_content', array($this,'addTheContentOfTheElectricComparatorWebservice'));
+			}
+
+			function addTheContentOfTheElectricComparatorWebservice($content){
+				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
+				// http://codex.wordpress.org/Function_Reference/is_main_query
+				if( is_page() && is_main_query() ) {	
+					// lets include the code
+					include_once(WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Electric-Comparator.php");
+					//attach the content of the webservice to the post
+					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+					$content=$content.$WPComcar_theResultOfTheWebservice;
+					return $content;
+				}				
+			}
+
+
+
 			//load footprint calculator
 			function footprint_execute(){
 				//attach to the content the result of the webservice
