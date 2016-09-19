@@ -278,10 +278,25 @@ class WPComcarPlugin_admin_configuration
 
     function plugin_electric_comparator_admin_options(){
 
-        add_settings_field('electric_comparator_page', 'electric_comparator calculator page', array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_electric_comparator',
+        add_settings_field( 'electric_comparator_page', 
+                            'Electric comparator page',
+                             array(     $this->objHtmlAdmin,
+                                        'plugin_create_selector_with_list_of_pages'), 
+                                        'WPComcar_plugin', 'plugin_electric_comparator',
                              array(     "name"          =>  "electric_comparator_page",
                                         "section"       =>  "electric_comparator",
                                         "explanation"   =>  "Select which page the Electric comparator should be loaded on."));
+  
+
+        add_settings_field( 'electric_comparator_callback', 
+                            'Electric comparator callback page',
+                             array(     $this->objHtmlAdmin,
+                                        'plugin_create_selector_with_list_of_pages'), 
+                                        'WPComcar_plugin', 'plugin_electric_comparator',
+                             array(     "name"          =>  "electric_comparator_callback",
+                                        "section"       =>  "electric_comparator",
+                                        "explanation"   =>  "The Callback page (This never gets seen by users but is crucial to user flow)."));
+
     }
 
 
@@ -293,6 +308,7 @@ class WPComcarPlugin_admin_configuration
 					 array( 	"name" 			=> 	"clkCars",
 					 			"section"		=> 	"general",
 					 			"explanation"	=>	""));
+        
     	add_settings_field('pushCars', 'Car Channel Public hash', array($this->objHtmlAdmin,'plugin_create_textbox'), 'WPComcar_plugin', 'plugin_general',
 					 array( 	"name" 			=> 	"pushCars",
 					 			"section"		=> 	"general",
@@ -362,10 +378,18 @@ class WPComcarPlugin_admin_configuration
 
 function plugin_options_electric_comparator_validate($input){
         $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
+        
         if (isset($input["electric_comparator_page"])){
             $arrOptions["electric_comparator_page"]=esc_attr(trim($input["electric_comparator_page"]));
         }else{
             $arrOptions["electric_comparator_page"]="";
+        }
+
+
+        if (isset($input["electric_comparator_callback"])){
+            $arrOptions["electric_comparator_callback"]=esc_attr(trim($input["electric_comparator_callback"]));
+        }else{
+            $arrOptions["electric_comparator_callback"]="";
         }
         return $arrOptions;
     }
