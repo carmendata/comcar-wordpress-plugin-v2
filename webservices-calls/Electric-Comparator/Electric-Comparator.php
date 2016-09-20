@@ -20,7 +20,24 @@
         function controller(){
             global $post;
             $thePostId=$post->ID;
-            $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/comparation.php";
+
+            //decide what page to load
+            //parent or subpage?
+            $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
+
+            //check if the parent title is the one expected
+            $theIdPageWhereShouldLoadThePlugin=$arrOptions["electric_comparator_page"];
+
+            if (strcmp($theIdPageWhereShouldLoadThePlugin,$thePostId)==0){
+                $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-details.php";
+            } else if (in_array($thePostId,$arrOptions["electric_comparator_cars_subpage"])) {
+                if (strcmp($theIdPageWhereShouldLoadThePlugin, $this->getParentId())==0){
+                    $theNameOfThePage=array_search($thePostId,$arrOptions["electric_comparator_cars_subpage"]);
+
+                    $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-$theNameOfThePage.php";
+                }
+            }
+
         }
 
         function getParentId(){
