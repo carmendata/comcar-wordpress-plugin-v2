@@ -291,12 +291,17 @@
 					}
 					
 
+
+
 					//page where we should load the plugin
 					$idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName.'_page']) ? $arrOptions[$thisPluginName.'_page']: "";
 
+			
+
 					//LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
 					/********************* TAX CALCULATOR AND COMPARATOR *************************/
-					if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"])){		
+					if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"]) && count($arrOptions["pages"]) > 0 ){		
+						
 						//foreach vans and cars...
 						foreach($arrOptions["pages"] as $key=>$page){
 							$idPageWhereShouldBeLoadedThePlugin=$arrOptions[$thisPluginName.'_'.$page.'_page'];
@@ -366,6 +371,7 @@
 			}
 
 			function addTheContentOfTheElectricComparatorWebservice($content){
+				
 				// We want to attach the content only whenever the main query is called and not in secondary ocassions. Check if it is a page. 
 				// http://codex.wordpress.org/Function_Reference/is_main_query
 				if( is_page() && is_main_query() ) {	
