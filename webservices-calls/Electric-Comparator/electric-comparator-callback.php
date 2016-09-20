@@ -1,5 +1,5 @@
 <?php
-exit('hello');
+
 
 	// get data from GET
 	if(count($_GET)>0){

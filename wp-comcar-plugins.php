@@ -325,11 +325,23 @@
 							}
 						}
 					}else{
+
+	
+ 
+					
 						/******************* FOOTPRINT CALCULATOR **********************/
 						if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){
 							$loadCssAndJavascript=true;
 							$theFunctionName=$thisPluginName."_execute";
 							$this->$theFunctionName();
+						} else {
+							if (strcmp($idPageWhereShouldBeLoadedThePlugin,$this->getParentId())==0){
+								$loadCssAndJavascript=true;
+								$parent_name = WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];
+								$theFunctionName=$parent_name."_execute";
+								$this->$theFunctionName();
+							}
+							
 						}
 					}					
 				}
@@ -381,6 +393,8 @@
 					$WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
 					$content=$content.$WPComcar_theResultOfTheWebservice;
 					return $content;
+
+
 				}				
 			}
 
