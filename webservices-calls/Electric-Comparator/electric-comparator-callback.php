@@ -11,7 +11,7 @@
 	
 	try {
 		// connect to the webservice
-		$WPComcar_ws = new SoapClient($WPComcar_services['comparator'], array('cache_wsdl' => 0));
+		$WPComcar_ws = new SoapClient($WPComcar_services['electric-comparator'], array('cache_wsdl' => 0));
 		// call the required functions and store the returned data
 		$WPComcar_resultsHTML = fixForSsl($WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, 'callback', '', $WPComcar_jsnData));
 		
