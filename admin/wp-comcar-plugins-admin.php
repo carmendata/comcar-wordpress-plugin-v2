@@ -33,6 +33,10 @@ class WPComcarPlugin_admin_configuration
 														"callback"	=> "The <b>Callback</b> page (This never gets seen by users but is crucial to user flow)."
 														);
 
+  public static $arrElectricComparatorSubPages =    array(  
+                                                        "callback"  => "The <b>Callback</b> page (This never gets seen by users but is crucial to user flow)."
+                                                        );
+
 	function __construct(){
 		if (is_admin()) {
 			if (!isset($this->objHtmlAdmin)){
@@ -288,14 +292,12 @@ class WPComcarPlugin_admin_configuration
                                         "explanation"   =>  "Select which page the Electric comparator should be loaded on."));
   
 
-        add_settings_field( 'electric_comparator_callback', 
-                            'Electric comparator callback page',
-                             array(     $this->objHtmlAdmin,
-                                        'plugin_create_selector_with_list_of_pages'), 
-                                        'WPComcar_plugin', 'plugin_electric_comparator',
-                             array(     "name"          =>  "electric_comparator_callback",
+          foreach($this::$arrElectricComparatorSubPages as $index=>$description){
+                add_settings_field("electric_comparator_subpage_$index", "", array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_electric_comparator',
+                             array(     "name"          =>  "electric_comparator_subpage_$index",
                                         "section"       =>  "electric_comparator",
-                                        "explanation"   =>  "The Callback page (This never gets seen by users but is crucial to user flow)."));
+                                        "explanation"   =>  "$description"));
+        }
 
     }
 
@@ -377,21 +379,43 @@ class WPComcarPlugin_admin_configuration
 
 
 function plugin_options_electric_comparator_validate($input){
+      
+
         $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
+          //subpages where the different pages of the tax calculator will load
+        $arrSubPages=array();
+        $arrOptions["pages"]=array();
         
-        if (isset($input["electric_comparator_page"])){
-            $arrOptions["electric_comparator_page"]=esc_attr(trim($input["electric_comparator_page"]));
-        }else{
-            $arrOptions["electric_comparator_page"]="";
-        }
 
+        foreach($input as $key=>$value){
+            //escape characters
+            $arrOptions[$key] = $input[$key];
+            //found clk
+            if(strpos($key,"_page")!==false){
+                $arrOptions[$key] = esc_attr(trim($input[$key]));
+                if(!preg_match('/^[0-9]+$/', $arrOptions[$key])) {
+                    //error
+                    $arrOptions["errors"]["page"]="Unknown page id";
+                    $arrOptions[$key] = '';
+                }
+            }
+            //subpages where loading the cars and vans
+            if (strpos($key,"electric_comparator_subpage")!==false && strlen($input[$key])>0){
+                $thePosition=strpos($key,"electric_comparator_subpage");
+                //return select, model, options or calc
+                $theKeyInTheArr=substr($key,$thePosition+1+strlen("electric_comparator_subpage"), strlen($key));
+                $arrSubPages[$theKeyInTheArr]=esc_attr(trim($input[$key]));
 
-        if (isset($input["electric_comparator_callback"])){
-            $arrOptions["electric_comparator_callback"]=esc_attr(trim($input["electric_comparator_callback"]));
-        }else{
-            $arrOptions["electric_comparator_callback"]="";
+            }
         }
+        
+        $arrOptions["electric_comparator_subpages"]=$arrSubPages;
+      
+        //as this is the last plugin loaded, check that all the pages are different. Otherwise prompt a warning!
+        $this->checkAllPagesAreDifferentBeforeSaving();
+        
         return $arrOptions;
+
     }
 
 
