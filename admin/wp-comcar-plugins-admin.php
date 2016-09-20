@@ -34,6 +34,7 @@ class WPComcarPlugin_admin_configuration
 														);
 
   public static $arrElectricComparatorSubPages =    array(  
+                                                        "details"   => "The <b>Details</b> page.",
                                                         "callback"  => "The <b>Callback</b> page (This never gets seen by users but is crucial to user flow)."
                                                         );
 
@@ -130,6 +131,49 @@ class WPComcarPlugin_admin_configuration
 
 
 	/**************************** CREATE THE FIELDS OF THE PLUGINS ***********************/
+
+     function plugin_electric_comparator_admin_options(){
+
+        add_settings_field('pages', 
+                           'Enable Electric Comparator', 
+                           array($this->objHtmlAdmin,'plugin_create_checkboxes'), 
+                           'WPComcar_plugin', 
+                           'plugin_electric_comparator',
+                           array(     "name"          => "pages",
+                                      "description"   => "",
+                                      "section"       => "electric_comparator",
+                                      "options"       =>  array("cars" => "For car channel")
+                            )
+                        );
+
+        // parent page
+        add_settings_field( 'electric_comparator_cars_page', 
+                            'Electric comparator page',
+                             array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 
+                            'WPComcar_plugin',
+                            'plugin_electric_comparator',
+                            array(     "name"          =>  "electric_comparator_cars_page",
+                                       "section"       =>  "electric_comparator",
+                                       "explanation"   =>  "Select which page the Electric comparator should be loaded on."
+                            )
+                        );
+  
+
+          foreach($this::$arrElectricComparatorSubPages as $index=>$description){
+                add_settings_field("electric_comparator_cars_subpage_$index", 
+                                   "", 
+                                   array($this->objHtmlAdmin,
+                                   'plugin_create_selector_with_list_of_pages'), 
+                                   'WPComcar_plugin', 
+                                   'plugin_electric_comparator',
+                                    array(     "name"          =>  "electric_comparator_cars_subpage_$index",
+                                                "section"       =>  "electric_comparator",
+                                                "explanation"   =>  "$description"
+                                    )
+                                );
+        }
+
+    }
 
 	function plugin_comparator_admin_options(){
 
@@ -278,30 +322,6 @@ class WPComcarPlugin_admin_configuration
     						 			"explanation"	=>	"Select which page the Footprint Calculator should be loaded on."));
     }
 
-
-
-    function plugin_electric_comparator_admin_options(){
-
-        add_settings_field( 'electric_comparator_page', 
-                            'Electric comparator page',
-                             array(     $this->objHtmlAdmin,
-                                        'plugin_create_selector_with_list_of_pages'), 
-                                        'WPComcar_plugin', 'plugin_electric_comparator',
-                             array(     "name"          =>  "electric_comparator_page",
-                                        "section"       =>  "electric_comparator",
-                                        "explanation"   =>  "Select which page the Electric comparator should be loaded on."));
-  
-
-          foreach($this::$arrElectricComparatorSubPages as $index=>$description){
-                add_settings_field("electric_comparator_subpage_$index", "", array($this->objHtmlAdmin,'plugin_create_selector_with_list_of_pages'), 'WPComcar_plugin', 'plugin_electric_comparator',
-                             array(     "name"          =>  "electric_comparator_subpage_$index",
-                                        "section"       =>  "electric_comparator",
-                                        "explanation"   =>  "$description"));
-        }
-
-    }
-
-
     //GENERAL OPTIONS
     function plugin_general_admin_options(){
 
@@ -379,7 +399,6 @@ class WPComcarPlugin_admin_configuration
 
 
 function plugin_options_electric_comparator_validate($input){
-      
 
         $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
           //subpages where the different pages of the tax calculator will load
@@ -400,16 +419,17 @@ function plugin_options_electric_comparator_validate($input){
                 }
             }
             //subpages where loading the cars and vans
-            if (strpos($key,"electric_comparator_subpage")!==false && strlen($input[$key])>0){
-                $thePosition=strpos($key,"electric_comparator_subpage");
+            if (strpos($key,"electric_comparator_cars_subpage")!==false && strlen($input[$key])>0){
+                $thePosition=strpos($key,"electric_comparator_cars_subpage");
                 //return select, model, options or calc
-                $theKeyInTheArr=substr($key,$thePosition+1+strlen("electric_comparator_subpage"), strlen($key));
+                $theKeyInTheArr=substr($key,$thePosition+1+strlen("electric_comparator_cars_subpage"), strlen($key));
                 $arrSubPages[$theKeyInTheArr]=esc_attr(trim($input[$key]));
+
 
             }
         }
-        
-        $arrOptions["electric_comparator_subpages"]=$arrSubPages;
+
+        $arrOptions["cars_subpages"]=$arrSubPages;
       
         //as this is the last plugin loaded, check that all the pages are different. Otherwise prompt a warning!
         $this->checkAllPagesAreDifferentBeforeSaving();

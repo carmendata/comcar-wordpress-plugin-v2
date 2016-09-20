@@ -1,6 +1,4 @@
 <?php
-
-
 	// get data from GET
 	if(count($_GET)>0){
 		$WPComcar_jsnData = json_encode($_GET);

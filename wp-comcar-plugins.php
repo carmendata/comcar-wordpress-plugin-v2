@@ -301,10 +301,10 @@
 					//LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
 					/********************* TAX CALCULATOR AND COMPARATOR *************************/
 					if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"]) && count($arrOptions["pages"]) > 0 ){		
-						
 						//foreach vans and cars...
 						foreach($arrOptions["pages"] as $key=>$page){
 							$idPageWhereShouldBeLoadedThePlugin=$arrOptions[$thisPluginName.'_'.$page.'_page'];
+
 							if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
 								if (in_array($idOfTheCurrentPage, $arrOptions[$page."_subpages"])){									
 									//if the parent id is thePageWhereShouldBeLoadedThePlugin, then load
@@ -377,7 +377,7 @@
 			}
 			
 
-			function electric_comparator_execute() {
+			function electric_comparator_cars_execute() {
 
 				add_filter('the_content', array($this,'addTheContentOfTheElectricComparatorWebservice'));
 			}

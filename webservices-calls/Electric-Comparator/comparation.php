@@ -1,9 +1,6 @@
 <?php
 
 
-
-
-
     // include authentication and other required variables
     include(WPComcar_WEBSERVICESCALLSPATH."/Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php");
 
@@ -22,18 +19,18 @@
     // Serialize object to JSON
     $WPComcar_jsnDataAndConfig = json_encode($WPComcar_objDataAndConfig);
     $WPComcar_arrOptions=get_option("WPComcar_plugin_options_electric_comparator");
+
     try {
        
         // connect to the webservice
         $WPComcar_ws = new SoapClient($WPComcar_services['electric_comparator'], array('cache_wsdl' => 0, "Access-Control-Allow-Origin"=> '*'));
-        $WPComcar_actionName= $WPComcar_arrOptions["electric_comparator_subpages"]["callback"];
+        $WPComcar_actionName= $WPComcar_arrOptions["electric_comparator_cars_subpage"]["callback"];
 
         $WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
-
         // call the required functions and store the returned data
         $WPComcar_resultsJS = $WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, $WPComcar_actionName );
-        $WPComcar_resultsHTML = $WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, 'callback', $WPComcar_jsnDataAndConfig);
+        $WPComcar_resultsHTML = $WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, '', $WPComcar_jsnDataAndConfig);
          
         
     } catch (Exception $e) {
