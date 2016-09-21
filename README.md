@@ -14,6 +14,10 @@ The Comparator allows users to compare several different vehicle across several 
 
 Available for both cars and vans
 
+### Electric comparator
+
+The electric comparator tool allow users to compare between electric and non-electric vehicles across different contract profiles.
+
 ### Footprint Calculator
 
 The Footprint Calculator tool is a simple way to allow users to calculate their CO2 tailpipe emissions based on fuel used, cost of fuel or distance travelled.
