@@ -26,7 +26,7 @@
             $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
 
             //check if the parent title is the one expected
-            $theIdPageWhereShouldLoadThePlugin=$arrOptions["electric_comparator_page"];
+            $theIdPageWhereShouldLoadThePlugin=$arrOptions["electric_comparator_cars_page"];
 
             if (strcmp($theIdPageWhereShouldLoadThePlugin,$thePostId)==0){
                 $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-details.php";

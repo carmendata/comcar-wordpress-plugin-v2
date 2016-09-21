@@ -429,6 +429,7 @@ function plugin_options_electric_comparator_validate($input){
             }
         }
 
+        $arrOptions["electric_comparator_cars_subpage"]=$arrSubPages;
         $arrOptions["cars_subpages"]=$arrSubPages;
       
         //as this is the last plugin loaded, check that all the pages are different. Otherwise prompt a warning!
