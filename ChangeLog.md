@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **0.20** Added Electric comparator tool
 - **0.19** Manage HTTPS
 - **0.18** Allow redirection to external site before Comparation
 - **0.17** Allow redirection to external site before Tax Calculation
