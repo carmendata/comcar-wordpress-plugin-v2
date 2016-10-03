@@ -1,4 +1,4 @@
-
+console.log( 'here we are');
 var WPComcar_web_service_options="jquery_options";
 var WPComcar_tax_calculator_request="jquery_request";
 var WPComcar_tax_calculator_headers="jquery_headers";
