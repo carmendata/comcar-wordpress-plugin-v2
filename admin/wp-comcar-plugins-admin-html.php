@@ -25,7 +25,7 @@ add_action( 'admin_menu', 'add_settings_page' );
 
 
 function plugin_options_page() {
-        include 'wp-comcar-plugins-admin-options.php';
+    include 'wp-comcar-plugins-admin-options.php';
 }
 /*---------------------------------------------------
 register settings
@@ -68,10 +68,11 @@ function plugin_settings_page() {
         $str_function_name = 'WPComcar_plugin_options_'.$arrKey; 
         if (strcmp($arrKey,"general")==0){
             echo '<a class="nav-tab WPComcar_subTab nav-tab-active '.$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
+       
         }else{
             echo '<a class="nav-tab WPComcar_subTab '.$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
         } 
-        // $str_settings .= call_user_func( 'WPComcar_plugin_options_' . $arrKey );              
+         // $str_settings .= call_user_func( 'WPComcar_plugin_options_' . $arrKey );              
     }
 
     $str_settings = '</div>';
@@ -89,12 +90,12 @@ function plugin_settings_page() {
 
 
 function WPComcar_plugin_options_general(){
- add_settings_field( 'myprefix_setting-id',
-    'This is the setting title',
-    'myprefix_setting_callback_function',
-    'general',
-    'myprefix_settings-section-name',
-    array( 'label_for' => 'myprefix_setting-id' ) );
+ // add_settings_field( 'myprefix_setting-id',
+ //    'This is the setting title',
+ //    'myprefix_setting_callback_function',
+ //    'general',
+ //    'myprefix_settings-section-name',
+ //    array( 'label_for' => 'myprefix_setting-id' ) );
 
 }
 
