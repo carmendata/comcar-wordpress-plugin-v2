@@ -71,21 +71,14 @@ function plugin_option_settings_page( ) {
     $message=''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
+     print_r($_REQUEST);
+        // foreach ($plugin_options['general'] as $value) {
+        //     update_option( $value['id'], $_REQUEST[ $value['id'] ] ); }
      
-        foreach ($plugin_options['general'] as $value) {
-            update_option( $value['id'], $_REQUEST[ $value['id'] ] ); }
-     
-        foreach ($plugin_options['general'] as $value) {
-            if( isset( $_REQUEST[ $value['id'] ] ) ) { update_option( $value['id'], $_REQUEST[ $value['id'] ]  ); } else { delete_option( $value['id'] ); } }
-        $message='saved';
-    }
-    else if( 'reset' == $_REQUEST['action'] ) {
-         
-        foreach ($plugin_options['general'] as $value) {
-            delete_option( $value['id'] ); }
-        $message='reset';        
-    }
- 
+        // foreach ($plugin_options['general'] as $value) {
+        //     if( isset( $_REQUEST[ $value['id'] ] ) ) { update_option( $value['id'], $_REQUEST[ $value['id'] ]  ); } else { delete_option( $value['id'] ); } }
+        // $message='saved';
+    } 
     ?>
 
 
@@ -111,7 +104,7 @@ function plugin_option_settings_page( ) {
 
  ?>
         <div class="content_options">
-            <form method="post">
+            <form method="post"  >
  <table>
     <tbody>
             <?php 
@@ -138,13 +131,14 @@ function plugin_option_settings_page( ) {
                      <tr>
                         <td>
                             <label>
-                                <?php 
+                                <?php
                                     echo $label;    
                                 ?>
                             </label>
                         </td>
                         <td>
-                            <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_settings( $name ) != "") { echo stripslashes(get_settings( $name)  ); } else { echo $std; } ?>" />
+<?php exit('here we are') ?>
+                            <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_option( $name ) != "") { echo stripslashes(get_option( $name)  ); } else { echo $std; } ?>" />
                             <small><?php echo $desc; ?></small>
                         </td>
                    </tr>
@@ -162,16 +156,7 @@ function plugin_option_settings_page( ) {
                         </tr>";
 
 
-                    break;
-                    case 'textarea': ?>
-                        <div class="option_input option_textarea">
-                        <label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
-                        <textarea name="<?php echo $value['id']; ?>" rows="" cols=""><?php if ( get_settings( $value['id'] ) != "") { echo stripslashes(get_settings( $value['id']) ); } else { echo $value['std']; } ?></textarea>
-                        <small><?php echo $value['desc']; ?></small>
-                        <div class="clearfix"></div>
-                        </div>
-                    <?php break;
-                 
+                    break; 
                     case 'select': ?>
 
                     <?php 
@@ -225,13 +210,20 @@ function plugin_option_settings_page( ) {
             ?>
           </tbody>
       </table>
-          <input type="hidden" name="action" value="save" />
+            
+             <span class="submit"><input name="save<?php echo $i; ?>" type="submit" class="button-primary" value="Save changes" /></span>
+
+             <input type="hidden" name="action" value="save" />
 
           </form>
           </div>
-     <?php } ?>
+            <?php
+            
+      } ?>
     </div>
     <?php
+
+
 }
 
 
