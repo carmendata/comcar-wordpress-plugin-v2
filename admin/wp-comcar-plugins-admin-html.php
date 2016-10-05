@@ -71,13 +71,15 @@ function plugin_option_settings_page( ) {
     $message=''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
-     print_r($_REQUEST);
-        // foreach ($plugin_options['general'] as $value) {
-        //     update_option( $value['id'], $_REQUEST[ $value['id'] ] ); }
-     
-        // foreach ($plugin_options['general'] as $value) {
-        //     if( isset( $_REQUEST[ $value['id'] ] ) ) { update_option( $value['id'], $_REQUEST[ $value['id'] ]  ); } else { delete_option( $value['id'] ); } }
-        // $message='saved';
+        foreach ( $plugin_options as $key => $content ) {
+            foreach ( $plugin_options[$key] as $value ) {
+                if ( isset( $value['name'] ) && isset( $_REQUEST[ $value['name'] ] ) ) {  
+                   
+                    update_option( $value['name'], $_REQUEST[ $value['name'] ] ); 
+                }
+            }
+        }
+        $message = 'saved';
     } 
     ?>
 
@@ -93,22 +95,20 @@ function plugin_option_settings_page( ) {
         <div id="icon-options-general"></div>   
 
         <?php
-        if ( $message=='saved' ) echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
-        <p>'.$themename.' settings saved.</strong></p></div>';
-        if ( $message=='reset' ) echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
-        <p>'.$themename.' settings reset.</strong></p></div>';
-       
+        if ( $message=='saved' ) {
+            echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
+            <p>'.$themename.' settings saved.</strong></p></div>';
+        }
      
- foreach ( $plugin_options as $key => $content) {
-
-
- ?>
+        foreach ( $plugin_options as $key => $content) {
+        ?>
+        
         <div class="content_options">
             <form method="post"  >
  <table>
     <tbody>
             <?php 
-
+ 
             foreach ($plugin_options[$key] as $value) {
                 $name = isset( $value["name"] ) ? $value["name"] : "";
                 $desc = isset( $value["desc"] ) ? $value["desc"] : "";
@@ -137,7 +137,7 @@ function plugin_option_settings_page( ) {
                             </label>
                         </td>
                         <td>
-<?php exit('here we are') ?>
+
                             <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_option( $name ) != "") { echo stripslashes(get_option( $name)  ); } else { echo $std; } ?>" />
                             <small><?php echo $desc; ?></small>
                         </td>
