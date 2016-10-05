@@ -117,26 +117,11 @@ function plugin_option_settings_page( ) {
             <?php 
 
             foreach ($plugin_options[$key] as $value) {
-                $name = '';
-                $desc = '';
-                $std = '';
-                $label = '';
-
-                if ( array_key_exists( 'label', $value  ) ) {
-                     $label = $value['label']; 
-                }
-
-                if ( array_key_exists( 'name', $value  ) ) {
-                     $name = $value['name']; 
-                }
-
-                if ( array_key_exists( 'desc', $value  ) ) {
-                     $desc = $value['desc']; 
-                }
-
-                if ( array_key_exists( 'std', $value  ) ) {
-                    $std = $value['std']; 
-                }
+                $name = isset( $value["name"] ) ? $value["name"] : "";
+                $desc = isset( $value["desc"] ) ? $value["desc"] : "";
+                $std = isset( $value["std"] ) ? $value["std"] : "";
+                $label = isset( $value["label"] ) ? $value["label"] : "";
+                $options = isset( $value["options"] ) ? $value["options"]:"";
 
 
                 switch ( $value['type'] ) {
@@ -164,7 +149,20 @@ function plugin_option_settings_page( ) {
                         </td>
                    </tr>
                     <?php break;
-                 
+                    case 'option':
+                    
+                    echo "<tr>
+                            <td>
+                                $label
+                            </td>
+                            <td>
+                                $desc add checkbox
+                            <td>
+                        
+                        </tr>";
+
+
+                    break;
                     case 'textarea': ?>
                         <div class="option_input option_textarea">
                         <label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
@@ -177,32 +175,51 @@ function plugin_option_settings_page( ) {
                     case 'select': ?>
 
                     <?php 
-                    echo '<tr><td>'.$value["name"].'</td><td>';
-                       plugin_create_selector($value);
+                    echo '<tr><td>'.$label.'</td><td>';
+                       
+
+
+                        // $arrOptions = get_option('WPComcar_plugin_options_'.$section);
+                        // $theSelectedOptions=$arrOptions[$name];
+
+        echo "<select name='$name'>";
+        //para cada opcion
+        foreach($options as $option=>$value){
+            // if (strcmp($theSelectedOptions,$option)==0){
+            //     echo "<option value='$option' selected>$value</option>";
+            // }else{
+                echo "<option value='$option'>$value</option>";
+            // }
+        }
+        echo "</select>";
+        
+        if (isset($desc)){
+            echo "<p class='description'> $desc </p>";
+        }
+
+
+
+
+
+
                         echo "</td></tr>";
                     break;
                  
-                    case "checkbox": 
-             
-                        $args=$value;
-                        $name=isset($args["name"]) ? $args["name"] : "";
-                        $description=isset($args["description"]) ? $args["description"] : ""; //description of the checkbox
-                        $options=isset($args["options"]) ? $args["options"]:"";
-
-                        echo '<tr><td>'.$args["name"].'</td><td>';
+                    case "checkbox":                     
+                        echo '<tr><td>' . $label . '</td><td>';
                         //print in order
                         foreach($options as $option){
                             // if ($this->theOptionIsSelected($theSelectedOptions, $option)){
                             //     echo "<input type='checkbox' name='WPComcar_plugin_options_[$name][]' value='$option' checked> $option <br/>";
                             // }else{
-                                echo "<input type='checkbox' name='WPComcar_plugin_options_[$name][]' value='$option'> $option <br/>";
+                                echo "<input type='checkbox' name='$name' value='$option'> $option <br/>";
                             // }
                         }
       
-        echo "</td></tr>";
-                     break; 
-                     default:
-                     break;                   
+                        echo "</td></tr>";
+                    break; 
+                    default:
+                    break;                   
                 }
             }
             ?>
@@ -218,43 +235,9 @@ function plugin_option_settings_page( ) {
 }
 
 
+ 
 
-    function plugin_create_selector($args){
-
-        $name=isset($args["name"]) ? $args["name"] : "";
-        $section=isset($args["section"]) ? $args["section"] : "";
-        $description=isset($args["description"]) ? $args["description"] : "";   
-        $class=isset($args["class"]) ? $args["class"] : "" ;
-
-
-        $options=$args["options"]; //description of the checkbox
-
-
-        $arrOptions = get_option('WPComcar_plugin_options_'.$section);
-        $theSelectedOptions=$arrOptions[$name];
-
-        echo "<select name='WPComcar_plugin_options_".$section."[$name]'>";
-        //para cada opcion
-        foreach($options as $option=>$value){
-            if (strcmp($theSelectedOptions,$option)==0){
-                echo "<option value='$option' selected>$value</option>";
-            }else{
-                echo "<option value='$option'>$value</option>";
-            }
-        }
-        echo "</select>";
-        
-        if (isset($description)){
-            echo "<p class='description'> $description </p>";
-        }
-    }
-
-
-
-function plugin_create_checkboxes($args){
-
-
-    }
+ 
 
 
 
