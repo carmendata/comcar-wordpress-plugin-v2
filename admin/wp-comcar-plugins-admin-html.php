@@ -1,4 +1,11 @@
 <?php
+
+
+
+
+
+include( 'wp-comcar-plugins-global-objects.php') ;
+
 function get_plugin_setting_structure() {
     
     $structure = array(     
@@ -12,68 +19,7 @@ function get_plugin_setting_structure() {
     return $structure;
 }
     
-/* ---------------------------------------------------------
-Declare options
------------------------------------------------------------ */
 
-$theme_options = array(
-
-    array( "name" => $themename." Options",
-    "type" => "title"),
-
-    /* ---------------------------------------------------------
-    General section
-    ----------------------------------------------------------- */
-    array( "name" => "General",
-    "type" => "section"),
-    array( "type" => "open"),
-
-    array( "name" => "Logo URL",
-    "desc" => "Enter the link to your logo image",
-    "id" => $shortname."_logo",
-    "type" => "text",
-    "std" => ""),
-
-    array( "name" => "Custom Favicon",
-    "desc" => "A favicon is a 16x16 pixel icon that represents your site; paste the URL to a .ico image that you want to use as the image",
-    "id" => $shortname."_favicon",
-    "type" => "text",
-    "std" => get_bloginfo('url') ."/images/favicon.ico"),
-
-    array( "type" => "close"),
-
-    /* ---------------------------------------------------------
-    Home section
-    ----------------------------------------------------------- */
-    array( "name" => "Homepage",
-    "type" => "section"),
-    array( "type" => "open"),
-
-    array( "name" => "Homepage Featured",
-    "desc" => "Choose a category from which featured posts are.",
-    "id" => $shortname."_feat_cat",
-    "type" => "select",
-    "options" => $all_cats,
-    "std" => "Select a category"),
-
-    array( "type" => "close"),
-
-    /* ---------------------------------------------------------
-    Footer section
-    ----------------------------------------------------------- */
-    array( "name" => "Footer",
-    "type" => "section"),
-    array( "type" => "open"),
-
-    array( "name" => "Footer Credit",
-    "desc" => "You can customize footer credit on footer area here.",
-    "id" => $shortname."_footer_text",
-    "type" => "text",
-    "std" => ""),
-
-    array( "type" => "close")
-
-);
 
 
 /*---------------------------------------------------
@@ -119,139 +65,200 @@ Plugin setting output
 /*---------------------------------------------------
 Theme Panel Output
 ----------------------------------------------------*/
-function plugin_settings_page() {
-    global $themename,$theme_options;
+function plugin_option_settings_page( ) {
+    global $themename,$plugin_options;
     $i=0;
     $message=''; 
+
     if ( 'save' == $_REQUEST['action'] ) {
      
-        foreach ($theme_options as $value) {
+        foreach ($plugin_options['general'] as $value) {
             update_option( $value['id'], $_REQUEST[ $value['id'] ] ); }
      
-        foreach ($theme_options as $value) {
+        foreach ($plugin_options['general'] as $value) {
             if( isset( $_REQUEST[ $value['id'] ] ) ) { update_option( $value['id'], $_REQUEST[ $value['id'] ]  ); } else { delete_option( $value['id'] ); } }
         $message='saved';
     }
     else if( 'reset' == $_REQUEST['action'] ) {
          
-        foreach ($theme_options as $value) {
+        foreach ($plugin_options['general'] as $value) {
             delete_option( $value['id'] ); }
         $message='reset';        
     }
  
     ?>
+
+
+
+
+
+
+
+
+
     <div class="wrap options_wrap">
-        <div id="icon-options-general"></div>
-        <h2><?php _e( ' Theme Options' ) //your admin panel title ?></h2>
+        <div id="icon-options-general"></div>   
+
         <?php
         if ( $message=='saved' ) echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
         <p>'.$themename.' settings saved.</strong></p></div>';
         if ( $message=='reset' ) echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
         <p>'.$themename.' settings reset.</strong></p></div>';
-        ?>
-        <ul>
-            <li>View Documentation |</li>
-            <li>Visit Support |</li>
-            <li>Theme version 1.0 </li>
-        </ul>
+       
+     
+ foreach ( $plugin_options as $key => $content) {
+
+
+ ?>
         <div class="content_options">
             <form method="post">
- 
-            <?php foreach ($theme_options as $value) {
-         
+ <table>
+    <tbody>
+            <?php 
+
+            foreach ($plugin_options[$key] as $value) {
+                $name = '';
+                $desc = '';
+                $std = '';
+                $label = '';
+
+                if ( array_key_exists( 'label', $value  ) ) {
+                     $label = $value['label']; 
+                }
+
+                if ( array_key_exists( 'name', $value  ) ) {
+                     $name = $value['name']; 
+                }
+
+                if ( array_key_exists( 'desc', $value  ) ) {
+                     $desc = $value['desc']; 
+                }
+
+                if ( array_key_exists( 'std', $value  ) ) {
+                    $std = $value['std']; 
+                }
+
+
                 switch ( $value['type'] ) {
-             
-                    case "open": ?>
-                    <?php break;
-                 
-                    case "close": ?>
-                    </div>
-                    </div><br />
-                    <?php break;
-                 
-                    case "title": ?>
-                    <div class="message">
-                        <p>To easily use the <?php echo $themename;?> theme options, you can use the options below.</p>
-                    </div>
-                    <?php break;
-                 
+                              
+                    case "description":  
+                        echo $value['description'];
+                    break;
+
+                    case "note":  
+                         echo '<h5>' . $value['note'] . '</h5>';
+                    break;
+                    
                     case 'text': ?>
-                    <div class="option_input option_text">
-                    <label for="<?php echo $value['id']; ?>">
-                    <?php echo $value['name']; ?></label>
-                    <input id="" type="<?php echo $value['type']; ?>" name="<?php echo $value['id']; ?>" value="<?php if ( get_settings( $value['id'] ) != "") { echo stripslashes(get_settings( $value['id'])  ); } else { echo $value['std']; } ?>" />
-                    <small><?php echo $value['desc']; ?></small>
-                    <div class="clearfix"></div>
-                    </div>
+                     <tr>
+                        <td>
+                            <label>
+                                <?php 
+                                    echo $label;    
+                                ?>
+                            </label>
+                        </td>
+                        <td>
+                            <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_settings( $name ) != "") { echo stripslashes(get_settings( $name)  ); } else { echo $std; } ?>" />
+                            <small><?php echo $desc; ?></small>
+                        </td>
+                   </tr>
                     <?php break;
                  
                     case 'textarea': ?>
-                    <div class="option_input option_textarea">
-                    <label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
-                    <textarea name="<?php echo $value['id']; ?>" rows="" cols=""><?php if ( get_settings( $value['id'] ) != "") { echo stripslashes(get_settings( $value['id']) ); } else { echo $value['std']; } ?></textarea>
-                    <small><?php echo $value['desc']; ?></small>
-                    <div class="clearfix"></div>
-                    </div>
+                        <div class="option_input option_textarea">
+                        <label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
+                        <textarea name="<?php echo $value['id']; ?>" rows="" cols=""><?php if ( get_settings( $value['id'] ) != "") { echo stripslashes(get_settings( $value['id']) ); } else { echo $value['std']; } ?></textarea>
+                        <small><?php echo $value['desc']; ?></small>
+                        <div class="clearfix"></div>
+                        </div>
                     <?php break;
                  
                     case 'select': ?>
-                    <div class="option_input option_select">
-                    <label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
-                    <select name="<?php echo $value['id']; ?>" id="<?php echo $value['id']; ?>">
-                    <?php foreach ($value['options'] as $option) { ?>
-                            <option <?php if (get_settings( $value['id'] ) == $option) { echo 'selected="selected"'; } ?>><?php echo $option; ?></option>
-                    <?php } ?>
-                    </select>
-                    <small><?php echo $value['desc']; ?></small>
-                    <div class="clearfix"></div>
-                    </div>
-                    <?php break;
+
+                    <?php 
+                    echo '<tr><td>'.$value["name"].'</td><td>';
+                       plugin_create_selector($value);
+                        echo "</td></tr>";
+                    break;
                  
-                    case "checkbox": ?>
-                    <div class="option_input option_checkbox">
-                    <label for="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
-                    <?php if(get_option($value['id'])){ $checked = "checked=\"checked\""; }else{ $checked = "";} ?>
-                    <input id="<?php echo $value['id']; ?>" type="checkbox" name="<?php echo $value['id']; ?>" value="true" <?php echo $checked; ?> /> 
-                    <small><?php echo $value['desc']; ?></small>
-                    <div class="clearfix"></div>
-                    </div>
-                    <?php break;
-                 
-                    case "section": 
-                    $i++; ?>
-                    <div class="input_section">
-                    <div class="input_title">
-                        
-                        <h3><img src="<?php echo get_template_directory_uri();?>/images/options.png" alt="">&nbsp;<?php echo $value['name']; ?></h3>
-                        <span class="submit"><input name="save<?php echo $i; ?>" type="submit" class="button-primary" value="Save changes" /></span>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="all_options">
-                    <?php break;
-                    
+                    case "checkbox": 
+             
+                        $args=$value;
+                        $name=isset($args["name"]) ? $args["name"] : "";
+                        $description=isset($args["description"]) ? $args["description"] : ""; //description of the checkbox
+                        $options=isset($args["options"]) ? $args["options"]:"";
+
+                        echo '<tr><td>'.$args["name"].'</td><td>';
+                        //print in order
+                        foreach($options as $option){
+                            // if ($this->theOptionIsSelected($theSelectedOptions, $option)){
+                            //     echo "<input type='checkbox' name='WPComcar_plugin_options_[$name][]' value='$option' checked> $option <br/>";
+                            // }else{
+                                echo "<input type='checkbox' name='WPComcar_plugin_options_[$name][]' value='$option'> $option <br/>";
+                            // }
+                        }
+      
+        echo "</td></tr>";
+                     break; 
+                     default:
+                     break;                   
                 }
-            }?>
+            }
+            ?>
+          </tbody>
+      </table>
           <input type="hidden" name="action" value="save" />
+
           </form>
-          <form method="post">
-              <p class="submit">
-              <input name="reset" type="submit" value="Reset" />
-              <input type="hidden" name="action" value="reset" />
-              </p>
-          </form>
-        </div>
-        <div class="footer-credit">
-            <p>This theme was made by <a title="anang pratika" href="http://anangpratika.wordpress.com" target="_blank" >Anang Pratika</a>.</p>
-        </div>
+          </div>
+     <?php } ?>
     </div>
     <?php
 }
 
 
 
+    function plugin_create_selector($args){
+
+        $name=isset($args["name"]) ? $args["name"] : "";
+        $section=isset($args["section"]) ? $args["section"] : "";
+        $description=isset($args["description"]) ? $args["description"] : "";   
+        $class=isset($args["class"]) ? $args["class"] : "" ;
 
 
-function plugin_settings_page1() {
+        $options=$args["options"]; //description of the checkbox
+
+
+        $arrOptions = get_option('WPComcar_plugin_options_'.$section);
+        $theSelectedOptions=$arrOptions[$name];
+
+        echo "<select name='WPComcar_plugin_options_".$section."[$name]'>";
+        //para cada opcion
+        foreach($options as $option=>$value){
+            if (strcmp($theSelectedOptions,$option)==0){
+                echo "<option value='$option' selected>$value</option>";
+            }else{
+                echo "<option value='$option'>$value</option>";
+            }
+        }
+        echo "</select>";
+        
+        if (isset($description)){
+            echo "<p class='description'> $description </p>";
+        }
+    }
+
+
+
+function plugin_create_checkboxes($args){
+
+
+    }
+
+
+
+function plugin_settings_page() {
     $structure = get_plugin_setting_structure();
     echo '
     <div class="wrap">
@@ -266,7 +273,7 @@ function plugin_settings_page1() {
         }else{
             echo '<a class="nav-tab WPComcar_subTab '.$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
         } 
-        call_user_func( 'WPComcar_plugin_options_' . $arrKey );              
+        // call_user_func( 'WPComcar_plugin_options_' . $arrKey );              
     
     }
 
@@ -277,53 +284,10 @@ function plugin_settings_page1() {
         </h2>   
     </div>
     ';
-
+plugin_option_settings_page();
     
-    submit_button("Save Changes"); 
+    // submit_button("Save Changes"); 
 }
-
-
-
-function WPComcar_plugin_options_general(){
-
-
-
-
-
-}
-
-
-
-
-function WPComcar_plugin_options_tax_calculator(){
-    // echo 'tax calculator';
-}
-
-
-
-
-
-function WPComcar_plugin_options_comparator(){
-    // echo 'comparator';
-}
-
-
-
-
-function WPComcar_plugin_options_electric_comparator(){
-    // echo 'electric comparator';
-}
-
-
-
-
-function WPComcar_plugin_options_footprint(){
-  add_settings_field('footprint_page', 'Footprint calculator page', 'plugin_create_selector_with_list_of_pages', 'WPComcar_plugin', 'plugin_footprint',
-                             array(     "name"          =>  "footprint_page",
-                                        "section"       =>  "footprint",
-                                        "explanation"   =>  "Select which page the Footprint Calculator should be loaded on."));
-}
-
 
  
 

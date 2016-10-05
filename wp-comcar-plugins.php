@@ -8,7 +8,9 @@
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
  */
-
+ini_set( 'error_reporting', E_ALL );
+ini_set( 'display_errors', true );
+include_once(__DIR__."/wp-comcar-constants.php");
 require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-admin-html.php");
   
 
