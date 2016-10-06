@@ -2,6 +2,14 @@
 /* ---------------------------------------------------------
 Declare options
 ----------------------------------------------------------- */
+ $plugin_nav = array(     
+                            'general'               => 'Main',
+                            'tax_calculator'        => 'Tax calculator',
+                            'comparator'            => 'Comparator',
+                            'electric_comparator'   => 'Electric comparator',
+                            'footprint'             => 'Footprint calculator'
+                        );
+
 
 $plugin_options = array( 
     'general' => array(
@@ -60,32 +68,32 @@ $plugin_options = array(
             array( 
                 "label" => "Car tax calculator pages",
                 "name" => "tax_calculator_carParentPage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => 'Pages',
                 "desc" => "Select which page the car Tax Calculator Parent Page should be loaded into.",
                 "type" => "select"
                 ) ,
 
             array( 
                 "name" => "tax_calculator_carSelectPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Select page (the first page in the calculation process).",
+                 "options" => 'Pages',
+                 "desc" => "The Select page (the first page in the calculation process).",
                 "type" => "select"
                 ) ,
             array( 
                 "name" => "tax_calculator_carModelPage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => 'Pages',
                 "desc" => "The Model page.",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "tax_calculator_carOptionPage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => 'Pages',
                 "desc" => "The Options page.",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "tax_calculator_carCalculatePage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => 'Pages',
                 "description" => "And finally the Calculate page (the last page).",
                 "type" => "select"
             ) ,
@@ -99,14 +107,14 @@ $plugin_options = array(
 
              array( 
                 "label" => "Van tax calculator pages",
-                "name" => "tax_calculator_vanTaxParentPage",
+                "name" => "tax_calculator_vanParentPage",
                 "options" => array( 'test1', 'test2' ),
                 "desc" => "Select which page the Van Tax Calculator Parent Page should be loaded into.",
                 "type" => "select"
             ),
 
             array( 
-                "name" => "tax_calculator_vanTaxSelectPage",
+                "name" => "tax_calculator_vanSelectPage",
                 "options" => array( 'test1', 'test2' ),
                 "desc" => "The Select page (the first page in the calculation process).",
                 "type" => "select"
@@ -118,13 +126,13 @@ $plugin_options = array(
                 "type" => "select"
             ),
             array( 
-                "name" => "tax_calculator_vanTaxOptionsPage",
+                "name" => "tax_calculator_vanOptionsPage",
                 "options" => array( 'test1', 'test2' ),
                 "desc" => "The Options page.",
                 "type" => "select"
             ) ,
             array( 
-                "name" => "tax_calculator_vanTaxCalculatePage",
+                "name" => "tax_calculator_vanCalculatePage",
                 "options" => array( 'test1', 'test2' ),
                 "desc" => "And finally the Calculate page (the last page).",
                 "type" => "select"
@@ -132,18 +140,18 @@ $plugin_options = array(
            
             array( 
                 "label" => "Car Tax Calculator Model page settings",
-                "name" => "tax_calculator_carTaxModelPage",
+                "name" => "tax_calculator_vanModelPage",
                 "options" => array( 'test1', 'test2' ),
                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),
             array( 
-                "name" => "tax_calculator_carTaxCalculatorListFields",
+                "name" => "tax_calculator_carCalculatorListFields",
                 "desc" => "List of fields to include in the table of results. Must match database names exactly.",
                 "type" => "text"
             ),
             array( 
-                "name" => "tax_calculator_carTaxCalculatorTableHeaders",
+                "name" => "tax_calculator_carCalculatorTableHeaders",
                 "desc" => "Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.",
                 "type" => "text"
             ),
@@ -178,13 +186,13 @@ $plugin_options = array(
 
             array( 
                 "label" => "van Tax Calculator Model page settings",
-                "name" => "tax_calculator_vanTaxModelPage",
+                "name" => "tax_calculator_vanModelPage",
                 "options" => array( 'test1', 'test2' ),
                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),
             array( 
-                "name" => "tax_calculator_vanTaxCalculatorListFields",
+                "name" => "tax_calculator_vanCalculatorListFields",
                 "desc" => "List of fields to include in the table of results. Must match database names exactly.",
                 "type" => "text"
             ),

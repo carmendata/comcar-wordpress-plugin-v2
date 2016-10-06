@@ -1,20 +1,25 @@
 $=jQuery;
 
 jQuery( document ).ready( function ( $ ) {
+	showContentActiveNav();
 	
-	// Selected another nav-tab
-	$( '.nav-tab-wrapper a' ).click( function( event ) {
+
+    // Selected another nav-tab	
+    $( '.nav-tab-wrapper a' ).click( function( event ) {
 
 
 		$( 'a.nav-tab-active' ).removeClass( 'nav-tab-active' );
 		$( this ).addClass( 'nav-tab-active' );
+        showContentActiveNav();
 
-		// Bring up nav content
+    });
 
 
-
-
-	});
+    // Bring up nav content    
+    function showContentActiveNav() {
+        $( '.content_options' ).hide();
+        $( "div [name=content_" + $( 'a.nav-tab-active' ).attr( 'name' ) + "]" ).show();
+    }
 
 
 

@@ -1,26 +1,5 @@
 <?php
-
-
-
-
-
 include( 'wp-comcar-plugins-global-objects.php') ;
-
-function get_plugin_setting_structure() {
-    
-    $structure = array(     
-                            'general'               => 'Main',
-                            'tax_calculator'        => 'Tax calculator',
-                            'comparator'            => 'Comparator',
-                            'electric_comparator'   => 'Electric comparator',
-                            'footprint'             => 'Footprint calculator'
-                        );
-
-    return $structure;
-}
-    
-
-
 
 /*---------------------------------------------------
 add actions
@@ -29,11 +8,10 @@ add_action( 'admin_init', 'plugin_settings_init' );
 add_action( 'admin_menu', 'add_settings_page' );
 
 
-
-
 function plugin_options_page() {
     include 'wp-comcar-plugins-admin-options.php';
 }
+
 /*---------------------------------------------------
 register settings
 ----------------------------------------------------*/
@@ -44,10 +22,6 @@ function plugin_settings_init(){
    
     wp_enqueue_script('panel_script');
     wp_enqueue_style('panel_style');      
-  
-
-// Nav options
-    // add_options_page('Comcar Plugin Menu', 'Comcar Plugin Menu', 'manage_options', 'WPComcar_plugin', 'plugin_options_page');
 }
 
 
@@ -66,83 +40,78 @@ Plugin setting output
 Theme Panel Output
 ----------------------------------------------------*/
 function plugin_option_settings_page( ) {
-    global $themename,$plugin_options;
-    $i=0;
-    $message=''; 
+    global $plugin_options;
+    $i = 0;
+    $message = ''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
         foreach ( $plugin_options as $key => $content ) {
             foreach ( $plugin_options[$key] as $value ) {
-                if ( isset( $value['name'] ) && isset( $_REQUEST[ $value['name'] ] ) ) {  
-                   
+                
+
+                if ( isset( $value['name'] ) && 
+                    isset( $_REQUEST[ $value['name'] ] ) ) {      
                     update_option( $value['name'], $_REQUEST[ $value['name'] ] ); 
+                } else if ( $value['type'] == 'checkbox' ) {
+
+                    foreach ( $value['options'] as $option ) {
+                        $full_name = $value['name']  . '_' . $option;
+                        $full_name = str_replace( ' ', '_', $full_name );
+                        if ( isset( $_REQUEST[  $full_name ] )) {
+                            update_option( $full_name, $_REQUEST[  $full_name] );               
+                        }
+                    }
                 }
+           
+
+
+
             }
         }
         $message = 'saved';
     } 
     ?>
 
-
-
-
-
-
-
-
-
     <div class="wrap options_wrap">
         <div id="icon-options-general"></div>   
-
-        <?php
-        if ( $message=='saved' ) {
-            echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
-            <p>'.$themename.' settings saved.</strong></p></div>';
-        }
-     
-        foreach ( $plugin_options as $key => $content) {
-        ?>
-        
-        <div class="content_options">
-            <form method="post"  >
- <table>
-    <tbody>
-            <?php 
- 
-            foreach ($plugin_options[$key] as $value) {
-                $name = isset( $value["name"] ) ? $value["name"] : "";
-                $desc = isset( $value["desc"] ) ? $value["desc"] : "";
-                $std = isset( $value["std"] ) ? $value["std"] : "";
-                $label = isset( $value["label"] ) ? $value["label"] : "";
-                $options = isset( $value["options"] ) ? $value["options"]:"";
-
-
-                switch ( $value['type'] ) {
-                              
-                    case "description":  
-                        echo $value['description'];
+            
+            <?php
+            if ( $message == 'saved' ) {
+                echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
+                <p> settings saved.</strong></p></div>';
+            }
+         
+            foreach ( $plugin_options as $key => $content) {   
+               echo  "<div class='content_options' name='content_$key'>
+                    <form method='post'  >
+                        <table>
+                            <tbody>";
+                            
+                                foreach ($plugin_options[$key] as $value) {
+                                    $name = isset( $value["name"] ) ? $value["name"] : "";
+                                    $desc = isset( $value["desc"] ) ? $value["desc"] : "";
+                                    $std = isset( $value["std"] ) ? $value["std"] : "";
+                                    $label = isset( $value["label"] ) ? $value["label"] : "";
+                                    $options = isset( $value["options"] ) ? $value["options"]:"";
+                
+                                    switch ( $value['type'] ) {
+                                        case "description":  
+                                            echo $value['description'];
+                                        break;
+                                        case "note":  
+                                            echo '<h5>' . $value['note'] . '</h5>';
+                                        break;  
+                                        case 'text': 
+                                            echo "<tr>
+                                                    <td>
+                                                        <label>$label</label>      
+                                                    </td>
+                                                <td>";?>
+                                                    <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_option( $name ) != "") { echo stripslashes(get_option( $name)  ); } else { echo $std; } ?>" />
+                                               <?php echo "<small>  $desc</small>
+                                                </td>
+                                            </tr>";
                     break;
-
-                    case "note":  
-                         echo '<h5>' . $value['note'] . '</h5>';
-                    break;
-                    
-                    case 'text': ?>
-                     <tr>
-                        <td>
-                            <label>
-                                <?php
-                                    echo $label;    
-                                ?>
-                            </label>
-                        </td>
-                        <td>
-
-                            <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_option( $name ) != "") { echo stripslashes(get_option( $name)  ); } else { echo $std; } ?>" />
-                            <small><?php echo $desc; ?></small>
-                        </td>
-                   </tr>
-                    <?php break;
                     case 'option':
                     
                     echo "<tr>
@@ -159,34 +128,34 @@ function plugin_option_settings_page( ) {
                     break; 
                     case 'select': ?>
 
-                    <?php 
-                    echo '<tr><td>'.$label.'</td><td>';
-                       
+                        <?php 
+                        echo '<tr><td>'.$label.'</td><td>';
+                        if ( $options == 'Pages' ) {
 
+                            $theDropDownArguments=array();
+                            $theDropDownArguments["name"]=$name;
+                            $theDropDownArguments["selected"]=get_option( $name );
+                            $theDropDownArguments['show_option_none']=' ';
+                            $theDropDownArguments["option_none_value"]="0"; 
+                            $theDropDownArguments["sort_column"]="menu_order"; 
+                            wp_dropdown_pages($theDropDownArguments); 
 
-                        // $arrOptions = get_option('WPComcar_plugin_options_'.$section);
-                        // $theSelectedOptions=$arrOptions[$name];
-
-        echo "<select name='$name'>";
-        //para cada opcion
-        foreach($options as $option=>$value){
-            // if (strcmp($theSelectedOptions,$option)==0){
-            //     echo "<option value='$option' selected>$value</option>";
-            // }else{
-                echo "<option value='$option'>$value</option>";
-            // }
-        }
-        echo "</select>";
-        
-        if (isset($desc)){
-            echo "<p class='description'> $desc </p>";
-        }
-
-
-
-
-
-
+                        } else {
+                            echo "<select name='$name'>";
+                            //para cada opcion
+                            foreach( $options as $option => $value ) {
+                                // if (strcmp($theSelectedOptions,$option)==0){
+                                //     echo "<option value='$option' selected>$value</option>";
+                                // }else{
+                                    echo "<option value='$option'>$value</option>";
+                                // }
+                            }
+                            echo "</select>";
+                        }
+   
+                        if ( isset( $desc ) ) {
+                             echo "<p class='description'> $desc </p>";
+                        }
                         echo "</td></tr>";
                     break;
                  
@@ -194,11 +163,14 @@ function plugin_option_settings_page( ) {
                         echo '<tr><td>' . $label . '</td><td>';
                         //print in order
                         foreach($options as $option){
-                            // if ($this->theOptionIsSelected($theSelectedOptions, $option)){
-                            //     echo "<input type='checkbox' name='WPComcar_plugin_options_[$name][]' value='$option' checked> $option <br/>";
-                            // }else{
-                                echo "<input type='checkbox' name='$name' value='$option'> $option <br/>";
-                            // }
+                            $full_name = $name . '_' . $option;
+                            $full_name = str_replace( ' ', '_', $full_name );
+
+                            if ( get_option( $full_name ) ) {
+                                echo "<input type='checkbox' name='$full_name' value='$option' checked> $option <br/>";
+                             }else{
+                                echo "<input type='checkbox' name='$full_name' value='enabled'> $option <br/>";
+                             }
                         }
       
                         echo "</td></tr>";
@@ -234,26 +206,22 @@ function plugin_option_settings_page( ) {
 
 
 function plugin_settings_page() {
-    $structure = get_plugin_setting_structure();
+    global $plugin_nav;
     echo '
     <div class="wrap">
         <h2 class="nav-tab-wrapper">';
 
     
-    foreach($structure as $arrKey => $arrTitle) { 
+    foreach($plugin_nav as $arrKey => $arrTitle) { 
         $str_function_name = 'WPComcar_plugin_options_'.$arrKey; 
-        if (strcmp($arrKey,"general")==0){
-            echo '<a class="nav-tab WPComcar_subTab nav-tab-active '.$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
+        if ( strcmp( $arrKey, "general" ) == 0 ) {
+            echo '<a name = ' .$arrKey. ' class="nav-tab WPComcar_subTab nav-tab-active ' .$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
        
         }else{
-            echo '<a class="nav-tab WPComcar_subTab '.$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
+            echo '<a name = ' .$arrKey. ' class="nav-tab WPComcar_subTab ' . $arrKey . '" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
         } 
-        // call_user_func( 'WPComcar_plugin_options_' . $arrKey );              
-    
+     
     }
-
-
-
 
     echo '
         </h2>   
@@ -261,7 +229,6 @@ function plugin_settings_page() {
     ';
 plugin_option_settings_page();
     
-    // submit_button("Save Changes"); 
 }
 
  
