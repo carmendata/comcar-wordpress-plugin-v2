@@ -352,15 +352,6 @@ $plugin_options = array(
                 "description" => "Default annual mileage",
                 "type" => "select"
             )
-
-
-
-
-
-
-
-
-
         )
 
 );

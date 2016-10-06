@@ -136,7 +136,7 @@ function createOptionsForEachNav( ) {
                             //para cada opcion
                             foreach( $options as $value => $option ) {
 
-                                 if ( get_option( $name ) ) {
+                                 if ( get_option( $name ) == $value) {
                                      echo "<option value='$value' selected>$option</option>";
                                  }else{
                                     echo "<option value='$value'>$option</option>";
