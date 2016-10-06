@@ -108,46 +108,47 @@ $plugin_options = array(
              array( 
                 "label" => "Van tax calculator pages",
                 "name" => "tax_calculator_vanParentPage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => 'Pages',
                 "desc" => "Select which page the Van Tax Calculator Parent Page should be loaded into.",
                 "type" => "select"
             ),
 
             array( 
                 "name" => "tax_calculator_vanSelectPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Select page (the first page in the calculation process).",
+                 "options" => 'Pages',
+                 "desc" => "The Select page (the first page in the calculation process).",
                 "type" => "select"
             ),
             array( 
                 "name" => "tax_calculator_vanTaxModelPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Model page.",
+                "options" => 'Pages',
+                 "desc" => "The Model page.",
                 "type" => "select"
             ),
             array( 
                 "name" => "tax_calculator_vanOptionsPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Options page.",
+                "options" => 'Pages',
+                 "desc" => "The Options page.",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "tax_calculator_vanCalculatePage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "And finally the Calculate page (the last page).",
+                "options" => 'Pages',
+                 "desc" => "And finally the Calculate page (the last page).",
                 "type" => "select"
             ),
            
             array( 
                 "label" => "Car Tax Calculator Model page settings",
                 "name" => "tax_calculator_vanModelPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
+                "options" => 'Pages',
+                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),
             array( 
                 "name" => "tax_calculator_carCalculatorListFields",
                 "desc" => "List of fields to include in the table of results. Must match database names exactly.",
+                "std" => "derivative,transmission,co2gpkm,fueltype,otrPrice",
                 "type" => "text"
             ),
             array( 
@@ -220,7 +221,7 @@ $plugin_options = array(
             array( 
                 "label" => "Car channel comparator",
                 "name" => "carComparatorParentPage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => 'Pages',
                 "desc" => "Select which page the car Tax Calculator Parent Page should be loaded into.",
                 "type" => "select"
                 ) ,
@@ -228,20 +229,20 @@ $plugin_options = array(
             
             array( 
                 "name" => "carComparatorSelectPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Select (the first page in the comparison process).",
+                "options" => 'Pages',
+                 "desc" => "The Select (the first page in the comparison process).",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "carComparatorDetailsPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Details page.",
+                "options" => 'Pages',
+                 "desc" => "The Details page.",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "carComparatorCallbackPage",
-                "options" => array( 'test1', 'test2' ),
-                "description" => "The Callback page (This never gets seen by users but is crucial to user flow).",
+                "options" => 'Pages',
+                 "description" => "The Callback page (This never gets seen by users but is crucial to user flow).",
                 "type" => "select"
             ) ,
             array( 
@@ -256,33 +257,33 @@ $plugin_options = array(
             array( 
                 "label" => "van channel comparator",
                 "name" => "vanComparatorParentPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "Parent page where you want the vans comparator plugin to appear.",
+                "options" => 'Pages',
+                 "desc" => "Parent page where you want the vans comparator plugin to appear.",
                 "type" => "select"
                 ) ,
 
             array( 
                 "name" => "vanComparatorSelectPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "Select which page the van Comparator Parent page will be loaded into.",
+                "options" => 'Pages',
+                 "desc" => "Select which page the van Comparator Parent page will be loaded into.",
                 "type" => "select"
                 ) ,
             array( 
                 "name" => "vanComparatorSelectPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Select (the first page in the comparison process).",
+                "options" => 'Pages',
+                 "desc" => "The Select (the first page in the comparison process).",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "vanComparatorDetailsPage",
-                "options" => array( 'test1', 'test2' ),
-                "desc" => "The Details page.",
+                "options" => 'Pages',
+                 "desc" => "The Details page.",
                 "type" => "select"
             ) ,
             array( 
                 "name" => "vanComparatorCallbackPage",
-                "options" => array( 'test1', 'test2' ),
-                "description" => "The Callback page (This never gets seen by users but is crucial to user flow).",
+                "options" => 'Pages',
+                 "description" => "The Callback page (This never gets seen by users but is crucial to user flow).",
                 "type" => "select"
             ),
 
@@ -309,13 +310,13 @@ $plugin_options = array(
                array( 
                 "label" => "General settings",
                 "name" => "comparatorTypicalMonthPrice",
-                "options" => array( 'test1', 'test2' ),
+                "options" => array( 'show'=>true, 'Don\'t Show'=>false ),
                 "description" => "Typical month price",
                 "type" => "select"
             ),
                   array( 
                 "name" => "comparatorDefaultMileage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => array( '10000'=>'10000', '20000'=>'20000' ),
                 "description" => "Default annual mileage",
                 "type" => "select"
             )

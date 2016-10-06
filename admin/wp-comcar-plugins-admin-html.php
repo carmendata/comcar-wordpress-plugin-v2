@@ -39,7 +39,7 @@ Plugin setting output
 /*---------------------------------------------------
 Theme Panel Output
 ----------------------------------------------------*/
-function plugin_option_settings_page( ) {
+function createOptionsForEachNav( ) {
     global $plugin_options;
     $i = 0;
     $message = ''; 
@@ -53,12 +53,13 @@ function plugin_option_settings_page( ) {
                     isset( $_REQUEST[ $value['name'] ] ) ) {      
                     update_option( $value['name'], $_REQUEST[ $value['name'] ] ); 
                 } else if ( $value['type'] == 'checkbox' ) {
-
                     foreach ( $value['options'] as $option ) {
                         $full_name = $value['name']  . '_' . $option;
                         $full_name = str_replace( ' ', '_', $full_name );
                         if ( isset( $_REQUEST[  $full_name ] )) {
                             update_option( $full_name, $_REQUEST[  $full_name] );               
+                        } else {
+                            delete_option($full_name);
                         }
                     }
                 }
@@ -90,7 +91,7 @@ function plugin_option_settings_page( ) {
                                 foreach ($plugin_options[$key] as $value) {
                                     $name = isset( $value["name"] ) ? $value["name"] : "";
                                     $desc = isset( $value["desc"] ) ? $value["desc"] : "";
-                                    $std = isset( $value["std"] ) ? $value["std"] : "";
+                                    $std    = isset( $value["std"] ) ? $value["std"] : "";
                                     $label = isset( $value["label"] ) ? $value["label"] : "";
                                     $options = isset( $value["options"] ) ? $value["options"]:"";
                 
@@ -102,36 +103,26 @@ function plugin_option_settings_page( ) {
                                             echo '<h5>' . $value['note'] . '</h5>';
                                         break;  
                                         case 'text': 
-                                            echo "<tr>
-                                                    <td>
-                                                        <label>$label</label>      
-                                                    </td>
-                                                <td>";?>
-                                                    <input type="text" name="<?php echo $name; ?>" value="<?php if ( get_option( $name ) != "") { echo stripslashes(get_option( $name)  ); } else { echo $std; } ?>" />
-                                               <?php echo "<small>  $desc</small>
-                                                </td>
-                                            </tr>";
+                                        echo $std;
+                                            echo "<tr><td><label>$label</label></td><td>
+                                                    <input type='text' placeholder='$std' name='$name' value='";
+                                            if ( get_option( $name ) != "") { 
+                                                echo stripslashes(get_option( $name)  ) ;
+                                            }
+                                            echo "'/><small>  $desc</small></td></tr>";
                     break;
                     case 'option':
                     
                     echo "<tr>
-                            <td>
-                                $label
-                            </td>
-                            <td>
-                                $desc add checkbox
-                            <td>
-                        
+                            <td>$label</td>
+                            <td>$desc add checkbox</td>
                         </tr>";
-
-
                     break; 
                     case 'select': ?>
 
                         <?php 
                         echo '<tr><td>'.$label.'</td><td>';
                         if ( $options == 'Pages' ) {
-
                             $theDropDownArguments=array();
                             $theDropDownArguments["name"]=$name;
                             $theDropDownArguments["selected"]=get_option( $name );
@@ -147,7 +138,7 @@ function plugin_option_settings_page( ) {
                                 // if (strcmp($theSelectedOptions,$option)==0){
                                 //     echo "<option value='$option' selected>$value</option>";
                                 // }else{
-                                    echo "<option value='$option'>$value</option>";
+                                    echo "<option value='$value'>$option</option>";
                                 // }
                             }
                             echo "</select>";
@@ -165,12 +156,12 @@ function plugin_option_settings_page( ) {
                         foreach($options as $option){
                             $full_name = $name . '_' . $option;
                             $full_name = str_replace( ' ', '_', $full_name );
-
+ 
                             if ( get_option( $full_name ) ) {
-                                echo "<input type='checkbox' name='$full_name' value='$option' checked> $option <br/>";
-                             }else{
-                                echo "<input type='checkbox' name='$full_name' value='enabled'> $option <br/>";
-                             }
+                                echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $option <br/>";
+                            }else{
+                                echo "<input class='$name' type='checkbox' name='$full_name' value='disabled'> $option <br/>";
+                            }
                         }
       
                         echo "</td></tr>";
@@ -201,34 +192,29 @@ function plugin_option_settings_page( ) {
 
  
 
- 
+ function createNavsAdminPanel() {
+    global $plugin_nav;
+    
+    echo '<div class="wrap"><h2 class="nav-tab-wrapper">';
+
+    foreach($plugin_nav as $arrKey => $arrTitle) { 
+        $str_function_name = 'WPComcar_plugin_options_'.$arrKey; 
+        $class_activation = '';
+        if ( strcmp( $arrKey, "general" ) == 0 ) {
+            $class_activation =  'nav-tab-active';
+            
+        } 
+        echo "<a name = $arrKey class='nav-tab WPComcar_subTab $class_activation $arrKey ' data-targettab= $str_function_name > $arrTitle </a>";      
+    }
+
+    echo '</h2></div>';
+ }
 
 
 
 function plugin_settings_page() {
-    global $plugin_nav;
-    echo '
-    <div class="wrap">
-        <h2 class="nav-tab-wrapper">';
-
-    
-    foreach($plugin_nav as $arrKey => $arrTitle) { 
-        $str_function_name = 'WPComcar_plugin_options_'.$arrKey; 
-        if ( strcmp( $arrKey, "general" ) == 0 ) {
-            echo '<a name = ' .$arrKey. ' class="nav-tab WPComcar_subTab nav-tab-active ' .$arrKey.'" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
-       
-        }else{
-            echo '<a name = ' .$arrKey. ' class="nav-tab WPComcar_subTab ' . $arrKey . '" data-targettab="' .  $str_function_name . '">'.$arrTitle.'</a>';
-        } 
-     
-    }
-
-    echo '
-        </h2>   
-    </div>
-    ';
-plugin_option_settings_page();
-    
+    createNavsAdminPanel();
+    createOptionsForEachNav();   
 }
 
  
