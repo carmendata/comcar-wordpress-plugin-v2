@@ -11,6 +11,37 @@ Declare options
                         );
 
 
+$arr_page_setting = array(  "" => "",
+                            "maxP11D" => "P11D Value", 
+                            "cvotr" => "Price",
+                            "make" => "Manufacturer",
+                            "model" => "Model",
+                            "derivative" => "Derivative",
+                            "roof" => "Roof height",
+                            "wheelbase" => "Wheelbase",
+                            "loadlength" => "Load length",
+                            "payload" => "Payload",
+                            "loadvolume" => "Load Volume" ,
+                            "gvwkg" => "Gross Weight",
+                            "CO2gpkm" => "CO2",
+                            "fuelType" => "Fuel Type",
+                            "taxHigh" => "Tax (high)",
+                            "taxLow" => "Tax (low)",
+                            "bik" => "BIK",
+                            "bodyStyle" => "Bodystyle",
+                            "VED" => "VED",
+                            "fuelConsumptionDf" => "MPG",
+                            "CO2pctge" => "CO2 Percentage",
+                            "otrPrice" => "List Price",
+                            "seats" => "Seats",
+                            "transmission" => "Transmission",
+                            "doors" => "Doors",
+                            "insfifty" => "Insurance Group",
+                            "ps" => "Power" 
+                        );
+
+
+
 $plugin_options = array( 
     'general' => array(
         array( 
@@ -141,7 +172,7 @@ $plugin_options = array(
             array( 
                 "label" => "Car Tax Calculator Model page settings",
                 "name" => "tax_calculator_vanModelPage",
-                "options" => 'Pages',
+                "options" =>  $arr_page_setting,
                  "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),
@@ -154,6 +185,7 @@ $plugin_options = array(
             array( 
                 "name" => "tax_calculator_carCalculatorTableHeaders",
                 "desc" => "Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.",
+                "std" => "Derivative,Transmission,CO2 g/km,Fuel,List price",
                 "type" => "text"
             ),
             array( 
@@ -188,7 +220,7 @@ $plugin_options = array(
             array( 
                 "label" => "van Tax Calculator Model page settings",
                 "name" => "tax_calculator_vanModelPage",
-                "options" => array( 'test1', 'test2' ),
+                "options" => $arr_page_setting,
                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),

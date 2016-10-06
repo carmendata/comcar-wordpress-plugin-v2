@@ -45,30 +45,26 @@ function createOptionsForEachNav( ) {
     $message = ''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
-        foreach ( $plugin_options as $key => $content ) {
-            foreach ( $plugin_options[$key] as $value ) {
-                
+    print_r( $_REQUEST);
+        foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
 
-                if ( isset( $value['name'] ) && 
-                    isset( $_REQUEST[ $value['name'] ] ) ) {      
-                    update_option( $value['name'], $_REQUEST[ $value['name'] ] ); 
-                } else if ( $value['type'] == 'checkbox' ) {
-                    foreach ( $value['options'] as $option ) {
-                        $full_name = $value['name']  . '_' . $option;
-                        $full_name = str_replace( ' ', '_', $full_name );
-                        if ( isset( $_REQUEST[  $full_name ] )) {
-                            update_option( $full_name, $_REQUEST[  $full_name] );               
-                        } else {
-                            delete_option($full_name);
-                        }
+            if ( isset( $value['name'] ) && 
+                isset( $_REQUEST[ $value['name'] ] ) ) {      
+                update_option( $value['name'], $_REQUEST[ $value['name'] ] ); 
+            } else if ( $value['type'] == 'checkbox' ) {
+                foreach ( $value['options'] as $option ) {
+                    $full_name = $value['name']  . '_' . $option;
+                    $full_name = str_replace( ' ', '_', $full_name );
+                    if ( isset( $_REQUEST[ $full_name ] )) {
+                        update_option( $full_name, $_REQUEST[ $full_name ] );               
+                    } else {
+                        delete_option($full_name);
                     }
                 }
-           
+            } 
 
-
-
-            }
         }
+    
         $message = 'saved';
     } 
     ?>
@@ -115,7 +111,11 @@ function createOptionsForEachNav( ) {
                     
                     echo "<tr>
                             <td>$label</td>
-                            <td>$desc add checkbox</td>
+                            <td>$desc 
+
+
+                            <label> Default </label>
+                            </td>
                         </tr>";
                     break; 
                     case 'select': ?>
@@ -134,12 +134,13 @@ function createOptionsForEachNav( ) {
                         } else {
                             echo "<select name='$name'>";
                             //para cada opcion
-                            foreach( $options as $option => $value ) {
-                                // if (strcmp($theSelectedOptions,$option)==0){
-                                //     echo "<option value='$option' selected>$value</option>";
-                                // }else{
+                            foreach( $options as $value => $option ) {
+
+                                 if ( get_option( $name ) ) {
+                                     echo "<option value='$value' selected>$option</option>";
+                                 }else{
                                     echo "<option value='$value'>$option</option>";
-                                // }
+                                 }
                             }
                             echo "</select>";
                         }
@@ -175,6 +176,7 @@ function createOptionsForEachNav( ) {
       </table>
             
              <span class="submit"><input name="save<?php echo $i; ?>" type="submit" class="button-primary" value="Save changes" /></span>
+             <input type="hidden" name="nav" value="<?php echo $key; ?>" />
 
              <input type="hidden" name="action" value="save" />
 
