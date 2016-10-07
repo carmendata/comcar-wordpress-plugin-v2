@@ -111,16 +111,15 @@ function createOptionsForEachNav( ) {
                                         echo "'/><small>  $desc</small></td></tr>";
                     break;
                     case 'option':
-                    echo "___________";
-                    print_r( get_option($name));
+                   
                         echo "<tr>
                             <td>$label</td>
                             <td>$desc ";
-                     
+                        $checkbox_name = $name.'_checkbox';
                         if ( get_option( $name ) ) {
-                            echo "<input class='$name' type='checkbox' name='test' value='$name' checked>";
+                            echo "<input class='activation_textarea' type='checkbox' name='$checkbox_name' value='$name' >";
                         } else {
-                            echo "<input class='$name' type='checkbox' name='test' value='$name'>  ";
+                            echo "<input class='activation_textarea' type='checkbox' name='$checkbox_name' value='$name' checked>  ";
                         }
 
 
@@ -129,7 +128,7 @@ function createOptionsForEachNav( ) {
 
                         <tr><td></td><td>
 
-                        <textarea rows='4' cols='50' name='$name'>"
+                        <textarea rows='4' cols='50' name='$name' >"
                             .trim( get_option( $name ) ). 
                         "</textarea>
                         </td></tr>";
