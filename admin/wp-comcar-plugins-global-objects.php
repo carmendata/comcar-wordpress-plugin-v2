@@ -189,32 +189,46 @@ $plugin_options = array(
                 "type" => "text"
             ),
             array( 
+                "name" => "tax_calculator_capital_contributions",
                 "desc" => '"Capital Contributions" field label',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
             array( 
+                "name" => "tax_calculator_capital_contributions",
                 "desc" => '"Annual contributions" field label',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
             array( 
+                "name" => "tax_calculator_capital_contributions",
                 "desc" => 'Intro to the "Vehicle Options" section',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
-            array( 
+            array(
+                "name" => "tax_calculator_capital_contributions", 
                 "desc" => '"Specify vehicle options" button text',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
             array( 
+                "name" => "tax_calculator_capital_contributions",
                 "desc" => '"Specify vehicle options" button hint',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
             array( 
+                "name" => "tax_calculator_capital_contributions",
                 "desc" => '"Quick calculation" button text',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
-            array( 
+            array(
+                "name" => "tax_calculator_capital_contributions", 
                 "desc" => '"Quick calculation" button hint',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
 
             array( 
@@ -227,11 +241,14 @@ $plugin_options = array(
             array( 
                 "name" => "tax_calculator_vanCalculatorListFields",
                 "desc" => "List of fields to include in the table of results. Must match database names exactly.",
+                 "std" => "derivative,transmission,co2gpkm,fueltype,otrPrice",
+                
                 "type" => "text"
             ),
             array( 
                 "name" => "tax_calculator_vanTaxCalculatorTableHeaders",
                 "desc" => "Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.",
+                "std" => "Derivative,Transmission,CO2 g/km,Fuel,List price",
                 "type" => "text"
             )
         ),
@@ -322,27 +339,35 @@ $plugin_options = array(
 
 
             array(
+                "name" => "comparator_above_car_selector",
                 "label" =>  'Cars Selector Texts',
                 "desc" => 'Block of text above the selector dropdowns. By default contains: "For a comprehensive range of...". Edit as HTML',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
               array( 
+                "name" => "comparator_below_car_selector",
                 "desc" => 'Block of text below the selector dropdowns. By default contains: "Once you have selected a vehicle..." . Edit as HTML',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
                 array(
+                "name" => "comparator_above_van_selector",
                 "label" => 'Vans Selector Texts',
                 "desc" => 'Block of text above the selector dropdowns. By default contains: "For a comprehensive range of...". Edit as HTML',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
             array( 
+                "name" => "comparator_below_van_selector",
                 "desc" => 'Block of text above the selector dropdowns. By default contains: "For a comprehensive range of...". Edit as HTML Default Block of text below the selector dropdowns. By default contains: "Once you have selected a vehicle..." . Edit as HTML',
-                "type" => "option"
+                "type" => "option",
+                "default" => true
             ),
                array( 
                 "label" => "General settings",
                 "name" => "comparatorTypicalMonthPrice",
-                "options" => array( 'show'=>true, 'Don\'t Show'=>false ),
+                "options" => array( true => 'Show', false => 'Don\'t Show' ),
                 "description" => "Typical month price",
                 "type" => "select"
             ),
@@ -352,7 +377,47 @@ $plugin_options = array(
                 "description" => "Default annual mileage",
                 "type" => "select"
             )
-        )
+        ),
+        'electric_comparator' => array( 
+             array( 
+                "label" => "Enable electric comparator",
+                "name" => "enableElectricComparator",
+                "options" => array( 'For car channel'),
+                "type" => "checkbox"
+                ),
+                array( 
+                "label" => "Electric comparator page",
+                "name" => "carElectricComparatorParentPage",
+                "options" => 'Pages',
+                 "desc" => "Select which page the Electric comparator should be loaded on.",
+                "type" => "select"
+                ) ,
 
+            array( 
+                "name" => "carElectricComparatorDetailsPage",
+                "options" => 'Pages',
+                 "desc" => "The Details page.",
+                "type" => "select"
+                ) ,
+            array( 
+                "name" => "carElectricComparatorCallbackPage",
+                "options" => 'Pages',
+                 "desc" => "The Callback page (This never gets seen by users but is crucial to user flow).",
+                "type" => "select"
+            )
+        ),
+        'footprint' => array(
+            array( 
+                "description" => "The Footprint Calculator tool is a simple way to allow users to calculate their CO<sub>2</sub> tailpipe emissions based on fuel used, cost of fuel or distance travelled.",
+                "type" => "description"
+            ),
+            array( 
+                "label" => "Footprint calculator page",
+                "name" => "carFootprintParentPage",
+                "options" => 'Pages',
+                 "desc" => "Select which page the Footprint Calculator should be loaded on.",
+                "type" => "select"
+            )
+        )
 );
 ?>

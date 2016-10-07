@@ -45,12 +45,15 @@ function createOptionsForEachNav( ) {
     $message = ''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
-    print_r( $_REQUEST);
+        print_r($_REQUEST);
         foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
 
-            if ( isset( $value['name'] ) && 
-                isset( $_REQUEST[ $value['name'] ] ) ) {      
-                update_option( $value['name'], $_REQUEST[ $value['name'] ] ); 
+            $desc = isset( $value["desc"] ) ? $value["desc"] : "";
+                                   
+            if ( isset( $value['name'] ) && $value['type'] != 'checkbox') {      
+                $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";  
+                
+                update_option( $value['name'], $value_to_update ); 
             } else if ( $value['type'] == 'checkbox' ) {
                 foreach ( $value['options'] as $option ) {
                     $full_name = $value['name']  . '_' . $option;
@@ -100,23 +103,37 @@ function createOptionsForEachNav( ) {
                                         break;  
                                         case 'text': 
                                         echo $std;
-                                            echo "<tr><td><label>$label</label></td><td>
-                                                    <input type='text' placeholder='$std' name='$name' value='";
-                                            if ( get_option( $name ) != "") { 
-                                                echo stripslashes(get_option( $name)  ) ;
-                                            }
-                                            echo "'/><small>  $desc</small></td></tr>";
+                                        echo "<tr><td><label>$label</label></td><td>
+                                                <input type='text' placeholder='$std' name='$name' value='";
+                                        if ( get_option( $name ) != "") { 
+                                            echo stripslashes(get_option( $name)  ) ;
+                                        }
+                                        echo "'/><small>  $desc</small></td></tr>";
                     break;
                     case 'option':
-                    
-                    echo "<tr>
+                    echo "___________";
+                    print_r( get_option($name));
+                        echo "<tr>
                             <td>$label</td>
-                            <td>$desc 
+                            <td>$desc ";
+                     
+                        if ( get_option( $name ) ) {
+                            echo "<input class='$name' type='checkbox' name='test' value='$name' checked>";
+                        } else {
+                            echo "<input class='$name' type='checkbox' name='test' value='$name'>  ";
+                        }
 
 
-                            <label> Default </label>
-                            </td>
-                        </tr>";
+
+                        echo "<label> Default </label></td></tr>
+
+                        <tr><td></td><td>
+
+                        <textarea rows='4' cols='50' name='$name'>"
+                            .trim( get_option( $name ) ). 
+                        "</textarea>
+                        </td></tr>";
+
                     break; 
                     case 'select': ?>
 
@@ -157,8 +174,8 @@ function createOptionsForEachNav( ) {
                         foreach($options as $option){
                             $full_name = $name . '_' . $option;
                             $full_name = str_replace( ' ', '_', $full_name );
- 
-                            if ( get_option( $full_name ) ) {
+
+                            if ( get_option( $full_name ) != '' ) {
                                 echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $option <br/>";
                             }else{
                                 echo "<input class='$name' type='checkbox' name='$full_name' value='disabled'> $option <br/>";
