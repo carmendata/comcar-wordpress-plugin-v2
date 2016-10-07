@@ -1,5 +1,6 @@
 <!-- Calling the Comcar Tools plugin for WordPress version <?php print WPComcar_PLUGINVERSION ?> -->
 <?php
+
 	if(!isset($WPComcar_resultsCSS))	{	$WPComcar_resultsCSS="";	}
 	if(!isset($WPComcar_resultsJS))		{	$WPComcar_resultsJS="";		}
 	if(!isset($WPComcar_resultsHTML))	{	$WPComcar_resultsHTML="";	}

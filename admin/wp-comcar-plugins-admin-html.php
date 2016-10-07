@@ -45,7 +45,6 @@ function createOptionsForEachNav( ) {
     $message = ''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
-        print_r($_REQUEST);
         foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
 
             $desc = isset( $value["desc"] ) ? $value["desc"] : "";
