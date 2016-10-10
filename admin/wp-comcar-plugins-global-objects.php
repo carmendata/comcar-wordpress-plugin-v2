@@ -91,7 +91,7 @@ $plugin_options = array(
 
             array( 
                 "label" => "Enable tax calculator",
-                "name" => "tax_calculator_pages",
+                "name" => "pages",
                 "options" => array( 'For car channel' => 'cars', 'For van channel'=> 'vans' ),
                 "type" => "checkbox"
                 ),
@@ -105,32 +105,32 @@ $plugin_options = array(
                 ) ,
 
             array( 
-                "name" => "tax_calculator_carSelectPage",
+                "name" => "tax_calculator_cars_subpage_select",
                  "options" => 'Pages',
                  "desc" => "The Select page (the first page in the calculation process).",
                 "type" => "select"
                 ) ,
             array( 
-                "name" => "tax_calculator_carModelPage",
+                "name" => "tax_calculator_cars_subpage_model",
                 "options" => 'Pages',
                 "desc" => "The Model page.",
                 "type" => "select"
             ) ,
             array( 
-                "name" => "tax_calculator_carOptionPage",
+                "name" => "tax_calculator_cars_subpage_options",
                 "options" => 'Pages',
                 "desc" => "The Options page.",
                 "type" => "select"
             ) ,
             array( 
-                "name" => "tax_calculator_carCalculatePage",
+                "name" => "tax_calculator_cars_subpage_calc",
                 "options" => 'Pages',
                 "description" => "And finally the Calculate page (the last page).",
                 "type" => "select"
             ) ,
             array( 
                 "label" => "Calculation override URL",
-                "name" => "tax_calculator_carOverrideURL",
+                "name" => "tax_calculator_cars_calc_override",
                 "desc" => "Override URL to visit prior to the tax calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation).",
                 "type" => "text"
             ),
@@ -138,32 +138,32 @@ $plugin_options = array(
 
              array( 
                 "label" => "Van tax calculator pages",
-                "name" => "tax_calculator_vanParentPage",
+                "name" => "tax_calculator_vans_page",
                 "options" => 'Pages',
                 "desc" => "Select which page the Van Tax Calculator Parent Page should be loaded into.",
                 "type" => "select"
             ),
 
             array( 
-                "name" => "tax_calculator_vanSelectPage",
+                "name" => "tax_calculator_vans_subpage_select",
                  "options" => 'Pages',
                  "desc" => "The Select page (the first page in the calculation process).",
                 "type" => "select"
             ),
             array( 
-                "name" => "tax_calculator_vanTaxModelPage",
+                "name" => "tax_calculator_vans_subpage_model",
                 "options" => 'Pages',
                  "desc" => "The Model page.",
                 "type" => "select"
             ),
             array( 
-                "name" => "tax_calculator_vanOptionsPage",
+                "name" => "tax_calculator_vans_subpage_options",
                 "options" => 'Pages',
                  "desc" => "The Options page.",
                 "type" => "select"
             ) ,
             array( 
-                "name" => "tax_calculator_vanCalculatePage",
+                "name" => "tax_calculator_vans_subpage_calc",
                 "options" => 'Pages',
                  "desc" => "And finally the Calculate page (the last page).",
                 "type" => "select"

@@ -113,6 +113,11 @@ add_action("wp_head",'activate_page_plugins');
 
 
 
+function preg_grep_keys($pattern, $input) {
+    return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input))));
+}
+
+
 
 
 
@@ -134,14 +139,8 @@ add_action("wp_head",'activate_page_plugins');
 
 
 
-
-// CHECK IN THE FUTURE 
-                // $idOfTheCurrentPageParent=$this->getParentId();
-// echo $idOfTheCurrentPageParent;
-
- 
             foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $label ) {
-
+               
                     //name of the plugin (footprint, comparator, tax_calculator)
                  
                 //not activated
@@ -161,38 +160,45 @@ add_action("wp_head",'activate_page_plugins');
 
 
                     //page where we should load the plugin
-                    $idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName]) ? $arrOptions[$thisPluginName]: "";
-    
-
-
-
-
+                    $idPageWhereShouldBeLoadedThePlugin = isset($arrOptions[$thisPluginName]) ? $arrOptions[$thisPluginName]: "";
+                
 
                     //LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
                     /********************* TAX CALCULATOR AND COMPARATOR *************************/
-                    if (isset($arrOptions[$thisPluginName."_pages"]) && is_array($arrOptions[$thisPluginName."_pages"]) ) {     
+                      
+                    if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"]) ) {     
                         //foreach vans and cars...
-                        foreach($arrOptions[$thisPluginName."_pages"] as $key=>$page){
+                
+                        foreach($arrOptions["pages"] as $key=>$page){
                             $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
-exit($idPageWhereShouldBeLoadedThePlugin);
-                            if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
-                                if (in_array($idOfTheCurrentPage, $arrOptions[$page."_subpages"])){                                 
-                                    //if the parent id is thePageWhereShouldBeLoadedThePlugin, then load
-                                    if (strcmp($idOfTheCurrentPageParent, $idPageWhereShouldBeLoadedThePlugin)==0){
+
+                            $arr_subpages = preg_grep_keys('#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i',$arrOptions);
+
+                            // if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
+                            foreach( $arr_subpages as $label=>$value ) {
+                          
+                                if ( $value == $idOfTheCurrentPage ) {
+                              
+
+
+                                
                                         $loadCssAndJavascript=true;
                                         $theFunctionName=$thisPluginName.'_'.$page."_execute";
-                                        $this->$theFunctionName();
+                       
+                                       
                                         break;
-                                    }
                                 }
+
                             }
+                              
+                           
                             //if it is the same page, load the plugin, or if it is a subpage
-                            if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){                            
-                                $loadCssAndJavascript=true;
-                                $theFunctionName=$thisPluginName.'_'.$page."_execute";
-                                $this->$theFunctionName();
-                                break;
-                            }
+                            // if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){                            
+                            //     $loadCssAndJavascript=true;
+                            //     $theFunctionName=$thisPluginName.'_'.$page."_execute";
+                            //     $this->$theFunctionName();
+                            //     break;
+                            // }
                         }
                     }else{
 
