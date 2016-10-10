@@ -125,7 +125,8 @@ add_action("wp_head",'activate_page_plugins');
                 //for all the plugins in comcar but for the general
                 require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
                 global $plugin_nav;        
-             
+  
+
                 global $post;
                 $idOfTheCurrentPage = get_post( $post )->ID;
 
@@ -138,49 +139,42 @@ add_action("wp_head",'activate_page_plugins');
                 // $idOfTheCurrentPageParent=$this->getParentId();
 // echo $idOfTheCurrentPageParent;
 
-
  
-            foreach ( array_slice( $plugin_nav , 1 ) as $key => $label ) {
+            foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $label ) {
 
                     //name of the plugin (footprint, comparator, tax_calculator)
-                    $thisPluginName = $plugin_nav[$i];  
-
-     
-
-
-
-
-
-         
+                 
                 //not activated
                 if (!isset($arrGeneralSettings["pluginsOptions"][$thisPluginName])){
                      continue;
                 }
+   
                     //options of the current plugin
-                    $arrOptions = get_option('WPComcar_plugin_options_'.$thisPluginName);
-                  
-       print_r($arrOptions);
-                exit(   );
+                    $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
+   
+            
 
-                    // if (!isset($arrOptions)){
-                    //     continue;
-                    // }
+                    if (!isset($arrOptions)){
+                        continue;
+                    }
                     
 
 
-
                     //page where we should load the plugin
-                    $idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName.'_page']) ? $arrOptions[$thisPluginName.'_page']: "";
+                    $idPageWhereShouldBeLoadedThePlugin=isset($arrOptions[$thisPluginName]) ? $arrOptions[$thisPluginName]: "";
+    
 
-            
+
+
+
 
                     //LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
                     /********************* TAX CALCULATOR AND COMPARATOR *************************/
-                    if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"]) && count($arrOptions["pages"]) > 0 ){     
+                    if (isset($arrOptions[$thisPluginName."_pages"]) && is_array($arrOptions[$thisPluginName."_pages"]) ) {     
                         //foreach vans and cars...
-                        foreach($arrOptions["pages"] as $key=>$page){
-                            $idPageWhereShouldBeLoadedThePlugin=$arrOptions[$thisPluginName.'_'.$page.'_page'];
-
+                        foreach($arrOptions[$thisPluginName."_pages"] as $key=>$page){
+                            $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
+exit($idPageWhereShouldBeLoadedThePlugin);
                             if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
                                 if (in_array($idOfTheCurrentPage, $arrOptions[$page."_subpages"])){                                 
                                     //if the parent id is thePageWhereShouldBeLoadedThePlugin, then load

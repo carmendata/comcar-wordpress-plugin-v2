@@ -91,14 +91,14 @@ $plugin_options = array(
 
             array( 
                 "label" => "Enable tax calculator",
-                "name" => "tax_calculator_enableTaxCalculator",
-                "options" => array( 'For car channel', 'For van channel' ),
+                "name" => "tax_calculator_pages",
+                "options" => array( 'For car channel' => 'cars', 'For van channel'=> 'vans' ),
                 "type" => "checkbox"
                 ),
 
             array( 
                 "label" => "Car tax calculator pages",
-                "name" => "tax_calculator_carParentPage",
+                "name" => "tax_calculator_cars_page",
                 "options" => 'Pages',
                 "desc" => "Select which page the car Tax Calculator Parent Page should be loaded into.",
                 "type" => "select"

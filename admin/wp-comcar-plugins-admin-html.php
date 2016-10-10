@@ -46,23 +46,38 @@ function createOptionsForEachNav( ) {
 
     if ( 'save' == $_REQUEST['action'] ) {
         foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
+                $obj_opt = get_option('WP_plugin_options_'.$_REQUEST['nav']);
 
             $desc = isset( $value["desc"] ) ? $value["desc"] : "";
                                    
             if ( isset( $value['name'] ) && $value['type'] != 'checkbox') {      
                 $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";  
-                
+              
+                $obj_opt[$value['name']] = $value_to_update;
+                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+
                 update_option( $value['name'], $value_to_update ); 
             } else if ( $value['type'] == 'checkbox' ) {
-                foreach ( $value['options'] as $option ) {
+               
+                $checkbox_array = array();
+
+                foreach ( $value['options'] as $label => $option ) {
                     $full_name = $value['name']  . '_' . $option;
                     $full_name = str_replace( ' ', '_', $full_name );
+
+
                     if ( isset( $_REQUEST[ $full_name ] )) {
+                        $obj_opt[$full_name] = $_REQUEST[ $full_name ];   
                         update_option( $full_name, $_REQUEST[ $full_name ] );               
+                        array_push( $checkbox_array, $option );
                     } else {
+                        unset($obj_opt[$full_name]);
                         delete_option($full_name);
                     }
                 }
+                $obj_to_insert[$value['name']] = $checkbox_array;
+                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
+           
             } 
 
         }
@@ -169,14 +184,14 @@ function createOptionsForEachNav( ) {
                     case "checkbox":                     
                         echo '<tr><td>' . $label . '</td><td>';
                         //print in order
-                        foreach($options as $option){
+                        foreach($options as $label => $option){
                             $full_name = $name . '_' . $option;
                             $full_name = str_replace( ' ', '_', $full_name );
 
                             if ( get_option( $full_name ) != '' ) {
-                                echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $option <br/>";
+                                echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $label <br/>";
                             }else{
-                                echo "<input class='$name' type='checkbox' name='$full_name' value='disabled'> $option <br/>";
+                                echo "<input class='$name' type='checkbox' name='$full_name' value='$option'> $label <br/>";
                             }
                         }
       
