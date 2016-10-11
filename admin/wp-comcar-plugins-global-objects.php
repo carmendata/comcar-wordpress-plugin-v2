@@ -172,74 +172,75 @@ $plugin_options = array(
                 "type" => "select"
             ),
            
-            
-
-            
-
-
 
             array( 
-                "label" => "Car Tax Calculator Model page settings",
                 "name" => "tax_calculator_cars_texts",
-                "options" =>  $arr_page_setting,
-                "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
-                "type" => "select"
-            ),
-            array( 
-                "name" => "tax_calculator_carCalculatorListFields",
-                "desc" => "List of fields to include in the table of results. Must match database names exactly.",
-                "std" => "derivative,transmission,co2gpkm,fueltype,otrPrice",
-                "type" => "text"
-            ),
-            array( 
-                "name" => "tax_calculator_carCalculatorTableHeaders",
-                "desc" => "Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.",
-                "std" => "Derivative,Transmission,CO2 g/km,Fuel,List price",
-                "type" => "text"
-            ),
-            array( 
-                "name" => "tax_calculator_capital_contributions",
-                "desc" => '"Capital Contributions" field label',
-                "type" => "option",
-                "default" => true
-            ),
-            array( 
-                "name" => "tax_calculator_capital_contributions",
-                "desc" => '"Annual contributions" field label',
-                "type" => "option",
-                "default" => true
-            ),
-            array( 
-                "name" => "tax_calculator_capital_contributions",
-                "desc" => 'Intro to the "Vehicle Options" section',
-                "type" => "option",
-                "default" => true
-            ),
-            array(
-                "name" => "tax_calculator_capital_contributions", 
-                "desc" => '"Specify vehicle options" button text',
-                "type" => "option",
-                "default" => true
-            ),
-            array( 
-                "name" => "tax_calculator_capital_contributions",
-                "desc" => '"Specify vehicle options" button hint',
-                "type" => "option",
-                "default" => true
-            ),
-            array( 
-                "name" => "tax_calculator_capital_contributions",
-                "desc" => '"Quick calculation" button text',
-                "type" => "option",
-                "default" => true
-            ),
-            array(
-                "name" => "tax_calculator_capital_contributions", 
-                "desc" => '"Quick calculation" button hint',
-                "type" => "option",
-                "default" => true
-            ),
+                "type" => "openSection" 
+                ),
 
+                array( 
+                    "label" => "Car Tax Calculator Model page settings",
+                    "name" => "",
+                    "options" =>  $arr_page_setting,
+                    "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
+                    "type" => "select"
+                ),
+                array( 
+                    "name" => "tax_calculator_cars_request",
+                    "desc" => "List of fields to include in the table of results. Must match database names exactly.",
+                    "std" => "derivative,transmission,co2gpkm,fueltype,otrPrice",
+                    "type" => "text"
+                ),
+                array( 
+                    "name" => "tax_calculator_cars_headers",
+                    "desc" => "Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.",
+                    "std" => "Derivative,Transmission,CO2 g/km,Fuel,List price",
+                    "type" => "text"
+                ),
+                array( 
+                    "name" => "capCon",
+                    "desc" => '"Capital Contributions" field label',
+                    "type" => "option",
+                    "default" => true
+                ),
+                array( 
+                    "name" => "annCon",
+                    "desc" => '"Annual contributions" field label',
+                    "type" => "option",
+                    "default" => true
+                ),
+                array( 
+                    "name" => "optionsIntro",
+                    "desc" => 'Intro to the "Vehicle Options" section',
+                    "type" => "option",
+                    "default" => true
+                ),
+                array(
+                    "name" => "optionsAdd", 
+                    "desc" => '"Specify vehicle options" button text',
+                    "type" => "option",
+                    "default" => true
+                ),
+                array( 
+                    "name" => "optionsAddSubtext",
+                    "desc" => '"Specify vehicle options" button hint',
+                    "type" => "option",
+                    "default" => true
+                ),
+                array( 
+                    "name" => "inpGoToCalcValue",
+                    "desc" => '"Quick calculation" button text',
+                    "type" => "option",
+                    "default" => true
+                ),
+                array(
+                    "name" => "goToCalcSubtext", 
+                    "desc" => '"Quick calculation" button hint',
+                    "type" => "option",
+                    "default" => true
+                ),
+
+            array( "type" => "closeSection" ),
             array( 
                 "label" => "van Tax Calculator Model page settings",
                 "name" => "tax_calculator_vanModelPage",

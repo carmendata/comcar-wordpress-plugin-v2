@@ -34,15 +34,42 @@ function add_settings_page() {
 
 function saveToolsOptions( ) {
     global $plugin_options;
-    
+    $parent_name =  '';
     foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
         $obj_opt = get_option('WP_plugin_options_'.$_REQUEST['nav']);
         $desc = isset( $value["desc"] ) ? $value["desc"] : "";
-                                   
-        if ( isset( $value['name'] ) && $value['type'] != 'checkbox') {      
+        
+        if ( $value['type'] == 'openSection' ) {
+            $parent_name =  $value['name'];
+     
+            $obj_opt[$parent_name] = array();
+
+            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+
+        } else if(  $value['type'] == 'closeSection' ) {
+            // print_r( get_option( 'WP_plugin_options_'.$_REQUEST['nav'] ) );
+            // exit();
+            $parent_name =  '';
+            continue;
+        }  
+
+        if ( $parent_name != '' && $value['type'] != 'openSection' ) {    
+      
+            $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
+            $obj_opt[$parent_name][$value['name']] = $value_to_update;
+        
+            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+            continue;
+        }
+
+
+        if ( isset( $value['name'] ) && $value['type'] != 'checkbox' && $value['type'] != 'openSection' ) {      
             $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
             $obj_opt[$value['name']] = $value_to_update;
-            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+
+            if ( $parent_name != '' ) {   
+                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+            }
             update_option( $value['name'], $value_to_update ); 
 
         } else if ( $value['type'] == 'checkbox' ) {       
@@ -57,17 +84,17 @@ function saveToolsOptions( ) {
                     update_option( $full_name, $_REQUEST[ $full_name ] );               
                     array_push( $checkbox_array, $option );
                 } else {
-                    unset($obj_opt[$full_name]);
+                    unset( $obj_opt[$full_name] );
                     delete_option($full_name);
                 }
             }
             $obj_to_insert[$value['name']] = $checkbox_array;
-            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
+            if ( $parent_name != '' ) {   
+                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
+            }
         } 
     } 
 }
-
-
 
 
 
@@ -185,7 +212,7 @@ function createOptionsForEachNav( ) {
                     }
                     echo "</td></tr>";
                 break; 
-                
+
                 default:
                 break;                   
             }
