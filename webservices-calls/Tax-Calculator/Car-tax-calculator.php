@@ -1,5 +1,4 @@
 <?php 
-	
 	//create and instance of the controller and include the result in the page
 	global $objWPComcarCarTaxCalculatorController;
 	if (class_exists("WPComcarCarTaxCalculatorController") && !$objWPComcarCarTaxCalculatorController) {
@@ -25,7 +24,9 @@
 
 			//decide what page to load
 			//parent or subpage?
-			$arrOptions = get_option('WPComcar_plugin_options_tax_calculator');
+
+			$arrOptions = get_option('WP_plugin_options_tax_calculator');
+
 
 			
 			$idThePageWhereShouldLoadThePlugin=$arrOptions["tax_calculator_cars_page"];

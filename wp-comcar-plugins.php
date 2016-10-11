@@ -150,9 +150,6 @@ function preg_grep_keys($pattern, $input) {
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
-             
-            print_r($arrOptions);
-            exit();
 
                     if (!isset($arrOptions)){
                         continue;
@@ -242,9 +239,11 @@ function getToolContent( $current_tool_name ) {
             $tool_to_include = '';
         
 
+ include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
+          
+               
 
-
-            include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
+            
             $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
             $content = $content.$WPComcar_theResultOfTheWebservice;
             return $content;

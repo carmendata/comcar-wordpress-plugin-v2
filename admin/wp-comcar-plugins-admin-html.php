@@ -98,11 +98,37 @@ function saveToolsOptions( ) {
             
         } 
     }
-       print_r(get_option('WP_plugin_options_'.$_REQUEST['nav'])) ;
+     
+
+    $arrOptions = get_option('WP_plugin_options_'.$_REQUEST['nav']);
+    foreach($arrOptions["pages"] as $key=>$page){
+       
+        $arr_subpages = matchPattern('#^'.$_REQUEST['nav'].'_'.$page.'_subpage_(.*)$#i',$arrOptions);
+        $arrOptions[$page.'_subpages'] =  array();
+        foreach( $arr_subpages as $label=>$value ) {
+            
+            $subpage = str_replace( $_REQUEST['nav'].'_'.$page.'_subpage_','',$label );
+            $arrOptions[$page.'_subpages'][$subpage] = $value;
+
+        }
+
+        update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $arrOptions  ); 
+    }
+                               
+                         
+
+
+
+
+
 
 }
 
 
+
+function matchPattern($pattern, $input) {
+    return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input))));
+}
 
 
 
