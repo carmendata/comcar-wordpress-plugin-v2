@@ -130,7 +130,7 @@ function preg_grep_keys($pattern, $input) {
                 //for all the plugins in comcar but for the general
                 require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
                 global $plugin_nav;        
-  
+                global $current_tool_name;
 
                 global $post;
                 $idOfTheCurrentPage = get_post( $post )->ID;
@@ -155,8 +155,7 @@ function preg_grep_keys($pattern, $input) {
                         continue;
                     }
                     
-
-
+ 
                     //page where we should load the plugin
                     $idPageWhereShouldBeLoadedThePlugin = isset($arrOptions[$thisPluginName]) ? $arrOptions[$thisPluginName]: "";
                 
@@ -173,23 +172,19 @@ function preg_grep_keys($pattern, $input) {
                             $arr_subpages = preg_grep_keys('#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i',$arrOptions);
 
                             // if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
-                           
-
+                           array_push($arr_subpages, $arrOptions[$thisPluginName."_".$page ."_page"]);
 
 
                             foreach( $arr_subpages as $label=>$value ) {
                                
-                         
 
 
-                                if ( $value == $idOfTheCurrentPage ) {
-                              
-                              
+                                if ( $value == $idOfTheCurrentPage ) {       
+                             
                                         $loadCssAndJavascript=true;
                                         $current_tool_name=$thisPluginName.'_'.$page;
-                                                                    
-                                         add_filter('the_content',  function( $current_tool_name ) { return getToolContent( $current_tool_name ); });
-  // add_filter('the_content', 'getToolContent');
+                                         add_filter('the_content',  'getToolContent');
+                                     
                                         break;
                                 }
     
@@ -233,19 +228,35 @@ function preg_grep_keys($pattern, $input) {
                 }
             }
 
-function getToolContent( $current_tool_name ) {
-
+function getToolContent(  ) {
+    global $current_tool_name;
         if( is_page() && is_main_query() ) { 
         //             // lets include the code
             $tool_to_include = '';
         
+            $path_to_include = '';
+            switch ( $current_tool_name ) {
+                case 'tax_calculator_cars':
 
- include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
+ $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
+                   
+                break;
+                case 'tax_calculator_vans':
+
+                    $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
+                break;
+                default:
+                    
+                    break;
+            }
+                               
+        include_once(WPComcar_WEBSERVICESCALLSPATH.$path_to_include);
           
                
 
             
             $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+
             $content = $content.$WPComcar_theResultOfTheWebservice;
             return $content;
         }   
