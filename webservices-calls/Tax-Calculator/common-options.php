@@ -25,7 +25,7 @@
 		$WPComcar_resultsJS 	= fixForSsl($WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, 3, ''));
 
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
+		$WPComcar_arrOptions=get_option("WP_plugin_options_tax_calculator");
 		$WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["calc"];
 		$WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);

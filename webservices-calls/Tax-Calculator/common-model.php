@@ -20,7 +20,7 @@
 		return;
 	}
 	
-	$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
+	$WPComcar_arrOptions=get_option("WP_plugin_options_tax_calculator");
 
 
 

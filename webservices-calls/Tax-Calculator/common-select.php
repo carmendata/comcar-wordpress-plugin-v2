@@ -16,7 +16,7 @@
 		
 
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_tax_calculator");
+		$WPComcar_arrOptions=get_option("WP_plugin_options_tax_calculator");
 		$WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
 		$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["model"];
 

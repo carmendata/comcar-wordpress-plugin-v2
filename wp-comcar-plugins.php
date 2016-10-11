@@ -227,9 +227,10 @@ function preg_grep_keys($pattern, $input) {
                     }                   
                 }
 
-                // if ($loadCssAndJavascript){
-                //     $this->include_js_and_css();
-                // }
+                if ($loadCssAndJavascript){
+                    wp_enqueue_script('comcar-javascript');
+                    wp_enqueue_style('comcar-style');
+                }
             }
 
 function getToolContent( $current_tool_name ) {

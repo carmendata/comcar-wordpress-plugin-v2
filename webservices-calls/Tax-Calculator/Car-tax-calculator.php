@@ -26,9 +26,7 @@
 			//parent or subpage?
 
 			$arrOptions = get_option('WP_plugin_options_tax_calculator');
-
-
-			
+ 
 			$idThePageWhereShouldLoadThePlugin=$arrOptions["tax_calculator_cars_page"];
 			if (strcmp($idThePageWhereShouldLoadThePlugin,$thePostId)==0){
 				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-select.php";

@@ -16,7 +16,7 @@
 	$_POST['thisPage'] = $WPComcar_actionName;
 
 
-	$WPComcar_arrOptionsTaxCalculator=get_option("WPComcar_plugin_options_tax_calculator");
+	$WPComcar_arrOptionsTaxCalculator=get_option("WP_plugin_options_tax_calculator");
 	$WPComcar_theCurrentTaxCalcPage="tax_calculator_".$WPComcar_vehicleTypeForIncluding."_subpage_calc";
 	if (isset($WPComcar_arrOptionsTaxCalculator) && isset($WPComcar_arrOptionsTaxCalculator[$WPComcar_theCurrentTaxCalcPage])){
 		//tax calculator link page
