@@ -242,25 +242,30 @@ $plugin_options = array(
 
             array( "type" => "closeSection" ),
             array( 
+                "name" => "tax_calculator_vans_texts",
+                "type" => "openSection" 
+                ),
+            array( 
                 "label" => "van Tax Calculator Model page settings",
-                "name" => "tax_calculator_vanModelPage",
+                "name" => "",
                 "options" => $arr_page_setting,
                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),
             array( 
-                "name" => "tax_calculator_vanCalculatorListFields",
+                "name" => "tax_calculator_vans_request",
                 "desc" => "List of fields to include in the table of results. Must match database names exactly.",
                  "std" => "derivative,transmission,co2gpkm,fueltype,otrPrice",
                 
                 "type" => "text"
             ),
             array( 
-                "name" => "tax_calculator_vanTaxCalculatorTableHeaders",
+                "name" => "tax_calculator_vans_headers",
                 "desc" => "Table Headers. These correspond to the list above, use it to give the fields human-friendly aliases.",
                 "std" => "Derivative,Transmission,CO2 g/km,Fuel,List price",
                 "type" => "text"
-            )
+            ),
+            array( "type" => "closeSection" )
         ),
 
 

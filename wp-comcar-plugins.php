@@ -150,8 +150,7 @@ function preg_grep_keys($pattern, $input) {
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
-                    print_r($arrOptions);
-                    exit();
+             
             
 
                     if (!isset($arrOptions)){
@@ -176,8 +175,14 @@ function preg_grep_keys($pattern, $input) {
                             $arr_subpages = preg_grep_keys('#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i',$arrOptions);
 
                             // if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
+                           
+
+
                             foreach( $arr_subpages as $label=>$value ) {
-                          
+                               
+                                print_r($arr_subpages );
+
+
                                 if ( $value == $idOfTheCurrentPage ) {
                               
                               
@@ -238,9 +243,10 @@ function getToolContent( $current_tool_name ) {
 
 
 
-            include_once(WPComcar_WEBSERVICESCALLSPATH."Footprint-Calculator/Footprint-Calculator.php");
+
+            include_once(WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-tax-calculator.php");
             $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
-            $content=$content.$WPComcar_theResultOfTheWebservice;
+            $content = $content.$WPComcar_theResultOfTheWebservice;
             return $content;
         }   
 }

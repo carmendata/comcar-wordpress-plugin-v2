@@ -55,10 +55,12 @@ function saveToolsOptions( ) {
 
         if ( $parent_name != '' && $value['type'] != 'openSection' ) {    
       
+            if ( $value['name'] != ''){
             $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
             $obj_opt[$parent_name][$value['name']] = $value_to_update;
         
             update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+            }
             continue;
         }
 
