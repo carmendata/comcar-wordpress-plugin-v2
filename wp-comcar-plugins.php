@@ -150,7 +150,8 @@ function preg_grep_keys($pattern, $input) {
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
-   
+                    print_r($arrOptions);
+                    exit();
             
 
                     if (!isset($arrOptions)){

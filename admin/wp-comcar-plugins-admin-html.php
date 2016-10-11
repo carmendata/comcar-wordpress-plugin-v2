@@ -7,7 +7,6 @@ add actions
 add_action( 'admin_init', 'plugin_settings_init' );
 add_action( 'admin_menu', 'add_settings_page' );
 
-
 function plugin_options_page() {
     include 'wp-comcar-plugins-admin-options.php';
 }
@@ -33,6 +32,47 @@ function add_settings_page() {
 }
 
 
+function saveToolsOptions( ) {
+    global $plugin_options;
+    
+    foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
+        $obj_opt = get_option('WP_plugin_options_'.$_REQUEST['nav']);
+        $desc = isset( $value["desc"] ) ? $value["desc"] : "";
+                                   
+        if ( isset( $value['name'] ) && $value['type'] != 'checkbox') {      
+            $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
+            $obj_opt[$value['name']] = $value_to_update;
+            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
+            update_option( $value['name'], $value_to_update ); 
+
+        } else if ( $value['type'] == 'checkbox' ) {       
+            $checkbox_array = array();
+
+            foreach ( $value['options'] as $label => $option ) {
+                $full_name = $value['name']  . '_' . $option;
+                $full_name = str_replace( ' ', '_', $full_name );
+
+                if ( isset( $_REQUEST[ $full_name ] )) {
+                    $obj_opt[$full_name] = $_REQUEST[ $full_name ];   
+                    update_option( $full_name, $_REQUEST[ $full_name ] );               
+                    array_push( $checkbox_array, $option );
+                } else {
+                    unset($obj_opt[$full_name]);
+                    delete_option($full_name);
+                }
+            }
+            $obj_to_insert[$value['name']] = $checkbox_array;
+            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
+        } 
+    } 
+}
+
+
+
+
+
+
+
 /*---------------------------------------------------
 Plugin setting output
 ----------------------------------------------------*/
@@ -45,182 +85,119 @@ function createOptionsForEachNav( ) {
     $message = ''; 
 
     if ( 'save' == $_REQUEST['action'] ) {
-        foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
-                $obj_opt = get_option('WP_plugin_options_'.$_REQUEST['nav']);
-
-            $desc = isset( $value["desc"] ) ? $value["desc"] : "";
-                                   
-            if ( isset( $value['name'] ) && $value['type'] != 'checkbox') {      
-                $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";  
-              
-                $obj_opt[$value['name']] = $value_to_update;
-                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
-
-                update_option( $value['name'], $value_to_update ); 
-            } else if ( $value['type'] == 'checkbox' ) {
-               
-                $checkbox_array = array();
-
-                foreach ( $value['options'] as $label => $option ) {
-                    $full_name = $value['name']  . '_' . $option;
-                    $full_name = str_replace( ' ', '_', $full_name );
-
-
-                    if ( isset( $_REQUEST[ $full_name ] )) {
-                        $obj_opt[$full_name] = $_REQUEST[ $full_name ];   
-                        update_option( $full_name, $_REQUEST[ $full_name ] );               
-                        array_push( $checkbox_array, $option );
-                    } else {
-                        unset($obj_opt[$full_name]);
-                        delete_option($full_name);
-                    }
-                }
-                $obj_to_insert[$value['name']] = $checkbox_array;
-                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
-           
-            } 
-
-        }
-    
+        saveToolsOptions();
         $message = 'saved';
     } 
-    ?>
-
-    <div class="wrap options_wrap">
-        <div id="icon-options-general"></div>   
-            
-            <?php
-            if ( $message == 'saved' ) {
-                echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
-                <p> settings saved.</strong></p></div>';
-            }
+    
+    echo '<div class="wrap options_wrap"> <div id="icon-options-general"></div>';
+          
+    if ( $message == 'saved' ) {
+        echo '<div class="updated settings-error" id="setting-error-settings_updated"> 
+        <p> settings saved.</strong></p></div>';
+    }
          
-            foreach ( $plugin_options as $key => $content) {   
-               echo  "<div class='content_options' name='content_$key'>
-                    <form method='post'  >
-                        <table>
-                            <tbody>";
+    foreach ( $plugin_options as $key => $content) {   
+        echo  "<div class='content_options' name='content_$key'><form method='post'  >
+                <table><tbody>";
                             
-                                foreach ($plugin_options[$key] as $value) {
-                                    $name = isset( $value["name"] ) ? $value["name"] : "";
-                                    $desc = isset( $value["desc"] ) ? $value["desc"] : "";
-                                    $std    = isset( $value["std"] ) ? $value["std"] : "";
-                                    $label = isset( $value["label"] ) ? $value["label"] : "";
-                                    $options = isset( $value["options"] ) ? $value["options"]:"";
+        foreach ( $plugin_options[$key] as $value ) {
+            $name = isset( $value["name"] ) ? $value["name"] : "";
+            $desc = isset( $value["desc"] ) ? $value["desc"] : "";
+            $std  = isset( $value["std"] ) ? $value["std"] : "";
+            $label = isset( $value["label"] ) ? $value["label"] : "";
+            $options = isset( $value["options"] ) ? $value["options"]:"";
                 
-                                    switch ( $value['type'] ) {
-                                        case "description":  
-                                            echo $value['description'];
-                                        break;
-                                        case "note":  
-                                            echo '<h5>' . $value['note'] . '</h5>';
-                                        break;  
-                                        case 'text': 
-                                        echo $std;
-                                        echo "<tr><td><label>$label</label></td><td>
-                                                <input type='text' placeholder='$std' name='$name' value='";
-                                        if ( get_option( $name ) != "") { 
-                                            echo stripslashes(get_option( $name)  ) ;
-                                        }
-                                        echo "'/><small>  $desc</small></td></tr>";
-                    break;
-                    case 'option':
-                   
-                        echo "<tr>
-                            <td>$label</td>
-                            <td>$desc ";
-                        $checkbox_name = $name.'_checkbox';
-                        if ( get_option( $name ) ) {
-                            echo "<input class='activation_textarea' type='checkbox' name='$checkbox_name' value='$name' >";
-                        } else {
-                            echo "<input class='activation_textarea' type='checkbox' name='$checkbox_name' value='$name' checked>  ";
-                        }
+            switch ( $value['type'] ) {
+                case "description":  
+                    echo $value['description'];
+                break;
 
+                case "note":  
+                    echo '<h5>'.$value['note'].'</h5>';
+                break;  
 
+                case 'text': 
+                    echo $std."<tr><td><label>$label</label></td><td>
+                        <input type='text' placeholder='$std' name='$name' value='";
+                
+                    if ( get_option( $name ) != "") { 
+                        echo stripslashes(get_option( $name)  ) ;
+                    }
+                    echo "'/><small>  $desc</small></td></tr>";
+                break;
 
-                        echo "<label> Default </label></td></tr>
+                case 'option':
+                   echo "<tr><td>$label</td><td>$desc ";
+                    $checkbox_name = $name.'_checkbox';
+                    
+                    if ( get_option( $name ) ) {
+                        echo "<input class='activation_textarea' type='checkbox' name='$checkbox_name' value='$name' >";
+                    } else {
+                        echo "<input class='activation_textarea' type='checkbox' name='$checkbox_name' value='$name' checked>  ";
+                    }
 
-                        <tr><td></td><td>
+                    echo "<label> Default </label></td></tr><tr><td></td><td>
+                            <textarea rows='4' cols='50' name='$name' >"
+                            .trim( get_option( $name ) )."</textarea></td></tr>";
+                break; 
 
-                        <textarea rows='4' cols='50' name='$name' >"
-                            .trim( get_option( $name ) ). 
-                        "</textarea>
-                        </td></tr>";
+                case 'select': 
+                    echo '<tr><td>'.$label.'</td><td>';
+                    if ( $options == 'Pages' ) {
+                        $theDropDownArguments = array();
+                        $theDropDownArguments['name'] = $name;
+                        $theDropDownArguments['selected'] = get_option( $name );
+                        $theDropDownArguments['show_option_none'] = ' ';
+                        $theDropDownArguments['option_none_value'] = "0"; 
+                        $theDropDownArguments['sort_column'] = "menu_order"; 
+                        wp_dropdown_pages( $theDropDownArguments ); 
 
-                    break; 
-                    case 'select': ?>
-
-                        <?php 
-                        echo '<tr><td>'.$label.'</td><td>';
-                        if ( $options == 'Pages' ) {
-                            $theDropDownArguments=array();
-                            $theDropDownArguments["name"]=$name;
-                            $theDropDownArguments["selected"]=get_option( $name );
-                            $theDropDownArguments['show_option_none']=' ';
-                            $theDropDownArguments["option_none_value"]="0"; 
-                            $theDropDownArguments["sort_column"]="menu_order"; 
-                            wp_dropdown_pages($theDropDownArguments); 
-
-                        } else {
-                            echo "<select name='$name'>";
-                            //para cada opcion
-                            foreach( $options as $value => $option ) {
-
-                                 if ( get_option( $name ) == $value) {
-                                     echo "<option value='$value' selected>$option</option>";
-                                 }else{
-                                    echo "<option value='$value'>$option</option>";
-                                 }
+                    } else {
+                        echo "<select name='$name'>";
+                        //para cada opcion
+                        foreach( $options as $value => $option ) {
+                            if ( get_option( $name ) == $value ) {
+                                echo "<option value='$value' selected>$option</option>";
+                            } else {
+                                echo "<option value='$value'>$option</option>";
                             }
-                            echo "</select>";
                         }
+                        echo "</select>";
+                    }
    
-                        if ( isset( $desc ) ) {
-                             echo "<p class='description'> $desc </p>";
-                        }
-                        echo "</td></tr>";
-                    break;
-                 
-                    case "checkbox":                     
-                        echo '<tr><td>' . $label . '</td><td>';
-                        //print in order
-                        foreach($options as $label => $option){
-                            $full_name = $name . '_' . $option;
-                            $full_name = str_replace( ' ', '_', $full_name );
+                    if ( isset( $desc ) ) {
+                        echo "<p class='description'> $desc </p>";
+                    }
+                    echo "</td></tr>";
+                break; 
 
-                            if ( get_option( $full_name ) != '' ) {
-                                echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $label <br/>";
-                            }else{
-                                echo "<input class='$name' type='checkbox' name='$full_name' value='$option'> $label <br/>";
-                            }
+                case "checkbox":                     
+                    echo '<tr><td>' . $label . '</td><td>';
+                    foreach($options as $label => $option){
+                        $full_name = $name . '_' . $option;
+                        $full_name = str_replace( ' ', '_', $full_name );
+                        
+                        if ( get_option( $full_name ) != '' ) {
+                            echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $label <br/>";
+                        }else{
+                            echo "<input class='$name' type='checkbox' name='$full_name' value='$option'> $label <br/>";
                         }
-      
-                        echo "</td></tr>";
-                    break; 
-                    default:
-                    break;                   
-                }
+                    }
+                    echo "</td></tr>";
+                break; 
+                
+                default:
+                break;                   
             }
-            ?>
-          </tbody>
-      </table>
-            
-             <span class="submit"><input name="save<?php echo $i; ?>" type="submit" class="button-primary" value="Save changes" /></span>
-             <input type="hidden" name="nav" value="<?php echo $key; ?>" />
-
-             <input type="hidden" name="action" value="save" />
-
-          </form>
-          </div>
-            <?php
-            
-      } ?>
-    </div>
-    <?php
-
-
+        }
+        echo "</tbody></table>
+            <span class='submit'><input name='save$i' type='submit' class='button-primary' value='Save changes' /></span>
+            <input type='hidden' name='nav' value='$key' />    
+            <input type='hidden' name='action' value='save' />
+            </form></div>";            
+    } 
+    echo '</div>';
 }
-
 
  
 
