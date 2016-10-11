@@ -35,6 +35,8 @@ function add_settings_page() {
 function saveToolsOptions( ) {
     global $plugin_options;
     $parent_name =  '';
+    delete_option('WP_plugin_options_'.$_REQUEST['nav']);
+    
     foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
         $obj_opt = get_option('WP_plugin_options_'.$_REQUEST['nav']);
         $desc = isset( $value["desc"] ) ? $value["desc"] : "";
@@ -49,7 +51,7 @@ function saveToolsOptions( ) {
         } else if(  $value['type'] == 'closeSection' ) {
             // print_r( get_option( 'WP_plugin_options_'.$_REQUEST['nav'] ) );
             // exit();
-            $parent_name =  '';
+            $parent_name = '';
             continue;
         }  
 
@@ -69,9 +71,9 @@ function saveToolsOptions( ) {
             $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
             $obj_opt[$value['name']] = $value_to_update;
 
-            if ( $parent_name != '' ) {   
+            
                 update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
-            }
+            
             update_option( $value['name'], $value_to_update ); 
 
         } else if ( $value['type'] == 'checkbox' ) {       
@@ -91,11 +93,13 @@ function saveToolsOptions( ) {
                 }
             }
             $obj_to_insert[$value['name']] = $checkbox_array;
-            if ( $parent_name != '' ) {   
+            
                 update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
-            }
+            
         } 
-    } 
+    }
+       print_r(get_option('WP_plugin_options_'.$_REQUEST['nav'])) ;
+
 }
 
 

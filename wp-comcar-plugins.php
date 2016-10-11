@@ -151,7 +151,8 @@ function preg_grep_keys($pattern, $input) {
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
              
-            
+            print_r($arrOptions);
+            exit();
 
                     if (!isset($arrOptions)){
                         continue;
@@ -178,9 +179,10 @@ function preg_grep_keys($pattern, $input) {
                            
 
 
+
                             foreach( $arr_subpages as $label=>$value ) {
                                
-                                print_r($arr_subpages );
+                         
 
 
                                 if ( $value == $idOfTheCurrentPage ) {
@@ -238,9 +240,7 @@ function getToolContent( $current_tool_name ) {
         if( is_page() && is_main_query() ) { 
         //             // lets include the code
             $tool_to_include = '';
-
-
-
+        
 
 
 
