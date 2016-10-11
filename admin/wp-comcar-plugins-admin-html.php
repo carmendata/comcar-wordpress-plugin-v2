@@ -229,7 +229,8 @@ function createOptionsForEachNav( ) {
     
     echo '<div class="wrap"><h2 class="nav-tab-wrapper">';
 
-    foreach($plugin_nav as $arrKey => $arrTitle) { 
+    foreach($plugin_nav as $arrKey => $arrInfo) {
+        $arrTitle = $arrInfo['label']; 
         $str_function_name = 'WPComcar_plugin_options_'.$arrKey; 
         $class_activation = '';
         if ( strcmp( $arrKey, "general" ) == 0 ) {

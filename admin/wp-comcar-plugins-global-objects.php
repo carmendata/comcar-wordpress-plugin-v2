@@ -2,13 +2,16 @@
 /* ---------------------------------------------------------
 Declare options
 ----------------------------------------------------------- */
- $plugin_nav = array(     
-                            'general'               => 'Main',
-                            'tax_calculator'        => 'Tax calculator',
-                            'comparator'            => 'Comparator',
-                            'electric_comparator'   => 'Electric comparator',
-                            'footprint'             => 'Footprint calculator'
-                        );
+$plugin_nav = array(     
+                        'general'               => array( 'label' => 'Main', 'path' => ''),
+                        'tax_calculator'        => array( 'label' => 'Tax calculator', 'path' => ''),
+                        'comparator'            => array( 'label' => 'Comparator','path' => ''),
+                        'electric_comparator'   => array( 'label' => 'Electric comparator','path' => ''),
+                        'footprint'             => array( 'label' => 'Footprint calculator', 'path' => '')
+                    );
+
+
+
 
 
 $arr_page_setting = array(  "" => "",
@@ -77,7 +80,7 @@ $plugin_options = array(
         array( 
                 "label" => "Enable tools",
                 "name" => "general_enableTools",
-                "options" => array( 'Tax calculator','Comparator','Electric comparator', 'Footprint calculator'),
+                "options" => array( 'Tax calculator' => 'Tax calculator', 'Comparator' => 'comparator', 'Electric comparator' => 'electric_comparator', 'Footprint calculator' =>'footprint'),
                 "type" => "checkbox"
         )      
     ),
@@ -173,7 +176,7 @@ $plugin_options = array(
                 "label" => "Car Tax Calculator Model page settings",
                 "name" => "tax_calculator_vanModelPage",
                 "options" =>  $arr_page_setting,
-                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
+                "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"
             ),
             array( 

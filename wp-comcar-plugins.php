@@ -139,7 +139,7 @@ function preg_grep_keys($pattern, $input) {
 
 
 
-            foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $label ) {
+            foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $plugin_info ) {
                
                     //name of the plugin (footprint, comparator, tax_calculator)
                  
@@ -179,16 +179,15 @@ function preg_grep_keys($pattern, $input) {
                           
                                 if ( $value == $idOfTheCurrentPage ) {
                               
-
-
-                                
+                              
                                         $loadCssAndJavascript=true;
-                                        $theFunctionName=$thisPluginName.'_'.$page."_execute";
-                       
-                                       
+                                        $current_tool_name=$thisPluginName.'_'.$page;
+                                                                    
+                                         add_filter('the_content',  function( $current_tool_name ) { return getToolContent( $current_tool_name ); });
+  // add_filter('the_content', 'getToolContent');
                                         break;
                                 }
-
+    
                             }
                               
                            
@@ -206,25 +205,45 @@ function preg_grep_keys($pattern, $input) {
  
                     
                         /******************* FOOTPRINT CALCULATOR **********************/
-                        if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){
-                            $loadCssAndJavascript=true;
-                            $theFunctionName=$thisPluginName."_execute";
-                            $this->$theFunctionName();
-                        } else {
-                            if (strcmp($idPageWhereShouldBeLoadedThePlugin,$this->getParentId())==0){
-                                $loadCssAndJavascript=true;
-                                $parent_name = WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];
-                                $theFunctionName=$parent_name."_execute";
-                                $this->$theFunctionName();
-                            }
+                        // if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){
+                        //     $loadCssAndJavascript=true;
+                        //     $theFunctionName=$thisPluginName."_execute";
+                        //     $this->$theFunctionName();
+                        // } else {
+                        //     if (strcmp($idPageWhereShouldBeLoadedThePlugin,$this->getParentId())==0){
+                        //         $loadCssAndJavascript=true;
+                        //         $parent_name = WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];
+                             
+                        //         $theFunctionName=$parent_name."_execute";
+                        //         $this->$theFunctionName();
+                        //     }
                             
-                        }
+                        // }
                     }                   
                 }
-                if ($loadCssAndJavascript){
-                    $this->include_js_and_css();
-                }
+
+                // if ($loadCssAndJavascript){
+                //     $this->include_js_and_css();
+                // }
             }
+
+function getToolContent( $current_tool_name ) {
+
+        if( is_page() && is_main_query() ) { 
+        //             // lets include the code
+            $tool_to_include = '';
+
+
+
+
+
+            include_once(WPComcar_WEBSERVICESCALLSPATH."Footprint-Calculator/Footprint-Calculator.php");
+            $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+            $content=$content.$WPComcar_theResultOfTheWebservice;
+            return $content;
+        }   
+}
+
 
             
 ?>
