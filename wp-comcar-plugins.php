@@ -135,71 +135,51 @@ function preg_grep_keys($pattern, $input) {
                 global $post;
                 $idOfTheCurrentPage = get_post( $post )->ID;
 
-
-
-
-
-            foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $plugin_info ) {
-               
-                    //name of the plugin (footprint, comparator, tax_calculator)
-                 
-                //not activated
-                if (!isset($arrGeneralSettings["pluginsOptions"][$thisPluginName])){
-                     continue;
-                }
+                // foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $plugin_info ) {
+                foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $plugin_info ) {
+                
+                    //if it is not activated
+                    if (!isset($arrGeneralSettings["pluginsOptions"][$thisPluginName])){
+                         continue;
+                    }
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
 
-                    if (!isset($arrOptions)){
+                    // If the arrOption is empty jump to the next one
+                    if ( !isset( $arrOptions ) ) {
                         continue;
                     }
-                    
- 
+                     
                     //page where we should load the plugin
-                    $idPageWhereShouldBeLoadedThePlugin = isset($arrOptions[$thisPluginName]) ? $arrOptions[$thisPluginName]: "";
+                    // $idPageWhereShouldBeLoadedThePlugin = isset($arrOptions[$thisPluginName]) ? $arrOptions[$thisPluginName]: "";
                 
 
                     //LOAD THE PLUGIN IF WE ARE IN THE FIRST PAGE OR IN A SUBPAGE
                     /********************* TAX CALCULATOR AND COMPARATOR *************************/
                       
-                    if (isset($arrOptions["pages"]) && is_array($arrOptions["pages"]) ) {     
+                    if ( isset( $arrOptions["pages"] ) && 
+                        is_array( $arrOptions["pages"] ) ) {     
                         //foreach vans and cars...
                 
                         foreach($arrOptions["pages"] as $key=>$page){
-                            $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
+                            // $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
 
-                            $arr_subpages = preg_grep_keys('#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i',$arrOptions);
+                            $arr_pages = preg_grep_keys( '#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i', $arrOptions );
 
-                            // if (isset($arrOptions[$page."_subpages"]) && is_array($arrOptions[$page."_subpages"])){
-                           array_push($arr_subpages, $arrOptions[$thisPluginName."_".$page ."_page"]);
+                            // Include also parent page
+                            array_push( $arr_pages, $arrOptions[$thisPluginName."_".$page ."_page"] );
 
-
-                            foreach( $arr_subpages as $label=>$value ) {
-                               
-
-
+                            foreach( $arr_pages as $label=>$value ) {
                                 if ( $value == $idOfTheCurrentPage ) {       
-                             
-                                        $loadCssAndJavascript=true;
-                                        $current_tool_name=$thisPluginName.'_'.$page;
-                                         add_filter('the_content',  'getToolContent');
-                                     
-                                        break;
+                                    $loadCssAndJavascript = true;
+                                    $current_tool_name = $thisPluginName.'_'.$page;
+                                    add_filter( 'the_content',  'getToolContent' );
+                                    break;
                                 }
-    
                             }
-                              
-                           
-                            //if it is the same page, load the plugin, or if it is a subpage
-                            // if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){                            
-                            //     $loadCssAndJavascript=true;
-                            //     $theFunctionName=$thisPluginName.'_'.$page."_execute";
-                            //     $this->$theFunctionName();
-                            //     break;
-                            // }
                         }
-                    }else{
+                    } else {
 
     
  
@@ -228,6 +208,8 @@ function preg_grep_keys($pattern, $input) {
                 }
             }
 
+
+
 function getToolContent(  ) {
     global $current_tool_name;
         if( is_page() && is_main_query() ) { 
@@ -237,12 +219,9 @@ function getToolContent(  ) {
             $path_to_include = '';
             switch ( $current_tool_name ) {
                 case 'tax_calculator_cars':
-
- $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
-                   
+                    $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
                 break;
                 case 'tax_calculator_vans':
-
                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
                 break;
                 default:
