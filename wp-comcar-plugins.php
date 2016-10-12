@@ -146,8 +146,7 @@ function preg_grep_keys($pattern, $input) {
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
-                    print_r($arrOptions);
-
+             
                     // If the arrOption is empty jump to the next one
                     if ( !isset( $arrOptions ) ) {
                         continue;

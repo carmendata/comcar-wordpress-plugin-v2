@@ -1,8 +1,6 @@
-.WPComcar_formRow textarea {
+.content_options .options_table textarea {
     resize: none;
-}
-.WPComcar_separateTextAreas{
-	margin-bottom:50px;
+    height: 30px;
 }
 
 div.WPComcar_error{
@@ -15,13 +13,6 @@ div.WPComcar_error{
 			box-sizing:border-box;
 
 	clear:left;
-}
-
-.WPComcar_clickable{
-	cursor:pointer;
-	cursor:hand;
-	border-top: 1px solid #CCC;
-	padding-top: 1em;
 }
 
 /* ------------ Tabs ------------ */
@@ -58,29 +49,40 @@ div.WPComcar_error{
 
 
 
-.WPComcar_sizeOfOptionText{
-	height:50px;
-	width:300px;
+.content_options .options_table tr th {
+	vertical-align: top;
+	float:left;
 }
-.WPComcar_sizeOfCheckBox{
-	height:50px;
-	width:50px;
+
+
+
+
+
+
+
+
+
+
+.content_options .options_table tr input[type='checkbox'] {
+
+	height:25px;
+	width:25px;
 	padding:0;
 	margin:0;
 	vertical-align: middle;
 	text-align: center;
 }
-.WPComcar_float{
-	float:left;
+
+.content_options .options_table tr select,
+.content_options .options_table tr input[type='text']{
+	height:35px;
+	width:400px;
 }
 
-.WPComcar_formRow{
-	float: left;
-	width: 100%;
-	clear: left;
+
+
+.content_options .options_table tr > td,
+.content_options .options_table tr > th{
+padding-top:10px;
 }
 
-.WPComcar_formRow .WPComcar_checkBoxWrap{
-	font-size: 0.8em;
-	float: left;
-}

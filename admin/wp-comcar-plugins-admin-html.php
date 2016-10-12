@@ -157,7 +157,7 @@ function createOptionsForEachNav( ) {
          
     foreach ( $plugin_options as $key => $content) {   
         echo  "<div class='content_options' name='content_$key'><form method='post'  >
-                <table><tbody>";
+                <table class='options_table'><tbody>";
                             
         foreach ( $plugin_options[$key] as $value ) {
             $name = isset( $value["name"] ) ? $value["name"] : "";
@@ -177,17 +177,17 @@ function createOptionsForEachNav( ) {
                 break;  
 
                 case 'text': 
-                    echo $std."<tr><td><label>$label</label></td><td>
+                    echo $std."<tr><th><label>$label</label></th><td>
                         <input type='text' placeholder='$std' name='$name' value='";
                 
                     if ( get_option( $name ) != "") { 
                         echo stripslashes(get_option( $name)  ) ;
                     }
-                    echo "'/><small>  $desc</small></td></tr>";
+                    echo "'/><p>  $desc</p></td></tr>";
                 break;
 
                 case 'option':
-                   echo "<tr><td>$label</td><td>$desc ";
+                   echo "<tr><th>$label</th><td>$desc </td><td>";
                     $checkbox_name = $name.'_checkbox';
                     
                     if ( get_option( $name ) ) {
@@ -202,7 +202,7 @@ function createOptionsForEachNav( ) {
                 break; 
 
                 case 'select': 
-                    echo '<tr><td>'.$label.'</td><td>';
+                    echo '<tr><th>'.$label.'</th><td>';
                     if ( $options == 'Pages' ) {
                         $theDropDownArguments = array();
                         $theDropDownArguments['name'] = $name;
@@ -234,7 +234,7 @@ function createOptionsForEachNav( ) {
                 break; 
 
                 case "checkbox":                     
-                    echo '<tr><td>' . $label . '</td><td>';
+                    echo '<tr><th>' . $label . '</th><td>';
                     foreach($options as $label => $option){
                         $full_name = $name . '_' . $option;
                         $full_name = str_replace( ' ', '_', $full_name );
