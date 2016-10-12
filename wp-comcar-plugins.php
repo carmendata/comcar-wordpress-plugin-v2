@@ -9,8 +9,8 @@
  * License: GPL2
  */
 
-// ini_set( 'error_reporting', E_ALL );
-// ini_set( 'display_errors', true );
+ ini_set( 'error_reporting', E_ALL );
+ini_set( 'display_errors', true );
 include_once(__DIR__."/wp-comcar-constants.php");
 
 // shall I ask if it is admin to include it?
@@ -21,6 +21,24 @@ add_action("wp", 'plugin_redirection');
 add_action("wp_head",'activate_page_plugins');   
 
 
+
+	function decodeURLParam( $str_to_decode ) {
+				// decode string (can't use hex2bin prior to php5.4)
+		        $cnt_code = strlen( $str_to_decode ); 
+		        $unhexed_taxcalculatorcode = "";   
+		        $i = 0; 
+		        while($i < $cnt_code ) {       
+		            $a = substr( $str_to_decode, $i, 2 );           
+		            $c = pack("H*",$a ); 
+		            if ( $i==0 ){
+		            	$unhexed_taxcalculatorcode = $c;
+		           	} else {
+		           		$unhexed_taxcalculatorcode .= $c;
+		           	} 
+		            $i+=2; 
+		        } 
+		        return base64_decode( $unhexed_taxcalculatorcode );
+			}
 
 
 
@@ -43,10 +61,11 @@ add_action("wp_head",'activate_page_plugins');
                         $WPComcar_tax_calc_override = $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
 
                         if( isset($_GET['taxcalculatorcode'] ) ) {
+
                             // if there is encoded data put it back into the form
                             $encoded_taxcalculatorcode = htmlspecialchars( $_GET[ 'taxcalculatorcode' ] );
 
-                            $decoded_taxcalculatorcode =   $this->decodeURLParam( $encoded_taxcalculatorcode );
+                            $decoded_taxcalculatorcode =   decodeURLParam( $encoded_taxcalculatorcode );
 
                             $arr_decoded = explode( '~', $decoded_taxcalculatorcode );
 
@@ -166,8 +185,12 @@ function preg_grep_keys($pattern, $input) {
                             array_push( $arr_pages, $arrOptions[ $thisPluginName."_".$page ."_page" ] );
 
                             foreach( $arr_pages as $label=>$value ) {
-                                if ( $value == $idOfTheCurrentPage ) {  
+                                
 
+
+
+
+                                if ( $value == $idOfTheCurrentPage ) {  
                                     $current_tool_name = $thisPluginName.'_'.$page;
                                     break 2;
                                 }
