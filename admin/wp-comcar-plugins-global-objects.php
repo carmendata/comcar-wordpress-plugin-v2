@@ -181,6 +181,7 @@ $plugin_options = array(
                 array( 
                     "label" => "Car Tax Calculator Model page settings",
                     "name" => "",
+                    "class"=> "selectorToFillBox",
                     "options" =>  $arr_page_setting,
                     "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                     "type" => "select"
@@ -248,6 +249,7 @@ $plugin_options = array(
             array( 
                 "label" => "van Tax Calculator Model page settings",
                 "name" => "",
+                "class"=> "selectorToFillBox",
                 "options" => $arr_page_setting,
                 "desc" => "Select options from list to add them to the box below. Repeat several times to build a list.",
                 "type" => "select"

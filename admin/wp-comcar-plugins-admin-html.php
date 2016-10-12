@@ -165,6 +165,7 @@ function createOptionsForEachNav( ) {
             $std  = isset( $value["std"] ) ? $value["std"] : "";
             $label = isset( $value["label"] ) ? $value["label"] : "";
             $options = isset( $value["options"] ) ? $value["options"]:"";
+            $classes = isset( $value["class"] ) ? $value["class"]:"";
                 
             switch ( $value['type'] ) {
                 case "description":  
@@ -207,12 +208,14 @@ function createOptionsForEachNav( ) {
                         $theDropDownArguments['name'] = $name;
                         $theDropDownArguments['selected'] = get_option( $name );
                         $theDropDownArguments['show_option_none'] = ' ';
+                        $theDropDownArguments['class'] = $classes; 
                         $theDropDownArguments['option_none_value'] = "0"; 
                         $theDropDownArguments['sort_column'] = "menu_order"; 
+
                         wp_dropdown_pages( $theDropDownArguments ); 
 
                     } else {
-                        echo "<select name='$name'>";
+                        echo "<select name='$name' class='$classes'> ";
                         //para cada opcion
                         foreach( $options as $value => $option ) {
                             if ( get_option( $name ) == $value ) {

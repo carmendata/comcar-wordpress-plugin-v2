@@ -17,7 +17,7 @@ jQuery( document ).ready( function ( $ ) {
 
     });
 
-     $('.activation_textarea').on( 'click', function( ) {
+    $('.activation_textarea').on( 'click', function( ) {
         var textarea_name = $(this).attr( 'name' ).replace( '_checkbox', '' );
         if( typeof( $(this).attr('checked') ) == 'undefined' ) {
             $( 'textarea[name=' + textarea_name + ']' ).show();
@@ -25,7 +25,36 @@ jQuery( document ).ready( function ( $ ) {
             $( 'textarea[name=' + textarea_name + ']' ).hide();
             $( 'textarea[name=' + textarea_name + ']' ).html('');
         }
-     });
+    });
+
+
+
+    $('.selectorToFillBox').on( 'change', function() {
+        var field_value = $("option:selected", this).val();
+        var header_value = $("option:selected", this).text();
+
+        var field_input = $(this).closest('tr').next('tr').find('input');
+        var field_input_content = field_input.val();
+
+        var header_input = $(this).closest('tr').next('tr').next('tr').find('input');    
+        var header_input_content = header_input.val();
+
+        if ( field_input_content.length > 0 ) {
+            field_input_content = field_input_content + ',' + field_value;
+            header_input_content = header_input_content + ',' + header_value;
+        } else {
+            field_input_content = field_value;
+            header_input_content = header_value;
+        }
+        field_input.val( field_input_content );
+        header_input.val( header_input_content );
+
+
+       
+        
+
+    });
+
 
 
     function showOrHideTextAreas() {
