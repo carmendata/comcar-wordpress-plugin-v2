@@ -63,7 +63,7 @@ function saveToolsOptions( ) {
         
             update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
             }
-            continue;
+         
         }
 
 
