@@ -31,15 +31,15 @@ add_action("wp_head",'activate_page_plugins');
                 global $post;
                 $post_id = $post->ID;
             
-        
                 $WPTax_calc_arrOptions = get_option( "WPComcar_plugin_options_tax_calculator" ); 
                 $WPComparator_arrOptions = get_option( "WPComcar_plugin_options_comparator" );
-                $WPComcar_arrOptions=array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
+                $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
+
+
 
                 switch( $post_id ) {
                     case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
                         // check for calculation redirect
-      
                         $WPComcar_tax_calc_override = $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
 
                         if( isset($_GET['taxcalculatorcode'] ) ) {
@@ -61,26 +61,21 @@ add_action("wp_head",'activate_page_plugins');
 
                         } else if ( $WPComcar_tax_calc_override ) {
                             // if an override exists, encode data and transmit
-
-                            // defaults in case the page is visited without a $_POST submission
-                            if(!isset($_GET['car']))         {  $_GET['car']="";  }
-                            if(!isset($_POST['car']))        {  $_POST['car']=$_GET['car'];  }
-
-                            if(!isset($_GET['id']))          {  $_GET['id']=$_POST['car'];  }
-                            if(!isset($_POST['id']))         {  $_POST['id']=$_GET['id'];  }
-
-                            if(!isset($_POST['CapCon']))     {  $_POST['CapCon']="";  }
-                            if(!isset($_POST['AnnCon']))     {  $_POST['AnnCon']="";  }
-                            if(!isset($_POST['frm_listID'])) {  $_POST['frm_listID']="";  }
-                            if(!isset($_POST['optTotal']))   {  $_POST['optTotal']="";  }
-
+ 							$_GET['car']		= isset( $_GET['car']) ? $_GET['car'] : "";
+                          	$_POST['car']		= isset( $_POST['car']) ? $_POST['car'] : $_GET['car'];
+                          	$_GET['id']			= isset( $_GET['id']) ? $_GET['car'] : $_POST['car'];
+                          	$_POST['id']		= isset( $_POST['id']) ? $_POST['id'] : $_GET['id'];
+                          	$_POST['CapCon']	= isset( $_POST['CapCon']) ? $_POST['CapCon'] : "";
+                          	$_POST['AnnCon']	= isset( $_POST['AnnCon']) ? $_POST['AnnCon'] : "";
+                          	$_POST['frm_listID']= isset( $_POST['frm_listID']) ? $_POST['frm_listID'] : "";
+                          	$_POST['optTotal']	= isset( $_POST['optTotal']) ? $_POST['optTotal'] : "";
+                          	 
                             // create formData string to encode as base64
-                            $WPComcar_formData = "";
-                            $WPComcar_formData = $WPComcar_formData.$_POST['id']."~";
-                            $WPComcar_formData = $WPComcar_formData.$_POST['CapCon']."~";
-                            $WPComcar_formData = $WPComcar_formData.$_POST['AnnCon']."~";
-                            $WPComcar_formData = $WPComcar_formData.$_POST['frm_listID']."~";
-                            $WPComcar_formData = $WPComcar_formData.$_POST['optTotal'];
+                            $WPComcar_formData = 	$_POST['id']."~"
+                            						.$_POST['CapCon']."~"
+                            						.$_POST['AnnCon']."~"
+                            						.$_POST['frm_listID']."~"
+                            						.$_POST['optTotal'];
 
                             $WPComcar_hashedData = bin2hex( base64_encode( $WPComcar_formData ) );
                             header( "Location: $WPComcar_tax_calc_override?taxcalculatorcode=$WPComcar_hashedData");
