@@ -7,7 +7,7 @@
 	if(!isset($_POST['id'])){	$_POST['id'] = $_GET['id'];	}
 	$_POST['thisPage'] = $WPComcar_vehicleType.'-details.php';
 	//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-	$WPComcar_arrOptions=get_option("WPComcar_plugin_options_comparator");
+	$WPComcar_arrOptions=get_option("WP_plugin_options_comparator");
 	$WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
 	//callback page
 	$WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["details"];

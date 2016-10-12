@@ -32,15 +32,15 @@ add_action("wp_head",'activate_page_plugins');
                 $post_id = $post->ID;
             
         
-                $WPTax_calc_arrOptions = get_option("WPComcar_plugin_options_tax_calculator"); 
-                $WPComparator_arrOptions = get_option("WPComcar_plugin_options_comparator");
+                $WPTax_calc_arrOptions = get_option( "WPComcar_plugin_options_tax_calculator" ); 
+                $WPComparator_arrOptions = get_option( "WPComcar_plugin_options_comparator" );
                 $WPComcar_arrOptions=array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
-            
 
                 switch( $post_id ) {
                     case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
                         // check for calculation redirect
-                        $WPComcar_tax_calc_override= $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
+      
+                        $WPComcar_tax_calc_override = $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
 
                         if( isset($_GET['taxcalculatorcode'] ) ) {
                             // if there is encoded data put it back into the form
@@ -91,7 +91,7 @@ add_action("wp_head",'activate_page_plugins');
 
                     case $WPComcar_arrOptions["comparator_cars_subpage_details"]:   
                         $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_cars_comp_override"];       
-                    
+    
                         if( isset($_GET['comparatorcode'])) {
                             $_POST =  (array) json_decode(base64_decode($_GET['comparatorcode']));  
                         } else if ( $WPComcar_comparator_override ) {
@@ -124,15 +124,16 @@ function preg_grep_keys($pattern, $input) {
     //this function is called once every post and will call the desired plugin function
             function activate_page_plugins(){           
 
-                $loadCssAndJavascript=false;
+                $loadCssAndJavascript = false;
                 //if it is a page the one that is being loaded (not a POST)
                 $arrGeneralSettings=get_option("WPComcar_plugin_options_general");
                 //for all the plugins in comcar but for the general
                 require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
+               
                 global $plugin_nav;        
                 global $current_tool_name;
-
                 global $post;
+
                 $idOfTheCurrentPage = get_post( $post )->ID;
 
                 // foreach ( array_slice( $plugin_nav , 1 ) as $thisPluginName => $plugin_info ) {
@@ -140,11 +141,12 @@ function preg_grep_keys($pattern, $input) {
                 
                     //if it is not activated
                     if (!isset($arrGeneralSettings["pluginsOptions"][$thisPluginName])){
-                         continue;
+                        continue;
                     }
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
+
 
                     // If the arrOption is empty jump to the next one
                     if ( !isset( $arrOptions ) ) {
@@ -160,49 +162,41 @@ function preg_grep_keys($pattern, $input) {
                       
                     if ( isset( $arrOptions["pages"] ) && 
                         is_array( $arrOptions["pages"] ) ) {     
-                        //foreach vans and cars...
-                
-                        foreach($arrOptions["pages"] as $key=>$page){
+                        //foreach vans and cars...                
+                        foreach($arrOptions["pages"] as $key => $page){
                             // $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
 
                             $arr_pages = preg_grep_keys( '#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i', $arrOptions );
 
                             // Include also parent page
-                            array_push( $arr_pages, $arrOptions[$thisPluginName."_".$page ."_page"] );
+                            array_push( $arr_pages, $arrOptions[ $thisPluginName."_".$page ."_page" ] );
 
                             foreach( $arr_pages as $label=>$value ) {
-                                if ( $value == $idOfTheCurrentPage ) {       
-                                    $loadCssAndJavascript = true;
+                                if ( $value == $idOfTheCurrentPage ) {  
+
                                     $current_tool_name = $thisPluginName.'_'.$page;
-                                    add_filter( 'the_content',  'getToolContent' );
-                                    break;
+                                    break 2;
                                 }
                             }
                         }
-                    } else {
+                    } else {    
+                        $value = $arrOptions[ $thisPluginName."_page" ];
+                        $current_tool_name = $thisPluginName;
+                    }
 
-    
- 
-                    
-                        /******************* FOOTPRINT CALCULATOR **********************/
-                        // if (strcmp($idPageWhereShouldBeLoadedThePlugin,$idOfTheCurrentPage)==0){
-                        //     $loadCssAndJavascript=true;
-                        //     $theFunctionName=$thisPluginName."_execute";
-                        //     $this->$theFunctionName();
-                        // } else {
-                        //     if (strcmp($idPageWhereShouldBeLoadedThePlugin,$this->getParentId())==0){
-                        //         $loadCssAndJavascript=true;
-                        //         $parent_name = WPComcarPlugin_admin_configuration::$arrOrderOfPlugins[$i][0];
-                             
-                        //         $theFunctionName=$parent_name."_execute";
-                        //         $this->$theFunctionName();
-                        //     }
-                            
-                        // }
-                    }                   
+
+                    if ( $value == $idOfTheCurrentPage ) {       
+                        $loadCssAndJavascript = true;         
+                        add_filter( 'the_content',  'getToolContent' );
+                        break;
+                    }
+
                 }
 
-                if ($loadCssAndJavascript){
+
+
+                if ( $loadCssAndJavascript ) {
+                    echo "<script> $=jQuery; </script>";
                     wp_enqueue_script('comcar-javascript');
                     wp_enqueue_style('comcar-style');
                 }
@@ -213,27 +207,36 @@ function preg_grep_keys($pattern, $input) {
 function getToolContent(  ) {
     global $current_tool_name;
         if( is_page() && is_main_query() ) { 
+
         //             // lets include the code
-            $tool_to_include = '';
-        
-            $path_to_include = '';
+           
+
             switch ( $current_tool_name ) {
+
                 case 'tax_calculator_cars':
                     $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
                 break;
                 case 'tax_calculator_vans':
                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
                 break;
+                case 'comparator_cars':
+
+                    $path_to_include = "Comparator/Car-comparator.php";
+          
+                break;
+                case 'footprint':
+                    $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
+                break;
                 default:
-                    
-                    break;
+                    $path_to_include = '';
+                break;
             }
-                               
+                         
         include_once(WPComcar_WEBSERVICESCALLSPATH.$path_to_include);
           
                
-
             
+
             $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
 
             $content = $content.$WPComcar_theResultOfTheWebservice;

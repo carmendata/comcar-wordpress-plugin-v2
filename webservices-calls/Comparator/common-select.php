@@ -8,7 +8,7 @@
 	try {
 
 		//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-		$WPComcar_arrOptions=get_option("WPComcar_plugin_options_comparator");	
+		$WPComcar_arrOptions=get_option("WP_plugin_options_comparator");	
 		$WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
 
 		//lets set the textareas 

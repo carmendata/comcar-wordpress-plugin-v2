@@ -26,7 +26,7 @@
 
 			//decide what page to load
 			//parent or subpage?
-			$arrOptions = get_option('WPComcar_plugin_options_comparator');
+			$arrOptions = get_option('WP_plugin_options_comparator');
 
 			//check if the parent title is the one expected
 			$theIdPageWhereShouldLoadThePlugin=$arrOptions["comparator_vans_page"];
