@@ -11,9 +11,6 @@ $plugin_nav = array(
                     );
 
 
-
-
-
 $arr_page_setting = array(  "" => "",
                             "maxP11D" => "P11D Value", 
                             "cvotr" => "Price",
