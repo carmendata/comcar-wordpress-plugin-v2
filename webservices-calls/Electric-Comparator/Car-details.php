@@ -18,7 +18,7 @@
 
     // Serialize object to JSON
     $WPComcar_jsnDataAndConfig = json_encode($WPComcar_objDataAndConfig);
-    $WPComcar_arrOptions=get_option("WPComcar_plugin_options_electric_comparator");
+    $WPComcar_arrOptions=get_option("WP_plugin_options_electric_comparator");
 
     try {
        

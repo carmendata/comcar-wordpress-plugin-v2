@@ -126,7 +126,7 @@ function preg_grep_keys($pattern, $input) {
 
                 $loadCssAndJavascript = false;
                 //if it is a page the one that is being loaded (not a POST)
-                $arrGeneralSettings=get_option("WPComcar_plugin_options_general");
+                $arrGeneralSettings = get_option("WPComcar_plugin_options_general");
                 //for all the plugins in comcar but for the general
                 require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
                
@@ -146,7 +146,7 @@ function preg_grep_keys($pattern, $input) {
    
                     //options of the current plugin
                     $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
-
+                    print_r($arrOptions);
 
                     // If the arrOption is empty jump to the next one
                     if ( !isset( $arrOptions ) ) {
@@ -209,7 +209,6 @@ function getToolContent(  ) {
         if( is_page() && is_main_query() ) { 
 
         //             // lets include the code
-           
 
             switch ( $current_tool_name ) {
 
@@ -220,12 +219,16 @@ function getToolContent(  ) {
                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
                 break;
                 case 'comparator_cars':
-
                     $path_to_include = "Comparator/Car-comparator.php";
-          
+                break;
+                case 'comparator_vans':
+                    $path_to_include = "Comparator/Van-comparator.php";
                 break;
                 case 'footprint':
                     $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
+                break;
+                case 'electric_comparator_cars': 
+                    $path_to_include = "Electric-Comparator/Electric-Comparator.php";
                 break;
                 default:
                     $path_to_include = '';

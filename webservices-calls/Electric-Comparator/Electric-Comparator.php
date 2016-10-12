@@ -23,7 +23,7 @@
 
             //decide what page to load
             //parent or subpage?
-            $arrOptions = get_option('WPComcar_plugin_options_electric_comparator');
+            $arrOptions = get_option('WP_plugin_options_electric_comparator');
 
             //check if the parent title is the one expected
             $theIdPageWhereShouldLoadThePlugin=$arrOptions["electric_comparator_cars_page"];

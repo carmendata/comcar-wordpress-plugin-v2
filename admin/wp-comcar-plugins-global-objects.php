@@ -411,28 +411,29 @@ $plugin_options = array(
             )
         ),
         'electric_comparator' => array( 
+                 
              array( 
                 "label" => "Enable electric comparator",
-                "name" => "enableElectricComparator",
-                "options" => array( 'For car channel'),
+                "name" => "pages",
+                "options" => array( 'For car channel' => 'cars' ),
                 "type" => "checkbox"
                 ),
                 array( 
                 "label" => "Electric comparator page",
-                "name" => "carElectricComparatorParentPage",
+                "name" => "electric_comparator_cars_page",
                 "options" => 'Pages',
                  "desc" => "Select which page the Electric comparator should be loaded on.",
                 "type" => "select"
                 ) ,
 
             array( 
-                "name" => "carElectricComparatorDetailsPage",
+                "name" => "electric_comparator_cars_subpage_details",
                 "options" => 'Pages',
                  "desc" => "The Details page.",
                 "type" => "select"
                 ) ,
             array( 
-                "name" => "carElectricComparatorCallbackPage",
+                "name" => "electric_comparator_cars_subpage_callback",
                 "options" => 'Pages',
                  "desc" => "The Callback page (This never gets seen by users but is crucial to user flow).",
                 "type" => "select"
