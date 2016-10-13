@@ -48,9 +48,6 @@ jQuery( document ).ready( function ( $ ) {
         }
         field_input.val( field_input_content );
         header_input.val( header_input_content );
-
-
-       
         
 
     });

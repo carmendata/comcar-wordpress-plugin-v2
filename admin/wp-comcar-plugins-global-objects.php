@@ -331,6 +331,9 @@ $plugin_options = array(
                 "type" => "select"
                 ) ,
   
+
+
+  
             array( 
                 "name" => "comparator_vans_subpage_details",
                 "options" => "Pages",

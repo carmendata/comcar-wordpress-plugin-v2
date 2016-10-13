@@ -9,8 +9,11 @@
  * License: GPL2
  */
 
-ini_set( 'error_reporting', E_ALL );
-ini_set( 'display_errors', true );
+
+
+// Uncomment if you want to debug to receive warnings and errors
+// ini_set( 'error_reporting', E_ALL );
+// ini_set( 'display_errors', true );
 
 define( "WPComcar_PLUGINVERSION","1.0.0" );
 
@@ -215,7 +218,7 @@ function getToolContent(  ) {
             break;
         }
                      
-    	include_once(WPComcar_WEBSERVICESCALLSPATH.$path_to_include);                 
+    	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );                 
 
         $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
 			$content = isset( $content ) ? $content : "";
