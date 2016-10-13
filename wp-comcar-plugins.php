@@ -188,23 +188,26 @@ function preg_grep_keys($pattern, $input) {
                     if ( isset( $arrOptions["pages"] ) && 
                         is_array( $arrOptions["pages"] ) ) {     
                         //foreach vans and cars...                
+              
                         foreach($arrOptions["pages"] as $key => $page){
                             // $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
 
                             $arr_pages = preg_grep_keys( '#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i', $arrOptions );
-
+                           
+                            if ( isset($arr_pages)){
                             // Include also parent page
-                            array_push( $arr_pages, $arrOptions[ $thisPluginName."_".$page ."_page" ] );
+                                array_push( $arr_pages, $arrOptions[ $thisPluginName."_".$page ."_page" ] );
 
-                            foreach( $arr_pages as $label=>$value ) {
-                                
-
-
+                                foreach( $arr_pages as $label=>$value ) {
+                                    
 
 
-                                if ( $value == $idOfTheCurrentPage ) {  
-                                    $current_tool_name = $thisPluginName.'_'.$page;
-                                    break 2;
+
+
+                                    if ( $value == $idOfTheCurrentPage ) {  
+                                        $current_tool_name = $thisPluginName.'_'.$page;
+                                        break 2;
+                                    }
                                 }
                             }
                         }

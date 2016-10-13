@@ -83,9 +83,7 @@ function saveToolsOptions( ) {
  
             $obj_opt[$value['name']]= array();
             foreach ( $value['options'] as $label => $option ) {
-                echo $value['name'];
-           echo $option.'<br>';
-               
+
                 // $obj_to_insert[$value['name']] = array();
 
                 if ( isset( $_REQUEST[ $option ] )) {

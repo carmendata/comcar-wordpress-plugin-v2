@@ -92,7 +92,7 @@ $plugin_options = array(
             array( 
                 "label" => "Enable tax calculator",
                 "name" => "pages",
-                "options" => array( 'For car channel' => 'pages_cars', 'For van channel'=> 'pages_vans' ),
+                "options" => array( 'For car channel' => 'cars', 'For van channel'=> 'vans' ),
                 "type" => "checkbox"
                 ),
 
@@ -276,7 +276,7 @@ $plugin_options = array(
             array( 
                 "label" => "Enable comparator",
                 "name" => "pages",
-                "options" => array( 'For car channel' => 'pages_cars', 'For van channel'=> 'pages_vans' ),
+                "options" => array( 'For car channel' => 'cars', 'For van channel'=> 'vans' ),
                 "type" => "checkbox"
                 ),
           
@@ -414,7 +414,7 @@ $plugin_options = array(
              array( 
                 "label" => "Enable electric comparator",
                 "name" => "pages",
-                "options" => array( 'For car channel' => 'pages_cars' ),
+                "options" => array( 'For car channel' => 'cars' ),
                 "type" => "checkbox"
                 ),
                 array( 
