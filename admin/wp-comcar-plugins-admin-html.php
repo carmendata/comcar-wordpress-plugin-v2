@@ -136,12 +136,12 @@ Plugin setting output
 function createOptionsForEachNav( ) {
     global $plugin_options;
     $message = ""; 
-
-    if ( "save" == $_REQUEST["action"] ) {
-        saveToolsOptions();
-        $message = "saved";
-    } 
-    
+    if ( isset( $_REQUEST["action"] )) {
+        if ( "save" == $_REQUEST["action"] ) {
+            saveToolsOptions();
+            $message = "saved";
+        } 
+    }
     echo "<div class='wrap options_wrap'> <div id='icon-options-general'></div>";
           
     if ( $message == "saved" ) {
