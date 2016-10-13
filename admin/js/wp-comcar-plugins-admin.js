@@ -72,12 +72,10 @@ jQuery( document ).ready( function ( $ ) {
 
     function enableOrDisableNavs() {
         $('.WPComcar_disableSubTab').removeClass('WPComcar_disableSubTab');
-
-        $('input.general_enableTools:not(:checked)').each( function( ) {
-            var nav_name =  $(this).attr('name').replace( 'general_enableTools_', '' );
-            nav_name = nav_name.toLowerCase();
-            console.log(nav_name);
-            $('[name='+nav_name+']').addClass('WPComcar_disableSubTab');
+        console.log()
+        $('input.pluginsOptions:not(:checked)').each( function( ) {
+            var nav_name =  $(this).attr('name');
+            $('a[name='+nav_name+']').addClass('WPComcar_disableSubTab');
         })
        
     }
