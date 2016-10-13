@@ -90,11 +90,11 @@ function decodeURLParam( $str_to_decode ) {
                       	$_POST["optTotal"]	= isset( $_POST["optTotal"]) ? $_POST["optTotal"] : "";
                       	 
                         // create formData string to encode as base64
-                        $WPComcar_formData = 	$_POST['id']."~"
-                        						.$_POST['CapCon']."~"
-                        						.$_POST['AnnCon']."~"
-                        						.$_POST['frm_listID']."~"
-                        						.$_POST['optTotal'];
+                        $WPComcar_formData = 	$_POST["id"]."~"
+                        						.$_POST["CapCon"]."~"
+                        						.$_POST["AnnCon"]."~"
+                        						.$_POST["frm_listID"]."~"
+                        						.$_POST["optTotal"];
 
                         $WPComcar_hashedData = bin2hex( base64_encode( $WPComcar_formData ) );
                         header( "Location: $WPComcar_tax_calc_override?taxcalculatorcode=$WPComcar_hashedData");
@@ -107,8 +107,8 @@ function decodeURLParam( $str_to_decode ) {
                    
                     $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_cars_comp_override"];       
 
-                    if( isset($_GET['comparatorcode'])) {
-                        $_POST =  (array) json_decode(base64_decode($_GET['comparatorcode']));  
+                    if( isset($_GET["comparatorcode"])) {
+                        $_POST =  (array) json_decode(base64_decode($_GET["comparatorcode"]));  
                     } else if ( $WPComcar_comparator_override ) {
                         if( !isset( $_POST ) ) {  
                             $_POST=$_GET;  
@@ -166,7 +166,7 @@ function preg_grep_keys($pattern, $input) {
                     }
    
                     //options of the current plugin
-                    $arrOptions = get_option('WP_plugin_options_'.$thisPluginName);
+                    $arrOptions = get_option("WP_plugin_options_".$thisPluginName);
              
                     // If the arrOption is empty jump to the next one
                     if ( !isset( $arrOptions ) ) {
@@ -185,9 +185,8 @@ function preg_grep_keys($pattern, $input) {
                         //foreach vans and cars...                
               
                         foreach($arrOptions["pages"] as $key => $page){
-                            // $idPageWhereShouldBeLoadedThePlugin = $arrOptions[$thisPluginName.'_'.$page.'_page'];
-
-                            $arr_pages = preg_grep_keys( '#^'.$thisPluginName.'_'.$page.'_subpage_(.*)$#i', $arrOptions );
+                           
+                            $arr_pages = preg_grep_keys( "#^".$thisPluginName."_".$page."_subpage_(.*)$#i", $arrOptions );
                            
                             if ( isset($arr_pages)){
                             // Include also parent page
@@ -214,7 +213,7 @@ function preg_grep_keys($pattern, $input) {
 
                     if ( $value == $idOfTheCurrentPage ) {       
                         $loadCssAndJavascript = true;         
-                        add_filter( 'the_content',  'getToolContent' );
+                        add_filter( "the_content",  "getToolContent" );
                         break;
                     }
 
@@ -224,8 +223,8 @@ function preg_grep_keys($pattern, $input) {
 
                 if ( $loadCssAndJavascript ) {
                     echo "<script> $=jQuery; </script>";
-                    wp_enqueue_script('comcar-javascript');
-                    wp_enqueue_style('comcar-style');
+                    wp_enqueue_script("comcar-javascript");
+                    wp_enqueue_style("comcar-style");
                 }
             }
 
@@ -239,26 +238,26 @@ function getToolContent(  ) {
 
             switch ( $current_tool_name ) {
 
-                case 'tax_calculator_cars':
+                case "tax_calculator_cars":
                     $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
                 break;
-                case 'tax_calculator_vans':
+                case "tax_calculator_vans":
                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
                 break;
-                case 'comparator_cars':
+                case "comparator_cars":
                     $path_to_include = "Comparator/Car-comparator.php";
                 break;
-                case 'comparator_vans':
+                case "comparator_vans":
                     $path_to_include = "Comparator/Van-comparator.php";
                 break;
-                case 'footprint':
+                case "footprint":
                     $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
                 break;
-                case 'electric_comparator_cars': 
+                case "electric_comparator_cars": 
                     $path_to_include = "Electric-Comparator/Electric-Comparator.php";
                 break;
                 default:
-                    $path_to_include = '';
+                    $path_to_include = "";
                 break;
             }
                          
