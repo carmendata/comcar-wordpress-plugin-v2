@@ -4,16 +4,16 @@ require_once( "wp-comcar-plugins-global-objects.php") ;
 /*---------------------------------------------------
 add actions
 ----------------------------------------------------*/
-add_action( "admin_init", "plugin_settings_init" );
-add_action( "admin_menu", "add_settings_page" );
+add_action( "admin_init", "pluginSettingsInit" );
+add_action( "admin_menu", "addSettingsPage" );
 
 
 
 /*---------------------------------------------------
 register settings
 ----------------------------------------------------*/
-function plugin_settings_init(){
-    register_setting( "plugin_settings", "plugin_settings" );
+function pluginSettingsInit(){
+     // register_setting( "plugin_settings", "plugin_settings" );
     wp_register_script( "panel_script" , plugins_url( "/js/wp-comcar-plugins-admin.js", __FILE__ ) );
     wp_register_style( "panel_style" , plugins_url( "/css/wp-comcar-plugins-admin.css", __FILE__ ));
    
@@ -25,125 +25,118 @@ function plugin_settings_init(){
 /*---------------------------------------------------
 add settings page to menu
 ----------------------------------------------------*/
-function add_settings_page() {
-    add_menu_page(  "Comcar tools" , "Comcar tools settings" , "manage_options", "settings", "plugin_settings_page");
+function addSettingsPage() {
+    add_menu_page(  "Comcar tools" , "Comcar tools settings" , "manage_options", "settings", "pluginSettingsPage");
 }
+
+
+function pluginSettingsPage() {
+    createNavsAdminPanel();
+    createOptionsForEachNav();   
+}
+
 
 
 function saveToolsOptions( ) {
     global $plugin_options;
     $parent_name =  "";
-    delete_option("WP_plugin_options_".$_REQUEST["nav"]);
+    $current_tool_name = "WP_plugin_options_".$_REQUEST["nav"];
 
-    foreach ( $plugin_options[$_REQUEST["nav"]] as $value ) { 
+    // Delete all options to avoid problems if we change some id o name 
+    // and the old one still there
+    delete_option( $current_tool_name );
+
+    // Loop over all options inside the tool that we are saving
+    foreach ( $plugin_options[ $_REQUEST["nav"] ] as $value ) { 
    
-        $obj_opt = get_option("WP_plugin_options_".$_REQUEST["nav"]);
+        $obj_opt = get_option( $current_tool_name );
         $desc = isset( $value["desc"] ) ? $value["desc"] : "";
         
+        // This is used if you want that the object generated have a 
+        // parent call $value['name'] and any kind of info ( checkbox, text,
+        // selector..) will be included as a children of this openSection name
         if ( $value["type"] == "openSection" ) {
-            $parent_name =  $value["name"];
-     
+            $parent_name =  $value["name"];    
             $obj_opt[$parent_name] = array();
-
-            update_option( "WP_plugin_options_".$_REQUEST["nav"] ,  $obj_opt ); 
-
+            update_option( $current_tool_name ,  $obj_opt ); 
         } else if(  $value["type"] == "closeSection" ) {
+            // set parent name as "" to indicate that the next 
+            // option don't have parent
             $parent_name = "";
             continue;
         }  
 
-        if ( $parent_name != "" && $value["type"] != "openSection" ) {    
-  
-            if ( $value["name"] != ""){
-            $value_to_update = isset($_REQUEST[ $value["name"]]) ?$_REQUEST[ $value["name"]]:"";        
-            $obj_opt[$parent_name][$value["name"]] = $value_to_update;
-        
-            update_option( "WP_plugin_options_".$_REQUEST["nav"] ,  $obj_opt ); 
-            }
-         
+        // Are we inside of a section, if it is like this store
+        // the current option as children 
+        if ( $parent_name != "" && $value["type"] != "openSection" ) {   
+            if ( $value["name"] != "" ) {
+                $value_to_update = isset($_REQUEST[ $value["name"]]) ?$_REQUEST[ $value["name"]]:"";        
+                $obj_opt[$parent_name][$value["name"]] = $value_to_update;
+                update_option( $current_tool_name ,  $obj_opt ); 
+            }   
         }
 
 
-        if ( isset( $value["name"] ) && $value["type"] != "checkbox" && $value["type"] != "openSection" ) {      
+        if (    isset( $value["name"] ) 
+                && $value["type"] != "checkbox" 
+                && $value["type"] != "openSection" ) {  
+
             $value_to_update = isset($_REQUEST[ $value["name"]]) ?$_REQUEST[ $value["name"]]:"";        
             $obj_opt[$value["name"]] = $value_to_update;
+            
+            // We update options twice because we have two objects of options
+            // the first one $current_tool_name will be read from wp-comcar-plugins.php
+            // and have to has same structrue as old code to match it
 
-            update_option( "WP_plugin_options_".$_REQUEST["nav"] ,  $obj_opt ); 
-
+            // the other update_option is used to store and show the inputs values
+            // inside admin panel.
+            update_option( $current_tool_name ,  $obj_opt ); 
             update_option( $value["name"], $value_to_update ); 
-
+       
         } else if ( $value["type"] == "checkbox" ) {       
- 
             $obj_opt[$value["name"]]= array();
+            // the checkboxes has to be treated diferent as the rest of the inputs
             foreach ( $value["options"] as $label => $option ) {
-
-                // $obj_to_insert[$value["name"]] = array();
-
                 if ( isset( $_REQUEST[ $option ] )) {
-
                     update_option( $option, $_REQUEST[ $option ] );               
-                    
                     array_push(   $obj_opt[$value["name"]], $option );
                     $obj_opt[$value["name"]][$option]  = $_REQUEST[ $option ];
-                  
                 } else {
                     unset( $obj_opt[$option] );
                     delete_option($option);
                 }
-            }
-
-    
-
-             
-
-               
-
-                update_option( "WP_plugin_options_".$_REQUEST["nav"] , $obj_opt  ); 
-            
+            }            
+            update_option( $current_tool_name , $obj_opt  ); 
         } 
-
     }
 
-
-    $arrOptions = get_option("WP_plugin_options_".$_REQUEST["nav"]);
+    // This is a little hack necessary to match te new code with the old one
+    // it is redundant info, but in the future will be deleted
+    $arrOptions = get_option($current_tool_name);
     if ( isset( $arrOptions["pages"] )) {
         foreach($arrOptions["pages"] as $key=>$page){       
             $arr_subpages = matchPattern("#^".$_REQUEST["nav"]."_".$page."_subpage_(.*)$#i",$arrOptions);
             $arrOptions[$page."_subpages"] =  array();
             foreach( $arr_subpages as $label=>$value ) {
-                
                 $subpage = str_replace( $_REQUEST["nav"]."_".$page."_subpage_","",$label );
                 $arrOptions[$page."_subpages"][$subpage] = $value;
-
             }
-
-            update_option( "WP_plugin_options_".$_REQUEST["nav"] , $arrOptions  ); 
-        }
-                               
+            update_option( $current_tool_name , $arrOptions  ); 
+        }                         
     }                    
-
-
-
-
 }
 
 
 
-function matchPattern($pattern, $input) {
-    return array_intersect_key($input, array_flip(preg_grep($pattern, array_keys($input))));
-}
 
 
 
 /*---------------------------------------------------
 Plugin setting output
 ----------------------------------------------------*/
-/*---------------------------------------------------
-Theme Panel Output
-----------------------------------------------------*/
+
 function createOptionsForEachNav( ) {
     global $plugin_options;
-    $i = 0;
     $message = ""; 
 
     if ( "save" == $_REQUEST["action"] ) {
@@ -181,8 +174,7 @@ function createOptionsForEachNav( ) {
 
                 case "text": 
                     echo $std."<tr><th><label>$label</label></th><td>
-                        <input type='text' placeholder='$std' name='$name' value='";
-                
+                        <input type='text' placeholder='$std' name='$name' value='";            
                     if ( get_option( $name ) != "") { 
                         echo stripslashes(get_option( $name)  ) ;
                     }
@@ -190,8 +182,7 @@ function createOptionsForEachNav( ) {
                 break;
 
                 case "option":
-                   echo "<tr><th>$label</th><td>$desc </td><td>";
-
+                    echo "<tr><th>$label</th><td>$desc </td><td>";
                     $checkbox_name = $name."_checkbox";
                     
                     if ( get_option( $name ) ) {
@@ -239,8 +230,7 @@ function createOptionsForEachNav( ) {
 
                 case "checkbox":                     
                     echo "<tr><th>" . $label . "</th><td>";
-                    foreach($options as $label => $option){
-                        
+                    foreach($options as $label => $option){    
                         if ( get_option( $option ) != "" ) {
                             echo "<input class='$name' type='checkbox' name='$option' value='$option' checked> $label <br/>";
                         }else{
@@ -255,7 +245,7 @@ function createOptionsForEachNav( ) {
             }
         }
         echo "</tbody></table>
-            <span class='submit'><input name='save$i' type='submit' class='button-primary' value='Save changes' /></span>
+            <span class='submit'><input name='save' type='submit' class='button-primary' value='Save changes' /></span>
             <input type='hidden' name='nav' value='$key' />    
             <input type='hidden' name='action' value='save' />
             </form></div>";            
@@ -267,35 +257,19 @@ function createOptionsForEachNav( ) {
 
  function createNavsAdminPanel() {
     global $plugin_nav;
-    
     echo "<div class='wrap'><h2 class='nav-tab-wrapper'>";
 
-    foreach($plugin_nav as $arrKey => $arrInfo) {
-        $arrTitle = $arrInfo["label"]; 
+    foreach( $plugin_nav as $arrKey => $arr_info ) {
+        $arr_title = $arr_info["label"]; 
         $str_function_name = "WP_plugin_options_".$arrKey; 
         $class_activation = "";
         if ( strcmp( $arrKey, "general" ) == 0 ) {
-            $class_activation =  "nav-tab-active";
-            
+            $class_activation =  "nav-tab-active";       
         } 
-        echo "<a name = $arrKey class='nav-tab WPComcar_subTab $class_activation $arrKey ' data-targettab= $str_function_name > $arrTitle </a>";      
+        echo "<a name = $arrKey class='nav-tab WPComcar_subTab $class_activation $arrKey ' data-targettab= $str_function_name > $arr_title </a>";      
     }
-
     echo "</h2></div>";
  }
-
-
-
-function plugin_settings_page() {
-    createNavsAdminPanel();
-    createOptionsForEachNav();   
-}
-
- 
-
-
-
-
 ?>
 
 

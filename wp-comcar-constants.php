@@ -9,6 +9,12 @@
 		}
 		return $pageURL;
 	}
+
+
+	function matchPattern($pattern, $input) {
+	    return array_intersect_key( $input, array_flip( preg_grep( $pattern, array_keys( $input ))));
+	}
+	
 	
 	//global constants
 	define("WPComcar_WEBSERVICESCALLSPATH",dirname(__FILE__)."/webservices-calls/");
