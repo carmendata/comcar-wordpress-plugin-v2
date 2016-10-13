@@ -3,23 +3,24 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 0.20.1
+ * Version: 1.0.0
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
  */
 
- ini_set( 'error_reporting', E_ALL );
+ini_set( 'error_reporting', E_ALL );
 ini_set( 'display_errors', true );
-define("WPComcar_PLUGINVERSION","0.20");
-include_once(__DIR__."/wp-comcar-constants.php");
 
-// shall I ask if it is admin to include it?
-require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-admin-html.php");
+define("WPComcar_PLUGINVERSION","1.0.0");
+
+require_once( __DIR__."/wp-comcar-constants.php" );
+require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
 
 
-add_action("wp", 'plugin_redirection');    
-add_action("wp_head",'activate_page_plugins');   
+add_action( "wp", "plugin_redirection" );    
+add_action("wp_head","activate_page_plugins");   
+
 
 
 // decode url from base64
@@ -53,46 +54,40 @@ function decodeURLParam( $str_to_decode ) {
             $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" ); 
             $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
             $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
-// echo '<div style=" background-color:red;">';
-// echo '<br>';
-// echo $post_id;
-// echo '<br>';
-// print_r( $WPComparator_arrOptions);
-// echo '</div>';
 
             switch( $post_id ) {
                 case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
                     // check for calculation redirect
                     $WPComcar_tax_calc_override = $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
 
-                    if( isset($_GET['taxcalculatorcode'] ) ) {
+                    if( isset($_GET["taxcalculatorcode"] ) ) {
 
                         // if there is encoded data put it back into the form
-                        $encoded_taxcalculatorcode = htmlspecialchars( $_GET[ 'taxcalculatorcode' ] );
+                        $encoded_taxcalculatorcode = htmlspecialchars( $_GET[ "taxcalculatorcode" ] );
 
                         $decoded_taxcalculatorcode =   decodeURLParam( $encoded_taxcalculatorcode );
 
-                        $arr_decoded = explode( '~', $decoded_taxcalculatorcode );
+                        $arr_decoded = explode( "~", $decoded_taxcalculatorcode );
 
-                        $_POST['id'] = $arr_decoded[ 0 ];
+                        $_POST["id"] = $arr_decoded[ 0 ];
 
                         if( count( $arr_decoded > 1 ) ) {
-                            $_POST['CapCon'] = $arr_decoded[ 1 ];
-                            $_POST['AnnCon'] = $arr_decoded[ 2 ];
-                            $_POST['frm_listID'] = $arr_decoded[ 3 ];
-                            $_POST['optTotal'] = $arr_decoded[ 4 ];
+                            $_POST["CapCon"] = $arr_decoded[ 1 ];
+                            $_POST["AnnCon"] = $arr_decoded[ 2 ];
+                            $_POST["frm_listID"] = $arr_decoded[ 3 ];
+                            $_POST["optTotal"] = $arr_decoded[ 4 ];
                         }
 
                     } else if ( $WPComcar_tax_calc_override ) {
                         // if an override exists, encode data and transmit
-						$_GET['car']		= isset( $_GET['car']) ? $_GET['car'] : "";
-                      	$_POST['car']		= isset( $_POST['car']) ? $_POST['car'] : $_GET['car'];
-                      	$_GET['id']			= isset( $_GET['id']) ? $_GET['car'] : $_POST['car'];
-                      	$_POST['id']		= isset( $_POST['id']) ? $_POST['id'] : $_GET['id'];
-                      	$_POST['CapCon']	= isset( $_POST['CapCon']) ? $_POST['CapCon'] : "";
-                      	$_POST['AnnCon']	= isset( $_POST['AnnCon']) ? $_POST['AnnCon'] : "";
-                      	$_POST['frm_listID']= isset( $_POST['frm_listID']) ? $_POST['frm_listID'] : "";
-                      	$_POST['optTotal']	= isset( $_POST['optTotal']) ? $_POST['optTotal'] : "";
+						$_GET["car"]		= isset( $_GET["car"]) ? $_GET["car"] : "";
+                      	$_POST["car"]		= isset( $_POST["car"]) ? $_POST["car"] : $_GET["car"];
+                      	$_GET["id"]			= isset( $_GET["id"]) ? $_GET["car"] : $_POST["car"];
+                      	$_POST["id"]		= isset( $_POST["id"]) ? $_POST["id"] : $_GET["id"];
+                      	$_POST["CapCon"]	= isset( $_POST["CapCon"]) ? $_POST["CapCon"] : "";
+                      	$_POST["AnnCon"]	= isset( $_POST["AnnCon"]) ? $_POST["AnnCon"] : "";
+                      	$_POST["frm_listID"]= isset( $_POST["frm_listID"]) ? $_POST["frm_listID"] : "";
+                      	$_POST["optTotal"]	= isset( $_POST["optTotal"]) ? $_POST["optTotal"] : "";
                       	 
                         // create formData string to encode as base64
                         $WPComcar_formData = 	$_POST['id']."~"
