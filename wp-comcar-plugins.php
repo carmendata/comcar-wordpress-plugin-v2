@@ -145,13 +145,14 @@ function preg_grep_keys($pattern, $input) {
 
                 $loadCssAndJavascript = false;
                 //if it is a page the one that is being loaded (not a POST)
-                $arrGeneralSettings = get_option("WPComcar_plugin_options_general");
-echo '<div style=" background-color:red;">';
-print_r(get_option("WPComcar_plugin_options_general"));
-echo '<br>_________________';
-print_r(get_option("WP_plugin_options_general"));
-echo '</div>';
-                exit();
+                $arrGeneralSettings = get_option("WP_plugin_options_general");
+// echo '<div style=" background-color:red;">';
+// echo '<br><br>';
+// print_r(get_option("WPComcar_plugin_options_general"));
+// echo '<br>_________________';
+// print_r(get_option("WP_plugin_options_general"));
+// echo '</div>';
+//                 exit();
                 //for all the plugins in comcar but for the general
                 require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
                
