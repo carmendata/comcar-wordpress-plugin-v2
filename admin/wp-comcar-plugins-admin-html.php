@@ -36,8 +36,9 @@ function saveToolsOptions( ) {
     global $plugin_options;
     $parent_name =  '';
     delete_option('WP_plugin_options_'.$_REQUEST['nav']);
-    
-    foreach ( $plugin_options[$_REQUEST['nav']] as $value ) {         
+
+    foreach ( $plugin_options[$_REQUEST['nav']] as $value ) { 
+   
         $obj_opt = get_option('WP_plugin_options_'.$_REQUEST['nav']);
         $desc = isset( $value["desc"] ) ? $value["desc"] : "";
         
@@ -56,7 +57,7 @@ function saveToolsOptions( ) {
         }  
 
         if ( $parent_name != '' && $value['type'] != 'openSection' ) {    
-      
+  
             if ( $value['name'] != ''){
             $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
             $obj_opt[$parent_name][$value['name']] = $value_to_update;
@@ -71,9 +72,11 @@ function saveToolsOptions( ) {
             $value_to_update = isset($_REQUEST[ $value['name']]) ?$_REQUEST[ $value['name']]:"";        
             $obj_opt[$value['name']] = $value_to_update;
 
-            
+               
+
+
                 update_option( 'WP_plugin_options_'.$_REQUEST['nav'] ,  $obj_opt ); 
-            
+
             update_option( $value['name'], $value_to_update ); 
 
         } else if ( $value['type'] == 'checkbox' ) {       
@@ -92,34 +95,40 @@ function saveToolsOptions( ) {
                     delete_option($full_name);
                 }
             }
-            $obj_to_insert[$value['name']] = $checkbox_array;
-            
-                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_to_insert  ); 
+            $obj_opt[$value['name']] = $checkbox_array;
+             
+
+
+               
+
+                update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $obj_opt  ); 
             
         } 
+
     }
-     
+
 
     $arrOptions = get_option('WP_plugin_options_'.$_REQUEST['nav']);
-    foreach($arrOptions["pages"] as $key=>$page){
-       
-        $arr_subpages = matchPattern('#^'.$_REQUEST['nav'].'_'.$page.'_subpage_(.*)$#i',$arrOptions);
-        $arrOptions[$page.'_subpages'] =  array();
-        foreach( $arr_subpages as $label=>$value ) {
-            
-            $subpage = str_replace( $_REQUEST['nav'].'_'.$page.'_subpage_','',$label );
-            $arrOptions[$page.'_subpages'][$subpage] = $value;
+    if ( isset( $arrOptions["pages"] )) {
+        foreach($arrOptions["pages"] as $key=>$page){       
+            $arr_subpages = matchPattern('#^'.$_REQUEST['nav'].'_'.$page.'_subpage_(.*)$#i',$arrOptions);
+            $arrOptions[$page.'_subpages'] =  array();
+            foreach( $arr_subpages as $label=>$value ) {
+                
+                $subpage = str_replace( $_REQUEST['nav'].'_'.$page.'_subpage_','',$label );
+                $arrOptions[$page.'_subpages'][$subpage] = $value;
 
+            }
+
+            update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $arrOptions  ); 
         }
-
-        update_option( 'WP_plugin_options_'.$_REQUEST['nav'] , $arrOptions  ); 
-    }
                                
-                         
+    }                    
 
 
 
-
+      print_r(get_option("WP_plugin_options_general"));
+                echo '<br>';  
 
 
 }
@@ -188,6 +197,7 @@ function createOptionsForEachNav( ) {
 
                 case 'option':
                    echo "<tr><th>$label</th><td>$desc </td><td>";
+
                     $checkbox_name = $name.'_checkbox';
                     
                     if ( get_option( $name ) ) {
@@ -236,8 +246,12 @@ function createOptionsForEachNav( ) {
                 case "checkbox":                     
                     echo '<tr><th>' . $label . '</th><td>';
                     foreach($options as $label => $option){
-                        $full_name = $name . '_' . $option;
-                        $full_name = str_replace( ' ', '_', $full_name );
+
+              
+                            $full_name = $name . '_' . $option;
+                 
+                            $full_name = str_replace( ' ', '_', $full_name );
+
                         
                         if ( get_option( $full_name ) != '' ) {
                             echo "<input class='$name' type='checkbox' name='$full_name' value='$option' checked> $label <br/>";
@@ -270,7 +284,7 @@ function createOptionsForEachNav( ) {
 
     foreach($plugin_nav as $arrKey => $arrInfo) {
         $arrTitle = $arrInfo['label']; 
-        $str_function_name = 'WPComcar_plugin_options_'.$arrKey; 
+        $str_function_name = 'WP_plugin_options_'.$arrKey; 
         $class_activation = '';
         if ( strcmp( $arrKey, "general" ) == 0 ) {
             $class_activation =  'nav-tab-active';

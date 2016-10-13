@@ -54,30 +54,30 @@ $plugin_options = array(
         ),
         array( 
                 "label" => "Car channel ID",
-                "name" => "general_clkCars",
+                "name" => "clkCars",
                 "type" => "text"
         ),
         array( 
                 "label" => "Car Channel Public hash",
                 "desc" => "The public hash delivered with the car channel",
-                "name" => "general_pushCars",
+                "name" => "pushCars",
                 "type" => "text"
         ),
         array( 
                 "label" => "Van Channel ID",
-                "name" => "general_clkVans",
+                "name" => "clkVans",
                 "type" => "text"
         ),
         array( 
                 "label" => "Van Channel Public hash",
                 "desc" => "The public hash delivered with the van channel",
-                "name" => "general_pushVans",
+                "name" => "pushVans",
                 "type" => "text"
         ),
         array( 
                 "label" => "Enable tools",
-                "name" => "general_enableTools",
-                "options" => array( 'Tax calculator' => 'Tax calculator', 'Comparator' => 'comparator', 'Electric comparator' => 'electric_comparator', 'Footprint calculator' =>'footprint'),
+                "name" => "",
+                "options" => array( 'Tax calculator' => 'tax_calculator', 'Comparator' => 'comparator', 'Electric comparator' => 'electric_comparator', 'Footprint calculator' =>'footprint'),
                 "type" => "checkbox"
         )      
     ),
