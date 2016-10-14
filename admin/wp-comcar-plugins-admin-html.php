@@ -97,10 +97,10 @@ function saveToolsOptions( ) {
             $obj_opt[$value["name"]]= array();
             // the checkboxes has to be treated diferent as the rest of the inputs
             foreach ( $value["options"] as $label => $option ) {
-                if ( isset( $_REQUEST[ $option ] )) {
-                    update_option( $option, $_REQUEST[ $option ] );               
+                if ( isset( $_REQUEST[ $_REQUEST["nav"]."_".$option ] )) {
+                    update_option( $_REQUEST["nav"]."_".$option, $_REQUEST[ $_REQUEST["nav"]."_".$option ] );               
                     array_push(   $obj_opt[$value["name"]], $option );
-                    $obj_opt[$value["name"]][$option]  = $_REQUEST[ $option ];
+                    $obj_opt[$value["name"]][$option]  = $_REQUEST[ $_REQUEST["nav"]."_".$option ];
                 } else {
                     unset( $obj_opt[$option] );
                     delete_option($option);
@@ -162,6 +162,7 @@ function createOptionsForEachNav( ) {
             $classes = isset( $value["class"] ) ? $value["class"]:"";
                 
             switch ( $value['type'] ) {
+
                 case "description":  
                     echo $value['description'];
                 break;
@@ -228,11 +229,12 @@ function createOptionsForEachNav( ) {
 
                 case "checkbox":                     
                     echo "<tr><th>" . $label . "</th><td>";
-                    foreach($options as $label => $option){    
-                        if ( get_option( $option ) != "" ) {
-                            echo "<input class='$name' type='checkbox' name='$option' value='$option' checked> $label <br/>";
+                    foreach($options as $label => $option){ 
+                        $fullname =  $key."_".$option;
+                        if ( get_option( $fullname ) != "" ) {
+                            echo "<input class='$name' type='checkbox' name='$fullname' value='$option' checked> $label <br/>";
                         }else{
-                            echo "<input class='$name' type='checkbox' name='$option' value='$option'> $label <br/>";
+                            echo "<input class='$name' type='checkbox' name='$fullname' value='$option'> $label <br/>";
                         }
                     }
                     echo "</td></tr>";
