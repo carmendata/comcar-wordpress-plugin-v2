@@ -26,7 +26,7 @@ function pluginSettingsInit(){
 add settings page to menu
 ----------------------------------------------------*/
 function addSettingsPage() {
-    add_menu_page(  "Comcar tools" , "Comcar tools settings" , "manage_options", "settings", "pluginSettingsPage");
+    add_menu_page(  "Comcar tools" , "Comcar tools settings" , "manage_options", "settings", "pluginSettingsPage", plugins_url("/img/comcar_logo.png",__FILE__));
 }
 
 
