@@ -33,7 +33,7 @@
                         );
     $tax_calculator_structure = array(  
             array( 
-                "description" => "Please insert the ID and public hash for your own car and/or van channel. Channels are available to customers of Carmen Data Ltd. To become a customer see carmendata.co.uk",
+                "description" => "The Tax Calculator tool allows users to calculate how much company car tax they will incur.",
                 "type" => "description"
             ),
 
@@ -73,7 +73,7 @@
             array( 
                 "name" => "tax_calculator_cars_subpage_calc",
                 "options" => "Pages",
-                "description" => "And finally the Calculate page (the last page).",
+                "desc" => "And finally the Calculate page (the last page).",
                 "type" => "select"
             ) ,
             array( 

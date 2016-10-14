@@ -17,7 +17,7 @@ $comparator_structure = array(
                 "label" => "Car channel comparator",
                 "name" => "comparator_cars_page",
                 "options" => "Pages",
-                "desc" => "Select which page the car Tax Calculator Parent Page should be loaded into.",
+                "desc" => "Select which page the Car Comparator Parent page will be loaded into.",
                 "type" => "select"
                 ) ,
             
@@ -36,7 +36,7 @@ $comparator_structure = array(
             array( 
                 "name" => "comparator_cars_subpage_callback",
                 "options" => "Pages",
-                 "description" => "The Callback page (This never gets seen by users but is crucial to user flow).",
+                 "desc" => "The Callback page (This never gets seen by users but is crucial to user flow).",
                 "type" => "select"
             ) ,
             array( 
@@ -57,7 +57,7 @@ $comparator_structure = array(
             array( 
                 "name" => "comparator_vans_subpage_select",
                 "options" => "Pages",
-                 "desc" => "Select which page the van Comparator Parent page will be loaded into.",
+                 "desc" => "The Select (the first page in the comparison process).",
                 "type" => "select"
                 ) ,
   
