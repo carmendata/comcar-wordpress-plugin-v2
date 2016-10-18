@@ -69,10 +69,11 @@ jQuery( document ).ready( function ( $ ) {
 
     function enableOrDisableNavs() {
         $('.WPComcar_disableSubTab').removeClass('WPComcar_disableSubTab');
-        console.log()
+ 
         $('input.pluginsOptions:not(:checked)').each( function( ) {
-            var nav_name =  $(this).attr('name');
-            $('a[name='+nav_name+']').addClass('WPComcar_disableSubTab');
+            var nav_name =  $( this ).attr( 'name' );
+            nav_name = nav_name.replace( 'general_','' );
+            $( 'a[name='+nav_name+']' ).addClass( 'WPComcar_disableSubTab' );
         })
        
     }

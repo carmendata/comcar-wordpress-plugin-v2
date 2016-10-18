@@ -38,9 +38,11 @@ function pluginSettingsPage() {
 
 
 function saveToolsOptions( ) {
+  
     global $plugin_options;
     $parent_name =  "";
     $current_tool_name = "WP_plugin_options_".$_REQUEST["nav"];
+
 
     // Delete all options to avoid problems if we change some id o name 
     // and the old one still there
@@ -96,16 +98,19 @@ function saveToolsOptions( ) {
         } else if ( $value["type"] == "checkbox" ) {       
             $obj_opt[$value["name"]]= array();
             // the checkboxes has to be treated diferent as the rest of the inputs
+
             foreach ( $value["options"] as $label => $option ) {
                 if ( isset( $_REQUEST[ $_REQUEST["nav"]."_".$option ] )) {
                     update_option( $_REQUEST["nav"]."_".$option, $_REQUEST[ $_REQUEST["nav"]."_".$option ] );               
                     array_push(   $obj_opt[$value["name"]], $option );
                     $obj_opt[$value["name"]][$option]  = $_REQUEST[ $_REQUEST["nav"]."_".$option ];
+         
                 } else {
+
                     unset( $obj_opt[$option] );
-                    delete_option($option);
+                    delete_option(  $_REQUEST["nav"]."_".$option );
                 }
-            }            
+            }
             update_option( $current_tool_name , $obj_opt  ); 
         } 
     }
@@ -123,7 +128,9 @@ function saveToolsOptions( ) {
             }
             update_option( $current_tool_name , $arrOptions  ); 
         }                         
-    }                    
+    }  
+
+                 
 }
 
 
@@ -231,6 +238,7 @@ function createOptionsForEachNav( ) {
                     echo "<tr><th>" . $label . "</th><td>";
                     foreach($options as $label => $option){ 
                         $fullname =  $key."_".$option;
+                       
                         if ( get_option( $fullname ) != "" ) {
                             echo "<input class='$name' type='checkbox' name='$fullname' value='$option' checked> $label <br/>";
                         }else{
