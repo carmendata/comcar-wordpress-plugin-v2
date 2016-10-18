@@ -131,6 +131,7 @@ function activate_page_plugins(){
     global $post;
 
     $idOfTheCurrentPage = get_post( $post )->ID;
+    
 
     foreach (  $plugin_nav as $thisPluginName => $plugin_info ) {    
         //if it is not activated jump to next 
@@ -138,9 +139,10 @@ function activate_page_plugins(){
             continue;
         }
 
+
         //options of the current plugin
         $arrOptions = get_option("WP_plugin_options_".$thisPluginName);
- 
+
         // if the arrOption is empty also jump to next one
         if ( !isset( $arrOptions ) ) {
             continue;
@@ -172,8 +174,9 @@ function activate_page_plugins(){
             $value = $arrOptions[ $thisPluginName."_page" ];
             $current_tool_name = $thisPluginName;
         }
-
         // if we has found the page to load we have to get the content of it 
+   
+   
         if ( $value == $idOfTheCurrentPage ) {       
             $loadCssAndJavascript = true;         
             add_filter( "the_content",  "getToolContent" );
@@ -193,6 +196,7 @@ function activate_page_plugins(){
 // include the webservices-calls
 function getToolContent(  ) {
     global $current_tool_name;
+
     if( is_page() && is_main_query() ) { 
         switch ( $current_tool_name ) {
             case "tax_calculator_cars":
@@ -212,6 +216,9 @@ function getToolContent(  ) {
             break;
             case "electric_comparator_cars": 
                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
+            break;
+            case "fuelprices": 
+                $path_to_include = "FuelPrices/FuelPrices.php";
             break;
             default:
                 $path_to_include = "";

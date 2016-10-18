@@ -1,5 +1,7 @@
 ChangeLog
 =========
+- **1.1.0** Added new tool 'Fuel prices'
+- **1.0.0** Changed admin backend
 - **0.20.1** Bug Fixes for admin settings
 - **0.20** Added Electric comparator tool
 - **0.19** Manage HTTPS
