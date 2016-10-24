@@ -27,7 +27,7 @@
 
 
 
-	} catch ( Exception $WPComcar_e) {
+	} catch ( Exception $WPComcar_e ) {
 	
 		// Error handling code if soap request fails 
 		$WPComcar_msg = $WPComcar_msg.'The webservice failed to load the selector<br />';

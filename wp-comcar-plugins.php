@@ -127,13 +127,16 @@ function activate_page_plugins( ) {
     require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
    
     global $plugin_nav;        
-    global $current_tool_name;
+    global $thisPluginName;
     global $post;
-
+    global $current_page;
+  
+    $thisPluginName = '';
     $idOfTheCurrentPage = get_post( $post )->ID;
     
 
-    foreach (  $plugin_nav as $thisPluginName => $plugin_info ) {    
+    foreach (  $plugin_nav as $thisPluginName => $plugin_info ) { 
+
         //if it is not activated jump to next 
         if ( !isset( $arrGeneralSettings["pluginsOptions"][$thisPluginName] )) {
             continue;
@@ -149,40 +152,32 @@ function activate_page_plugins( ) {
         }
          
         // Has the plugin pages? as for example tax calculator 
-        if ( isset( $arrOptions["pages"] ) && 
-            is_array( $arrOptions["pages"] ) ) {     
-            // Loop over all the pages search if we are in one of them
-            foreach( $arrOptions["pages"] as $key => $page){
-               
-                $arr_sub_pages = matchPattern( "#^".$thisPluginName."_".$page."_subpage_(.*)$#i", $arrOptions );
-               
-                if ( isset( $arr_sub_pages )) {
-                    // Include also parent page in to do the checkings 
-                    //because we could be in the parent one
-                    array_push( $arr_sub_pages, $arrOptions[ $thisPluginName."_".$page ."_page" ] );
-
-                    foreach( $arr_sub_pages as $label=>$value ) {
-                        if ( $value == $idOfTheCurrentPage ) {  
-                            $current_tool_name = $thisPluginName.'_'.$page;
-                            break 2;
+       
+       
+ 
+        $arr_sub_pages = matchPattern( "#^".$thisPluginName."(.*)page(.*)$#i", $arrOptions );
+        foreach( $arr_sub_pages as $key => $value ) {
+            if ( $value == $idOfTheCurrentPage ) { 
+                if ( isset( $arrOptions["pages"] ) &&
+                    is_array( $arrOptions["pages"] ) ) {
+                    foreach( $arrOptions["pages"] as $page_key => $page) {        
+                        $arr_pages =  preg_match ( "#^(.*)".$page."(.*)$#i", $key );
+                        if ( $arr_pages ) {
+                            $current_page = $page;
+                            break;
                         }
+
                     }
+                } else {
+                    $current_page = '';
                 }
+                $loadCssAndJavascript = true;         
+                add_filter( "the_content",  "getToolContent" );
+                break 2;
             }
-
-        } else {
-        
-            // If the plugin doesn't has pages we have to check just the current one
-            $value = $arrOptions[ $thisPluginName."_page" ];
-            $current_tool_name = $thisPluginName;
         }
-        // if we has found the page to load we have to get the content of it 
-        if ( $value == $idOfTheCurrentPage ) {       
+             
 
-            $loadCssAndJavascript = true;         
-            add_filter( "the_content",  "getToolContent" );
-            break;
-        }
     }
 
     if ( $loadCssAndJavascript ) {
@@ -196,26 +191,30 @@ function activate_page_plugins( ) {
 
 // include the webservices-calls
 function getToolContent(  ) {
-    global $current_tool_name;
-
+    global $thisPluginName;
+    global $current_page;
     if( is_page() && is_main_query() ) { 
-        switch ( $current_tool_name ) {
-            case "tax_calculator_cars":
-                $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
+        switch ( $thisPluginName ) {
+            case "tax_calculator":
+                // Van or Car?
+                if ( $current_page =='cars' ) {
+                    $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
+                } else {
+                    $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
+                }
             break;
-            case "tax_calculator_vans":
-                $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
-            break;
-            case "comparator_cars":
-                $path_to_include = "Comparator/Car-comparator.php";
-            break;
-            case "comparator_vans":
-                $path_to_include = "Comparator/Van-comparator.php";
+            case "comparator":
+                // Van or Car?
+                if ( $current_page =='cars' ) {
+                    $path_to_include = "Comparator/Car-comparator.php";
+                } else {
+                    $path_to_include = "Comparator/Van-comparator.php";                   
+                }
             break;
             case "footprint":
                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
             break;
-            case "electric_comparator_cars": 
+            case "electric_comparator": 
                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
             break;
             case "fuelprices": 
