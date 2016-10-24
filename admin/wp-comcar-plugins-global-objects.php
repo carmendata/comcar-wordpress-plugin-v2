@@ -8,6 +8,8 @@
     require_once( "pluginStructures/electricComparatorStructure.php");
     require_once( "pluginStructures/footprintStructure.php");
     require_once( "pluginStructures/fuelPricesStructure.php");
+    require_once( "pluginStructures/fuelBenefitCheckStructure.php");
+
 
     global $general_structure;
     global $tax_calculator_structure;
@@ -15,6 +17,7 @@
     global $electric_comparator_structure;
     global $footprint_structure;
     global $fuelPrices_structure;
+    global $fuel_benefit_check_structure;
 
     $plugin_nav = array(     
                             "general"               => array( "label" => "Main", "path" => "" ),
@@ -22,17 +25,19 @@
                             "comparator"            => array( "label" => "Comparator","path" => "" ),
                             "electric_comparator"   => array( "label" => "Electric comparator","path" => "" ),
                             "footprint"             => array( "label" => "Footprint calculator", "path" => "" ),
-                            "fuelprices"            => array( "label" => "Fuel prices calculator", "path" => "" )
+                            "fuelprices"            => array( "label" => "Fuel prices calculator", "path" => "" ),
+                            "fuel_benefit_check"    => array( "label" => "Fuel beneefit check", "path" => ""  ) 
                         );
 
 
     $plugin_options = array( 
-        "general" => $general_structure,
-        "tax_calculator" => $tax_calculator_structure,
-        "comparator" => $comparator_structure,
-        "electric_comparator" => $electric_comparator_structure,
-        "footprint" => $footprint_structure,
-        "fuelprices" => $fuelPrices_structure
+        "general"               => $general_structure,
+        "tax_calculator"        => $tax_calculator_structure,
+        "comparator"            => $comparator_structure,
+        "electric_comparator"   => $electric_comparator_structure,
+        "footprint"             => $footprint_structure,
+        "fuelprices"            => $fuelPrices_structure,
+        "fuel_benefit_check"    => $fuel_benefit_check_structure
     );
 
 ?>

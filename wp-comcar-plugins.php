@@ -120,7 +120,7 @@ function plugin_redirection() {
 
 
 //this function is called once every post and will call the desired plugin function
-function activate_page_plugins(){           
+function activate_page_plugins( ) {           
 
     $loadCssAndJavascript = false;
     $arrGeneralSettings = get_option("WP_plugin_options_general");
@@ -139,9 +139,9 @@ function activate_page_plugins(){
             continue;
         }
 
-
         //options of the current plugin
         $arrOptions = get_option("WP_plugin_options_".$thisPluginName);
+   
 
         // if the arrOption is empty also jump to next one
         if ( !isset( $arrOptions ) ) {
@@ -169,15 +169,16 @@ function activate_page_plugins(){
                     }
                 }
             }
+
         } else {
+        
             // If the plugin doesn't has pages we have to check just the current one
             $value = $arrOptions[ $thisPluginName."_page" ];
             $current_tool_name = $thisPluginName;
         }
         // if we has found the page to load we have to get the content of it 
-   
-   
         if ( $value == $idOfTheCurrentPage ) {       
+
             $loadCssAndJavascript = true;         
             add_filter( "the_content",  "getToolContent" );
             break;
@@ -219,6 +220,9 @@ function getToolContent(  ) {
             break;
             case "fuelprices": 
                 $path_to_include = "FuelPrices/FuelPrices.php";
+            break;
+            case "fuel_benefit_check":
+                $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
             break;
             default:
                 $path_to_include = "";
