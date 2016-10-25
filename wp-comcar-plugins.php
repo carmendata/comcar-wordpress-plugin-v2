@@ -166,18 +166,16 @@ function activate_page_plugins( ) {
                             $current_page = $page;
                             break;
                         }
-
                     }
                 } else {
                     $current_page = '';
                 }
+
                 $loadCssAndJavascript = true;         
                 add_filter( "the_content",  "getToolContent" );
                 break 2;
             }
         }
-             
-
     }
 
     if ( $loadCssAndJavascript ) {
@@ -221,6 +219,7 @@ function getToolContent(  ) {
                 $path_to_include = "FuelPrices/FuelPrices.php";
             break;
             case "fuel_benefit_check":
+       
                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
             break;
             default:
@@ -231,7 +230,7 @@ function getToolContent(  ) {
     	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );                 
 
         $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
-			$content = isset( $content ) ? $content : "";
+		$content = isset( $content ) ? $content : "";
         $content = $content.$WPComcar_theResultOfTheWebservice;
         return $content;
     }   

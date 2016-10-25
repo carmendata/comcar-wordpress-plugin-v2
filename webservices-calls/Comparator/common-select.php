@@ -14,10 +14,10 @@
 		//lets set the textareas 
 		if (isset($WPComcar_arrOptions["comparator_".$WPComcar_vehicleTypeForIncluding."_texts"])){
 			$arrOfTexts=$WPComcar_arrOptions["comparator_".$WPComcar_vehicleTypeForIncluding."_texts"];
-			foreach($arrOfTexts as $key=>$value){
+			foreach( $arrOfTexts as $key => $value ) {
 				//if it is not defined, then use the default ones
-				if (strlen($value)>0){
-					$_POST[$key]=$value;
+				if ( strlen( $value ) > 0 ) {
+					$_POST[$key] = $value;
 				}
 			}
 		}

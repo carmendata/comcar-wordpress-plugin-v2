@@ -1,11 +1,14 @@
 <?php
-	// include authentication and other required variables
-	include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php');
-	   // include code with the actual call to the web service
+
+
+
+// include authentication and other required variables
+    include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php');
+       // include code with the actual call to the web service
 
     $WPComcar_objConfig = array();
     $WPComcar_objConfig['formMethod'] = 'get'; // Must be "get" or "post", anything else will be rejected
-    $WPComcar_objConfig['thisPage'] = 'select.php';
+    $WPComcar_objConfig['thisPage'] = 'detail.php';
     // Convert structure into JSON
     $WPComcar_jsnConfig = json_encode( $WPComcar_objConfig );
 
@@ -23,7 +26,7 @@
         //CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
         $WPComcar_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     
-        $WPComcar_resultsHTML = fixForSsl( $WPComcar_ws->GetHTML( $WPComcar_pubhash, $WPComcar_clk,1,$WPComcar_actionName,$WPComcar_jsnConfig ));
+        $WPComcar_resultsHTML = fixForSsl( $WPComcar_ws -> GetHTML( $WPComcar_pubhash, $WPComcar_clk,2,$WPComcar_actionName,$WPComcar_jsnConfig ));
 
     } catch (Exception $WPComcar_e) {
         // Error handling code if soap request fails 

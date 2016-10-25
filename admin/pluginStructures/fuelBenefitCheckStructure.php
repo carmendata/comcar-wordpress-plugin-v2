@@ -8,13 +8,13 @@
                 "type" => "select"
                 ) ,
             array( 
-                "name" => "fuel_benefit_check_subpage_model",
+                "name" => "fuel_benefit_check_subpage_detail",
                 "options" => "Pages",
                 "desc" => "Detail.",
                 "type" => "select"
             ) ,
             array( 
-                "name" => "fuel_benefit_check_subpage_options",
+                "name" => "fuel_benefit_check_subpage_callback",
                 "options" => "Pages",
                 "desc" => "Callback.",
                 "type" => "select"
