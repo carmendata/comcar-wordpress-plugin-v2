@@ -18,8 +18,8 @@
         $WPComcar_resultsJS = fixForSsl( $WPComcar_ws -> GetJS( $WPComcar_pubhash, $WPComcar_clk, 1 ) );
      
         $WPComcar_arrOptions = get_option("WP_plugin_options_fuel_benefit_check");
-        $WPComcar_actionName =  get_permalink($WPComcar_arrOptions['fuel_benefit_check_subpage_model']); 
-
+        $WPComcar_actionName =  get_permalink($WPComcar_arrOptions['fuel_benefit_check_subpage_detail']); 
+      
         //CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
         $WPComcar_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     
