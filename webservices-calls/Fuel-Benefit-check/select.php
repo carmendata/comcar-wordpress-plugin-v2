@@ -11,14 +11,9 @@
 
 
     $WPComcar_objConfig = $_POST;
-    // $WPComcar_objConfig['formMethod'] = 'get'; // Must be "get" or "post", anything else will be rejected
-    // $WPComcar_objConfig['thisPage'] = 'detail.php';
+
     // Convert structure into JSON
     $WPComcar_jsnConfig = json_encode( $WPComcar_objConfig );
-
-
-
-
 
 
 
