@@ -35,7 +35,7 @@
         array( 
                 "label" => "Enable tools",
                 "name" => "pluginsOptions",
-                "options" => array( "Tax calculator" => "tax_calculator", "Comparator" => "comparator", "Electric comparator" => "electric_comparator", "Footprint calculator" =>"footprint", "Fuel prices" =>"fuelprices", "Fuel benefit check" =>"fuel_benefit_check"),
+                "options" => array( "Tax calculator" => "tax_calculator", "Comparator" => "comparator", "Electric comparator" => "electric_comparator", "Footprint calculator" =>"footprint", "Fuel prices" =>"fuelprices", "Fuel benefit check" =>"fuel_benefit_check","Car details" =>"car_details"),
                 "type" => "checkbox"
         )
     );

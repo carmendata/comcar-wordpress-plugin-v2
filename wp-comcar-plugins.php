@@ -24,6 +24,8 @@ require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
 add_action( "wp", "plugin_redirection" );    
 add_action( "wp_head", "activate_page_plugins");   
 
+wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
+wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
 
 
 
@@ -169,9 +171,11 @@ function activate_page_plugins( ) {
         if ( !isset( $arrOptions ) ) {
             continue;
         }
-     
+      
         $arr_sub_pages = matchPattern( "#^".$thisPluginName."(.*)page(.*)$#i", $arrOptions );
         foreach( $arr_sub_pages as $key => $value ) {
+
+
             if ( $value == $idOfTheCurrentPage ) { 
                 if ( isset( $arrOptions["pages"] ) &&
                     is_array( $arrOptions["pages"] ) ) {
@@ -206,6 +210,7 @@ function activate_page_plugins( ) {
 function getToolContent(  ) {
     global $thisPluginName;
     global $current_page;
+
     if( is_page() && is_main_query() ) { 
         switch ( $thisPluginName ) {
             case "tax_calculator":
@@ -235,13 +240,15 @@ function getToolContent(  ) {
             break;
             case "fuel_benefit_check":
                 // When the old tools has been changed we can put this code at the very top of the page
-                wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
-                wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
-
+                wp_enqueue_style('wp_ibuttons');
+                wp_enqueue_script('wp_ibuttons');  
+                $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
+            break;
+            case "car_details":
                 wp_enqueue_style('wp_ibuttons');
                 wp_enqueue_script('wp_ibuttons');  
 
-                $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
+                $path_to_include = "Car_Details/Car_details.php";
             break;
             default:
                 $path_to_include = "";
