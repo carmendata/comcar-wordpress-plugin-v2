@@ -118,19 +118,15 @@ function plugin_redirection() {
             }
         break;
         case $WPFuel_benefit_check_arrOptions['fuel_benefit_check_page']:        
-
-
             $fuel_benefit_override= $WPFuel_benefit_check_arrOptions["fuel_benefit_check_override"];       
             if( !empty( $_POST ) OR isset($_GET["fuelBenefitCode"]) ) {
-
                 if( isset($_GET["fuelBenefitCode"])) {
                     $_POST =  (array) json_decode(base64_decode($_GET["fuelBenefitCode"]));  
                 } else if ( $fuel_benefit_override ) {
                     $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
                     header( "Location: $fuel_benefit_override?fuelBenefitCode=$WPComcar_hashedData");
                     exit(1);
-                }
-            
+                }  
             }
         break;
     }
@@ -169,11 +165,7 @@ function activate_page_plugins( ) {
         if ( !isset( $arrOptions ) ) {
             continue;
         }
-         
-        // Has the plugin pages? as for example tax calculator 
-       
-       
- 
+     
         $arr_sub_pages = matchPattern( "#^".$thisPluginName."(.*)page(.*)$#i", $arrOptions );
         foreach( $arr_sub_pages as $key => $value ) {
             if ( $value == $idOfTheCurrentPage ) { 

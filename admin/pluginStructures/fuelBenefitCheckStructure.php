@@ -1,4 +1,3 @@
-   
 <?php
    $fuel_benefit_check_structure = array(  
             array( 
@@ -8,17 +7,10 @@
                 "type" => "select"
                 ) ,
             array( 
-                "name" => "fuel_benefit_check_subpage_callback",
-                "options" => "Pages",
-                "desc" => "Callback.",
-                "type" => "select"
-            ) ,   
-            array( 
                 "label" => "Fuel benefit override URL",
                 "name" => "fuel_benefit_check_override",
                 "desc" => "Override URL to visit prior to the calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation)",
                 "type" => "text"
             )
-
         )
 ?>
