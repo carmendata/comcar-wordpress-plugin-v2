@@ -9,7 +9,7 @@
     require_once( "pluginStructures/footprintStructure.php");
     require_once( "pluginStructures/fuelPricesStructure.php");
     require_once( "pluginStructures/fuelBenefitCheckStructure.php");
-
+    require_once( "pluginStructures/carDetailsStructure.php");
 
     global $general_structure;
     global $tax_calculator_structure;
@@ -18,6 +18,7 @@
     global $footprint_structure;
     global $fuelPrices_structure;
     global $fuel_benefit_check_structure;
+    global $car_details_structure;
 
     $plugin_nav = array(     
                             "general"               => array( "label" => "Main", "path" => "" ),
@@ -26,7 +27,9 @@
                             "electric_comparator"   => array( "label" => "Electric comparator","path" => "" ),
                             "footprint"             => array( "label" => "Footprint calculator", "path" => "" ),
                             "fuelprices"            => array( "label" => "Fuel prices calculator", "path" => "" ),
-                            "fuel_benefit_check"    => array( "label" => "Fuel beneefit check", "path" => ""  ) 
+                            "fuel_benefit_check"    => array( "label" => "Fuel beneefit check", "path" => ""  ),
+                            "car_details"           => array( "label" => "Car Details", "path" => ""  )
+                               
                         );
 
 
@@ -37,7 +40,8 @@
         "electric_comparator"   => $electric_comparator_structure,
         "footprint"             => $footprint_structure,
         "fuelprices"            => $fuelPrices_structure,
-        "fuel_benefit_check"    => $fuel_benefit_check_structure
+        "fuel_benefit_check"    => $fuel_benefit_check_structure,
+        "car_details"           => $car_details_structure
     );
 
 ?>
