@@ -26,6 +26,11 @@ add_action( "wp_head", "activate_page_plugins");
 
 
 
+
+
+
+
+
 // decode url from base64
 function decodeURLParam( $str_to_decode ) {
 	// decode string (can't use hex2bin prior to php5.4)
@@ -229,7 +234,13 @@ function getToolContent(  ) {
                 $path_to_include = "FuelPrices/FuelPrices.php";
             break;
             case "fuel_benefit_check":
-       
+                // When the old tools has been changed we can put this code at the very top of the page
+                wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
+                wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
+
+                wp_enqueue_style('wp_ibuttons');
+                wp_enqueue_script('wp_ibuttons');  
+
                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
             break;
             default:
@@ -244,5 +255,6 @@ function getToolContent(  ) {
         $content = $content.$WPComcar_theResultOfTheWebservice;
         return $content;
     }   
-}        
+}  
+
 ?>
