@@ -1,9 +1,10 @@
 <?php
    $fuel_benefit_check_structure = array(  
             array( 
+                "label" => "Fuel benefit page",
                 "name" => "fuel_benefit_check_page",
                  "options" => "Pages",
-                 "desc" => "The Select page (the first page in the calculation process).",
+                 "desc" => "Select which page Fuel benefit check tool should be loaded into",
                 "type" => "select"
                 ) ,
             array( 
