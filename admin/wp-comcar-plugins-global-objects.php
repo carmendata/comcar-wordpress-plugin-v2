@@ -27,7 +27,7 @@
                             "electric_comparator"   => array( "label" => "Electric comparator","path" => "" ),
                             "footprint"             => array( "label" => "Footprint calculator", "path" => "" ),
                             "fuelprices"            => array( "label" => "Fuel prices calculator", "path" => "" ),
-                            "fuel_benefit_check"    => array( "label" => "Fuel beneefit check", "path" => ""  ),
+                            "fuel_benefit_check"    => array( "label" => "Fuel benefit check", "path" => ""  ),
                             "car_details"           => array( "label" => "Car Details", "path" => ""  )
                                
                         );

@@ -137,11 +137,8 @@ function plugin_redirection() {
             }
         break;
         case $WPcar_details_arrOptions['car_details_page']: 
-
             $car_details_override= $WPcar_details_arrOptions["car_details_override"];       
-
             if( !empty( $_POST ) OR isset( $_GET["carDetailsCode"] ) ) {
-
                 if( isset( $_GET["carDetailsCode"] )) {
                     $_POST =  (array) json_decode( base64_decode( $_GET["carDetailsCode"]) );  
                 } else if ( $car_details_override ) {
