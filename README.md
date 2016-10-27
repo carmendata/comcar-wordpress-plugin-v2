@@ -22,6 +22,18 @@ The electric comparator tool allow users to compare between electric and non-ele
 
 The Footprint Calculator tool is a simple way to allow users to calculate their CO2 tailpipe emissions based on fuel used, cost of fuel or distance travelled.
 
+### Fuel prices
+
+Shows average fuel prices in the UK
+
+### Fuel benefit check
+
+The fuel benefit check helps drivers to decide if this perk is worthwhile by comparing total cost of driving with the benefit and without.
+
+### Car details
+
+Car details allow users to select a vehicle to get detailed specifications and options for UK vehicles.
+
 ## Installation
 
 ### Prerequisites
