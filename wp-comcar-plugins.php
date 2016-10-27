@@ -61,7 +61,7 @@ function plugin_redirection() {
     $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" ); 
     $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
     $WPFuel_benefit_check_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
-
+    $WPcar_details_arrOptions = get_option( "WP_plugin_options_car_details" );
  
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
@@ -132,6 +132,21 @@ function plugin_redirection() {
                 } else if ( $fuel_benefit_override ) {
                     $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
                     header( "Location: $fuel_benefit_override?fuelBenefitCode=$WPComcar_hashedData");
+                    exit(1);
+                }  
+            }
+        break;
+        case $WPcar_details_arrOptions['car_details_page']: 
+
+            $car_details_override= $WPcar_details_arrOptions["car_details_override"];       
+
+            if( !empty( $_POST ) OR isset( $_GET["carDetailsCode"] ) ) {
+
+                if( isset( $_GET["carDetailsCode"] )) {
+                    $_POST =  (array) json_decode( base64_decode( $_GET["carDetailsCode"]) );  
+                } else if ( $car_details_override ) {
+                    $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                    header( "Location: $car_details_override?carDetailsCode=$WPComcar_hashedData");
                     exit(1);
                 }  
             }
