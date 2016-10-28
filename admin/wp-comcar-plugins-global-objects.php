@@ -10,6 +10,7 @@
     require_once( "pluginStructures/fuelPricesStructure.php");
     require_once( "pluginStructures/fuelBenefitCheckStructure.php");
     require_once( "pluginStructures/carDetailsStructure.php");
+    require_once( "pluginStructures/pricesAndOptionsStructure.php");
 
     global $general_structure;
     global $tax_calculator_structure;
@@ -19,6 +20,7 @@
     global $fuelPrices_structure;
     global $fuel_benefit_check_structure;
     global $car_details_structure;
+    global $prices_and_options_structure;
 
     $plugin_nav = array(     
                             "general"               => array( "label" => "Main", "path" => "" ),
@@ -28,8 +30,8 @@
                             "footprint"             => array( "label" => "Footprint calculator", "path" => "" ),
                             "fuelprices"            => array( "label" => "Fuel prices calculator", "path" => "" ),
                             "fuel_benefit_check"    => array( "label" => "Fuel benefit check", "path" => ""  ),
-                            "car_details"           => array( "label" => "Car Details", "path" => ""  )
-                               
+                            "car_details"           => array( "label" => "Car Details", "path" => ""  ),
+                            "prices_and_options"    => array( "label" => "Prices and options", "path" => ""  )
                         );
 
 
@@ -41,7 +43,8 @@
         "footprint"             => $footprint_structure,
         "fuelprices"            => $fuelPrices_structure,
         "fuel_benefit_check"    => $fuel_benefit_check_structure,
-        "car_details"           => $car_details_structure
+        "car_details"           => $car_details_structure,
+        "prices_and_options"    => $prices_and_options_structure
     );
 
 ?>

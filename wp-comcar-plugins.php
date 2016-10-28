@@ -262,6 +262,18 @@ function getToolContent(  ) {
 
                 $path_to_include = "Car_Details/Car_details.php";
             break;
+
+            case "prices_and_options":
+                wp_enqueue_style('wp_ibuttons');
+                wp_enqueue_script('wp_ibuttons');  
+
+                $path_to_include = "prices-And-Options/prices_and_options.php";           
+            break;
+
+
+
+
+
             default:
                 $path_to_include = "";
             break;
