@@ -14,9 +14,7 @@
 
 
 
-        // Convert structure into JSON
-        $WPComcar_jsonPost = json_encode(  $_POST );
-        $WPComcar_jsonGet = json_encode(  $_GET );
+       
         try {
             // connect to the webservice
             $WPComcar_ws = new SoapClient( $WPComcar_services['pricesAndOptions'], array( 'cache_wsdl' => 0 ) );
@@ -33,6 +31,11 @@
             if (array_key_exists( 'AnnCon', $_POST )) {
                 $stage = "calculation";            
             }   
+            $_POST['stage'] = $stage;
+            
+             // Convert structure into JSON
+            $WPComcar_jsonPost = json_encode(  $_POST );
+            $WPComcar_jsonGet = json_encode(  $_GET );
 
             $WPComcar_resultsHTML = fixForSsl( $WPComcar_ws -> GetHTML( $WPComcar_pubhash, $WPComcar_clk, $stage, $WPComcar_jsonPost, $WPComcar_jsonGet  ));
             $WPComcar_resultsJS = fixForSsl( $WPComcar_ws -> GetJS( $WPComcar_pubhash, $WPComcar_clk,   $stage,  $WPComcar_jsonGet ) );
