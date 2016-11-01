@@ -33,8 +33,8 @@
             if (array_key_exists( 'AnnCon', $_POST )) {
                 $stage = "calculation";            
             }   
-            
-            $WPComcar_resultsHTML = fixForSsl( $WPComcar_ws -> GetHTML( $WPComcar_pubhash, $WPComcar_clk,$WPComcar_jsonPost, $WPComcar_jsonGet  ));
+
+            $WPComcar_resultsHTML = fixForSsl( $WPComcar_ws -> GetHTML( $WPComcar_pubhash, $WPComcar_clk, $stage, $WPComcar_jsonPost, $WPComcar_jsonGet  ));
             $WPComcar_resultsJS = fixForSsl( $WPComcar_ws -> GetJS( $WPComcar_pubhash, $WPComcar_clk,   $stage,  $WPComcar_jsonGet ) );
             $WPComcar_resultsCSS = fixForSsl( $WPComcar_ws -> GetCSS( $WPComcar_pubhash, $WPComcar_clk,   $stage ) );
                 
