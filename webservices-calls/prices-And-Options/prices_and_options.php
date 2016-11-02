@@ -29,8 +29,11 @@
             }   
 
             if (array_key_exists( 'AnnCon', $_POST )) {
+
                 $stage = "calculation";            
             }   
+
+
             $_POST['stage'] = $stage;
             
              // Convert structure into JSON
