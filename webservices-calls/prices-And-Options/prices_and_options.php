@@ -5,15 +5,31 @@
     $thePostId = $post->ID;
     $WPComcar_arrOptions = get_option( 'WP_plugin_options_prices_and_options' ); 
    
-    $idThePageWhereShouldLoadThePlugin = $WPComcar_arrOptions["prices_and_options_page"];
+   
 
-    if (  $idThePageWhereShouldLoadThePlugin == $thePostId  ) {
-        include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php' );
+    switch ( $thePostId ) {
+        case $WPComcar_arrOptions["prices_and_options_car_page"]:
+            include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php' );
+            $loadContent = true;
+        break;
+        case $WPComcar_arrOptions["prices_and_options_van_page"]:
+            include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForVanTools.php' );
+            $loadContent = true;
+        break;
+        
+        default:
+            $loadContent = false;
+        break;
+    }
 
 
 
 
 
+
+
+    if (  $loadContent  ) {
+   
        
         try {
             // connect to the webservice
@@ -35,7 +51,7 @@
 
 
             $_POST['stage'] = $stage;
-            
+       
              // Convert structure into JSON
             $WPComcar_jsonPost = json_encode(  $_POST );
             $WPComcar_jsonGet = json_encode(  $_GET );

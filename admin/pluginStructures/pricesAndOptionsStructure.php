@@ -3,8 +3,8 @@
 $prices_and_options_structure = array(     
           
             array( 
-                "label" => "Prices and options page",
-                "name" => "prices_and_options_page",
+                "label" => "Car prices and options page",
+                "name" => "prices_and_options_car_page",
                 "options" => "Pages",
                 "desc" => "Select which page Prices and options should be loaded on.",
                 "type" => "select"
@@ -16,6 +16,13 @@ $prices_and_options_structure = array(
                 "name" => "prices_and_options_override",
                 "desc" => "Leave blank if not needed (refer to documentation for correct redirection to final calculation)",
                 "type" => "text"
+            ),
+               array( 
+                "label" => "Van prices and options page",
+                "name" => "prices_and_options_van_page",
+                "options" => "Pages",
+                "desc" => "Select which page Prices and options should be loaded on.",
+                "type" => "select"
             )
 
 

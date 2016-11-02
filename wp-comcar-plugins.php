@@ -151,12 +151,12 @@ function plugin_redirection() {
         break;
         case $WPprices_and_options_arrOptions['prices_and_options_page']: 
 
-                $_POST['get_content'] = $_GET; 
+                $_POST['get_content'] = json_encode($_GET); 
                 $car_details_override= $WPprices_and_options_arrOptions["prices_and_options_override"];       
                 if( !empty( $_POST ) OR isset( $_GET["carPricesAndOptionsCode"] ) ) {
                     if( isset( $_GET["carPricesAndOptionsCode"] )) {
                         $_POST =  (array) json_decode( base64_decode( $_GET["carPricesAndOptionsCode"]) );  
-                        $_GET = (array)$_POST['get_content'];
+                        $_GET = (array)json_decode($_POST['get_content']);
                         
                         
       
