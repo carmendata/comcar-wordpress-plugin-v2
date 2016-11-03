@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.4.0** Added new tools 'Prices and options'
 - **1.3.0** Added new tool 'Car details'
 - **1.2.0** Added new tool 'Fuel benefit check'
 - **1.1.0** Added new tool 'Fuel prices'
