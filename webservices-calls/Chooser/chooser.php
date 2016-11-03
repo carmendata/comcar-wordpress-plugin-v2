@@ -1,14 +1,14 @@
 <?php 
     global $post;
     $thePostId = $post->ID;
-    $WPComcar_arrOptions = get_option( 'WP_plugin_options_prices_and_options' ); 
+    $WPComcar_arrOptions = get_option( 'WP_plugin_options_chooser' ); 
    
     switch ( $thePostId ) {
-        case $WPComcar_arrOptions["prices_and_options_car_page"]:
+        case $WPComcar_arrOptions["chooser_car_page"]:
             include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php' );
             $loadContent = true;
         break;
-        case $WPComcar_arrOptions["prices_and_options_van_page"]:
+        case $WPComcar_arrOptions["chooser_van_page"]:
             include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForVanTools.php' );
             $loadContent = true;
         break;
@@ -23,21 +23,21 @@
        
         try {
             // connect to the webservice
-            $WPComcar_ws = new SoapClient( $WPComcar_services['pricesAndOptions'], array( 'cache_wsdl' => 0 ) );
+            $WPComcar_ws = new SoapClient( $WPComcar_services['chooser'], array( 'cache_wsdl' => 0 ) );
             $stage = "select";
-           
-            if (array_key_exists( 'fuelType', $_GET )) {
+
+            if (array_key_exists( 'taxband', $_POST )) {
                 $stage = "model";
             }    
          
-            if (array_key_exists( 'ID', $_GET )) {
-                $stage = "options";            
-            }   
+            // if (array_key_exists( 'ID', $_GET )) {
+            //     $stage = "options";            
+            // }   
 
-            if (array_key_exists( 'AnnCon', $_POST )) {
+            // if (array_key_exists( 'AnnCon', $_POST )) {
 
-                $stage = "calculation";            
-            }   
+            //     $stage = "calculation";            
+            // }   
 
 
             $_POST['stage'] = $stage;

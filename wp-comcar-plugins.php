@@ -30,9 +30,6 @@ wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ))
 
 
 
-
-
-
 // decode url from base64
 function decodeURLParam( $str_to_decode ) {
 	// decode string (can't use hex2bin prior to php5.4)
@@ -52,6 +49,22 @@ function decodeURLParam( $str_to_decode ) {
     return base64_decode( $unhexed_taxcalculatorcode );
 }
 
+
+function do_redirection( $post_to_override, $str_code ) {
+    if( !empty( $_POST ) OR isset( $_GET[$str_code] ) ) {
+        if( isset( $_GET[$str_code] )) {
+            $_POST =  (array) json_decode( base64_decode( $_GET[$str_code]) );  
+        } else if ( $post_to_override ) {
+            $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+            header( "Location: $post_to_override?$str_code=$WPComcar_hashedData");
+            exit(1);
+        }  
+    }
+}
+
+
+
+
 // process any actions that need to be done before page rendering
 function plugin_redirection() {
     global $pagename;
@@ -62,7 +75,7 @@ function plugin_redirection() {
     $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
     $WPFuel_benefit_check_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     $WPcar_details_arrOptions = get_option( "WP_plugin_options_car_details" );
-      $WPprices_and_options_arrOptions = get_option( "WP_plugin_options_prices_and_options" );
+    $WPprices_and_options_arrOptions = get_option( "WP_plugin_options_prices_and_options" );
  
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
@@ -109,7 +122,7 @@ function plugin_redirection() {
                 exit(1);
             }
 
-            break;
+        break;
 
         case $WPComcar_arrOptions["comparator_cars_subpage_details"]:   
             $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_cars_comp_override"];       
@@ -125,84 +138,59 @@ function plugin_redirection() {
                 exit(1);
             }
         break;
+
         case $WPFuel_benefit_check_arrOptions['fuel_benefit_check_page']:        
             $fuel_benefit_override= $WPFuel_benefit_check_arrOptions["fuel_benefit_check_override"];       
-            if( !empty( $_POST ) OR isset( $_GET["fuelBenefitCode"] ) ) {
-                if( isset( $_GET["fuelBenefitCode"] )) {
-                    $_POST =  (array) json_decode( base64_decode( $_GET["fuelBenefitCode"]) );  
-                } else if ( $fuel_benefit_override ) {
-                    $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
-                    header( "Location: $fuel_benefit_override?fuelBenefitCode=$WPComcar_hashedData");
-                    exit(1);
-                }  
-            }
+            do_redirection( $fuel_benefit_override, "fuelBenefitCode" );               
         break;
+
         case $WPcar_details_arrOptions['car_details_page']: 
             $car_details_override= $WPcar_details_arrOptions["car_details_override"];       
-            if( !empty( $_POST ) OR isset( $_GET["carDetailsCode"] ) ) {
-                if( isset( $_GET["carDetailsCode"] )) {
-                    $_POST =  (array) json_decode( base64_decode( $_GET["carDetailsCode"]) );  
-                } else if ( $car_details_override ) {
-                    $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
-                    header( "Location: $car_details_override?carDetailsCode=$WPComcar_hashedData");
-                    exit(1);
-                }  
-            }
+            do_redirection( $car_details_override, "carDetailsCode" );               
         break;
+
         case $WPprices_and_options_arrOptions['prices_and_options_car_page']: 
 
-                $_POST['get_content'] = json_encode($_GET); 
-                $car_details_override= $WPprices_and_options_arrOptions["prices_and_options_car_override"];       
-                if( !empty( $_POST ) OR isset( $_GET["carPricesAndOptionsCode"] ) ) {
-                    if( isset( $_GET["carPricesAndOptionsCode"] )) {
-                        $_POST =  (array) json_decode( base64_decode( $_GET["carPricesAndOptionsCode"]) );  
-                        $_GET = (array)json_decode($_POST['get_content']);
-                        
-                        
-      
-                    } else if ( $car_details_override ) {
-                        
-
-                        if ( $_POST['submit'] == 'Calculate' ) {
-                            $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
-                            header( "Location: $car_details_override?carPricesAndOptionsCode=$WPComcar_hashedData");
-                            exit(1);
-                        }
-                    }  
-                }
-         
+            $_POST['get_content'] = json_encode($_GET); 
+            $car_details_override= $WPprices_and_options_arrOptions["prices_and_options_car_override"];       
+            if( !empty( $_POST ) OR isset( $_GET["carPricesAndOptionsCode"] ) ) {
+                if( isset( $_GET["carPricesAndOptionsCode"] )) {
+                    $_POST =  (array) json_decode( base64_decode( $_GET["carPricesAndOptionsCode"]) );  
+                    $_GET = (array)json_decode($_POST['get_content']);   
+                } else if ( $car_details_override ) {                            
+                    if ( $_POST['submit'] == 'Calculate' ) {
+                        $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                        header( "Location: $car_details_override?carPricesAndOptionsCode=$WPComcar_hashedData");
+                        exit(1);
+                    }
+                }  
+            }
+             
         break;
 
+        case $WPprices_and_options_arrOptions['prices_and_options_van_page']: 
 
-
-            case $WPprices_and_options_arrOptions['prices_and_options_van_page']: 
-
-                $_POST['get_content'] = json_encode($_GET); 
-                $van_details_override= $WPprices_and_options_arrOptions["prices_and_options_van_override"];       
-                      
-
-                if( !empty( $_POST ) OR isset( $_GET["vanPricesAndOptionsCode"] ) ) {
-                    if( isset( $_GET["vanPricesAndOptionsCode"] )) {
-
-                        $_POST =  (array) json_decode( base64_decode( $_GET["vanPricesAndOptionsCode"]) );  
-                        $_GET = (array)json_decode($_POST['get_content']);
-                        
-                        
-      
-                    } else if ( $van_details_override ) {
-                        if ( $_POST['submit'] == 'Calculate' ) {
-
-                            $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
-                            header( "Location: $van_details_override?vanPricesAndOptionsCode=$WPComcar_hashedData");
-                            exit(1);
-                        }
-                    }  
-                }
-         
-        break;
-    
+            $_POST['get_content'] = json_encode($_GET); 
+            $van_details_override= $WPprices_and_options_arrOptions["prices_and_options_van_override"];       
+                  
+            if( !empty( $_POST ) OR isset( $_GET["vanPricesAndOptionsCode"] ) ) {
+                if( isset( $_GET["vanPricesAndOptionsCode"] )) {
+                    $_POST =  (array) json_decode( base64_decode( $_GET["vanPricesAndOptionsCode"]) );  
+                    $_GET = (array)json_decode($_POST['get_content']);   
+                } else if ( $van_details_override ) {
+                    if ( $_POST['submit'] == 'Calculate' ) {
+                        $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                        header( "Location: $van_details_override?vanPricesAndOptionsCode=$WPComcar_hashedData");
+                        exit(1);
+                    }
+                }  
+            }  
+        break; 
     }
 }
+
+
+
 
 
 
@@ -220,7 +208,7 @@ function activate_page_plugins( ) {
   
     $thisPluginName = '';
     $idOfTheCurrentPage = get_post( $post )->ID;
-    
+
 
     foreach (  $plugin_nav as $thisPluginName => $plugin_info ) { 
 
@@ -231,19 +219,22 @@ function activate_page_plugins( ) {
 
         //options of the current plugin
         $arrOptions = get_option("WP_plugin_options_".$thisPluginName);
-   
+  
         // if the arrOption is empty also jump to next one
         if ( !isset( $arrOptions ) ) {
             continue;
         }
-      
         $arr_sub_pages = matchPattern( "#^".$thisPluginName."(.*)page(.*)$#i", $arrOptions );
+
         foreach( $arr_sub_pages as $key => $value ) {
 
 
+
+          
             if ( $value == $idOfTheCurrentPage ) { 
                 if ( isset( $arrOptions["pages"] ) &&
                     is_array( $arrOptions["pages"] ) ) {
+
                     foreach( $arrOptions["pages"] as $page_key => $page) {        
                         $arr_pages =  preg_match ( "#^(.*)".$page."(.*)$#i", $key );
                         if ( $arr_pages ) {
@@ -323,6 +314,13 @@ function getToolContent(  ) {
                 $path_to_include = "prices-And-Options/prices_and_options.php";           
             break;
 
+            case "chooser":
+                wp_enqueue_style('wp_ibuttons');
+                wp_enqueue_script('wp_ibuttons');  
+
+              $path_to_include = "Chooser/chooser.php";     
+
+            break;
 
 
 

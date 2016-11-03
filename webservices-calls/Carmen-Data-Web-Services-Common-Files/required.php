@@ -15,6 +15,7 @@
 	$WPComcar_services['fuelprices']	= $WPComcar_webServiceBaseURL . 'fuelPrices.cfc?wsdl';
 	$WPComcar_services['carDetails']	= $WPComcar_webServiceBaseURL . 'carDetails.cfc?wsdl';
 	$WPComcar_services['pricesAndOptions']	= $WPComcar_webServiceBaseURL . 'pricesAndOptions.cfc?wsdl';
+	$WPComcar_services['chooser']	= $WPComcar_webServiceBaseURL . 'chooser.cfc?wsdl';
 				
 
 
