@@ -149,10 +149,10 @@ function plugin_redirection() {
                 }  
             }
         break;
-        case $WPprices_and_options_arrOptions['prices_and_options_page']: 
+        case $WPprices_and_options_arrOptions['prices_and_options_car_page']: 
 
                 $_POST['get_content'] = json_encode($_GET); 
-                $car_details_override= $WPprices_and_options_arrOptions["prices_and_options_override"];       
+                $car_details_override= $WPprices_and_options_arrOptions["prices_and_options_car_override"];       
                 if( !empty( $_POST ) OR isset( $_GET["carPricesAndOptionsCode"] ) ) {
                     if( isset( $_GET["carPricesAndOptionsCode"] )) {
                         $_POST =  (array) json_decode( base64_decode( $_GET["carPricesAndOptionsCode"]) );  
@@ -166,6 +166,34 @@ function plugin_redirection() {
                         if ( $_POST['submit'] == 'Calculate' ) {
                             $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
                             header( "Location: $car_details_override?carPricesAndOptionsCode=$WPComcar_hashedData");
+                            exit(1);
+                        }
+                    }  
+                }
+         
+        break;
+
+
+
+            case $WPprices_and_options_arrOptions['prices_and_options_van_page']: 
+
+                $_POST['get_content'] = json_encode($_GET); 
+                $van_details_override= $WPprices_and_options_arrOptions["prices_and_options_van_override"];       
+                      
+
+                if( !empty( $_POST ) OR isset( $_GET["vanPricesAndOptionsCode"] ) ) {
+                    if( isset( $_GET["vanPricesAndOptionsCode"] )) {
+
+                        $_POST =  (array) json_decode( base64_decode( $_GET["vanPricesAndOptionsCode"]) );  
+                        $_GET = (array)json_decode($_POST['get_content']);
+                        
+                        
+      
+                    } else if ( $van_details_override ) {
+                        if ( $_POST['submit'] == 'Calculate' ) {
+
+                            $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                            header( "Location: $van_details_override?vanPricesAndOptionsCode=$WPComcar_hashedData");
                             exit(1);
                         }
                     }  
