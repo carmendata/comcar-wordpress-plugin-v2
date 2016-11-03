@@ -29,15 +29,27 @@
             if (array_key_exists( 'taxband', $_POST )) {
                 $stage = "model";
             }    
-         
-            // if (array_key_exists( 'ID', $_GET )) {
-            //     $stage = "options";            
-            // }   
+       
+            if (array_key_exists( 'ID', $_GET )) {
+                 $stage = "options";            
+            }   
+  
+            if (array_key_exists( 'AnnCon', $_POST )) {
+                $stage = "calculation";
 
-            // if (array_key_exists( 'AnnCon', $_POST )) {
 
-            //     $stage = "calculation";            
-            // }   
+
+
+
+                $fuelbenefit_arrOptions = get_option( 'WP_plugin_options_fuel_benefit_check' ); 
+                $general_arrOptions = get_option( 'WP_plugin_options_general' );
+               
+
+
+                if ( array_key_exists('fuel_benefit_check', $general_arrOptions['pluginsOptions'] ) ) {
+                    $_GET['fuel_benefit_url']= get_permalink( $fuelbenefit_arrOptions['fuel_benefit_check_page'] );    
+                }
+            }   
 
 
             $_POST['stage'] = $stage;
