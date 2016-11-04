@@ -176,7 +176,6 @@ function plugin_redirection() {
             multiples_pages_redirection(  $van_details_override, "vanPricesAndOptionsCode" );           
         break;
 
-
          case $WPchooser_arrOptions['chooser_car_page']: 
             $chooser_override= $WPchooser_arrOptions["chooser_car_override"];    
             multiples_pages_redirection(  $chooser_override, "carChooserCode" )  ;                      
@@ -227,9 +226,6 @@ function activate_page_plugins( ) {
         $arr_sub_pages = matchPattern( "#^".$thisPluginName."(.*)page(.*)$#i", $arrOptions );
 
         foreach( $arr_sub_pages as $key => $value ) {
-
-
-
           
             if ( $value == $idOfTheCurrentPage ) { 
                 if ( isset( $arrOptions["pages"] ) &&
@@ -289,6 +285,8 @@ function getToolContent(  ) {
                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
             break;
             case "electric_comparator": 
+            wp_enqueue_style('wp_ibuttons');
+                wp_enqueue_script('wp_ibuttons'); 
                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
             break;
             case "fuelprices": 
@@ -318,12 +316,8 @@ function getToolContent(  ) {
                 wp_enqueue_style('wp_ibuttons');
                 wp_enqueue_script('wp_ibuttons');  
 
-              $path_to_include = "Chooser/chooser.php";     
-
+                $path_to_include = "Chooser/chooser.php";     
             break;
-
-
-
 
             default:
                 $path_to_include = "";
