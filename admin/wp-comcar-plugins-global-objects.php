@@ -3,14 +3,6 @@
     Declare options
     ----------------------------------------------------------- */
     // include all structures
-    $scan_result =  scandir(dirname(__FILE__).'/pluginStructures/');
-
-    foreach ( $scan_result as $key => $value ) {  
-        if ( !in_array( $value, array( '.', '..' ) ) ) {
-            require_once( 'pluginStructures/'.$value );
-        }
-    }
-
     $plugin_nav = array(     
                             "general"               => "Main",
                             "tax_calculator"        => "Tax calculator",
@@ -23,6 +15,16 @@
                             "prices_and_options"    => "Prices and options",
                             "chooser"               => "Chooser"
                         );
+
+    
+    $scan_result =  scandir(dirname(__FILE__).'/pluginStructures/');
+
+    foreach ( $scan_result as $key => $value ) {  
+        if ( !in_array( $value, array( '.', '..' ) ) ) {
+            require_once( 'pluginStructures/'.$value );
+        }
+    }
+
 
     
     $plugin_options = array( 

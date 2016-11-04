@@ -1,6 +1,16 @@
 
 <?php
 
+    // build options to enable or disable navs
+
+
+    foreach ( $plugin_nav as $key => $value ) {
+        if ( $key != 'general' ) {
+            $nav_options[$value] = $key; 
+        }
+    }
+ 
+    
     $general_structure = array(
         array( 
                 "description" => "Please insert the ID and public hash for your own car and/or van channel. Channels are available to customers of Carmen Data Ltd. To become a customer see <a target='_blank' href='http://carmendata.co.uk/'>carmendata.co.uk</a>",
@@ -35,7 +45,7 @@
         array( 
                 "label" => "Enable tools",
                 "name" => "pluginsOptions",
-                "options" => array( "Tax calculator" => "tax_calculator", "Comparator" => "comparator", "Electric comparator" => "electric_comparator", "Footprint calculator" =>"footprint", "Fuel prices" =>"fuelprices", "Fuel benefit check" =>"fuel_benefit_check","Car details" =>"car_details","Prices and options" =>"prices_and_options","Chooser" =>"chooser"),
+                "options" =>  $nav_options,
                 "type" => "checkbox"
         )
     );
