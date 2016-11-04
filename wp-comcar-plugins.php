@@ -76,7 +76,8 @@ function plugin_redirection() {
     $WPFuel_benefit_check_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     $WPcar_details_arrOptions = get_option( "WP_plugin_options_car_details" );
     $WPprices_and_options_arrOptions = get_option( "WP_plugin_options_prices_and_options" );
- 
+    $WPchooser_arrOptions = get_option( "WP_plugin_options_chooser" );
+  
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
     switch( $post_id ) {
@@ -169,7 +170,6 @@ function plugin_redirection() {
         break;
 
         case $WPprices_and_options_arrOptions['prices_and_options_van_page']: 
-
             $_POST['get_content'] = json_encode($_GET); 
             $van_details_override= $WPprices_and_options_arrOptions["prices_and_options_van_override"];       
                   
@@ -185,6 +185,47 @@ function plugin_redirection() {
                     }
                 }  
             }  
+        break;
+
+
+         case $WPchooser_arrOptions['chooser_car_page']: 
+
+            $_POST['get_content'] = json_encode($_GET); 
+            $chooser_override= $WPchooser_arrOptions["chooser_car_override"];    
+            if( !empty( $_POST ) OR isset( $_GET["carChooserCode"] ) ) {
+                if( isset( $_GET["carChooserCode"] )) {
+                    $_POST =  (array) json_decode( base64_decode( $_GET["carChooserCode"]) );  
+                    $_GET = (array)json_decode($_POST['get_content']);   
+                } else if ( $chooser_override ) {                            
+
+                    if ( $_POST['submit'] == 'Calculate' ) {
+                        $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                        header( "Location: $chooser_override?carChooserCode=$WPComcar_hashedData");
+                        exit(1);
+                    }
+                }  
+            }
+             
+        break; 
+
+         case $WPchooser_arrOptions['chooser_van_page']: 
+
+            $_POST['get_content'] = json_encode($_GET); 
+            $chooser_override = $WPchooser_arrOptions["chooser_van_override"];    
+            if( !empty( $_POST ) OR isset( $_GET["vanChooserCode"] ) ) {
+                if( isset( $_GET["vanChooserCode"] )) {
+                    $_POST =  (array) json_decode( base64_decode( $_GET["vanChooserCode"]) );  
+                    $_GET = (array)json_decode($_POST['get_content']);   
+                } else if ( $chooser_override ) {                            
+
+                    if ( $_POST['submit'] == 'Calculate' ) {
+                        $WPComvan_hashedData = base64_encode( json_encode( $_POST ));                
+                        header( "Location: $chooser_override?vanChooserCode=$WPComvan_hashedData");
+                        exit(1);
+                    }
+                }  
+            }
+             
         break; 
     }
 }
