@@ -11,28 +11,17 @@
         }
     }
 
-
-    // global $general_structure;
-    // global $tax_calculator_structure;
-    // global $comparator_structure;
-    // global $electric_comparator_structure;
-    // global $footprint_structure;
-    // global $fuelPrices_structure;
-    // global $fuel_benefit_check_structure;
-    // global $car_details_structure;
-    // global $prices_and_options_structure;
-
     $plugin_nav = array(     
-                            "general"               => array( "label" => "Main", "path" => "" ),
-                            "tax_calculator"        => array( "label" => "Tax calculator", "path" => "" ),
-                            "comparator"            => array( "label" => "Comparator","path" => "" ),
-                            "electric_comparator"   => array( "label" => "Electric comparator","path" => "" ),
-                            "footprint"             => array( "label" => "Footprint calculator", "path" => "" ),
-                            "fuelprices"            => array( "label" => "Fuel prices calculator", "path" => "" ),
-                            "fuel_benefit_check"    => array( "label" => "Fuel benefit check", "path" => ""  ),
-                            "car_details"           => array( "label" => "Car Details", "path" => ""  ),
-                            "prices_and_options"    => array( "label" => "Prices and options", "path" => ""  ),
-                            "chooser"               => array( "label" => "Chooser", "path" => ""  )
+                            "general"               => "Main",
+                            "tax_calculator"        => "Tax calculator",
+                            "comparator"            => "Comparator",
+                            "electric_comparator"   => "Electric comparator",
+                            "footprint"             => "Footprint calculator",
+                            "fuelprices"            => "Fuel prices calculator",
+                            "fuel_benefit_check"    => "Fuel benefit check",
+                            "car_details"           => "Car Details",
+                            "prices_and_options"    => "Prices and options",
+                            "chooser"               => "Chooser"
                         );
 
     

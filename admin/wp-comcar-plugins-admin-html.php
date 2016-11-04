@@ -267,8 +267,8 @@ function createOptionsForEachNav( ) {
     global $plugin_nav;
     echo "<div class='wrap'><h2 class='nav-tab-wrapper'>";
 
-    foreach( $plugin_nav as $arrKey => $arr_info ) {
-        $arr_title = $arr_info["label"]; 
+    foreach( $plugin_nav as $arrKey => $arr_title ) {
+
         $str_function_name = "WP_plugin_options_".$arrKey; 
         $class_activation = "";
         if ( strcmp( $arrKey, "general" ) == 0 ) {
