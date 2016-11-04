@@ -1,6 +1,5 @@
 <?php
-
-$car_details_structure = array(  
+ $plugin_options["car_details"] = array(  
             array( 
                 "label" => "Car Details page",
                 "name" => "car_details_page",

@@ -9,9 +9,8 @@
             $nav_options[$value] = $key; 
         }
     }
- 
     
-    $general_structure = array(
+   $plugin_options["general"] = array(
         array( 
                 "description" => "Please insert the ID and public hash for your own car and/or van channel. Channels are available to customers of Carmen Data Ltd. To become a customer see <a target='_blank' href='http://carmendata.co.uk/'>carmendata.co.uk</a>",
                 "type" => "description"

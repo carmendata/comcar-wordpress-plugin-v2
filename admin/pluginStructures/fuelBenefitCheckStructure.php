@@ -1,5 +1,5 @@
 <?php
-   $fuel_benefit_check_structure = array(  
+ $plugin_options["fuel_benefit_check"] = array(  
             array( 
                 "label" => "Fuel benefit page",
                 "name" => "fuel_benefit_check_page",

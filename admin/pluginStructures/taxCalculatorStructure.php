@@ -1,9 +1,7 @@
 <?php
 
 
-
-
- $arr_page_setting = array(  "" => "",
+ $plugin_options[ "tax_calculator" ] = array(  "" => "",
                             "maxP11D" => "P11D Value", 
                             "cvotr" => "Price",
                             "make" => "Manufacturer",

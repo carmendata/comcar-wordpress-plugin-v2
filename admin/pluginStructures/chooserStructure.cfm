@@ -1,5 +1,5 @@
 <?php
-    $chooser_structure = array(  
+ $plugin_options["chooser" ]  = array(  
             array( 
                 "label" => "Car chooser page",
                 "name" => "chooser_car_page",

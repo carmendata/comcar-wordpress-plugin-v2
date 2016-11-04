@@ -1,7 +1,6 @@
 <?php 
 
-
-$electric_comparator_structure = array(             
+ $plugin_options["electric_comparator"] = array(             
              array( 
                 "label" => "Enable electric comparator",
                 "name" => "pages",

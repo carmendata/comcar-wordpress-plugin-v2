@@ -1,7 +1,6 @@
 <?php
 
-
-$comparator_structure = array(  
+$plugin_options["comparator" ] = array(  
             array( 
                 "description" => "The Comparator allows users to compare several different vehicle across several contract terms and mileages. Calculations can be viewed from the point of view of the driver and the company.",
                 "type" => "description"

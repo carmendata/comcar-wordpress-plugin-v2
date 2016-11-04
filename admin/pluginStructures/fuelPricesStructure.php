@@ -1,6 +1,5 @@
 <?php 
-
-    $fuelPrices_structure = array(     
+    $plugin_options [ "fuelprices" ]  = array(     
           
             array( 
                 "label" => "Fuel prices page",

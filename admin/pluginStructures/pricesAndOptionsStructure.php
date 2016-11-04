@@ -1,6 +1,5 @@
 <?php 
-
-$prices_and_options_structure = array(     
+$plugin_options["prices_and_options"] = array(     
           
         array( 
             "label" => "Car prices and options page",
