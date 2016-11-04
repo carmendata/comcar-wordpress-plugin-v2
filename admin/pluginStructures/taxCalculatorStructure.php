@@ -1,7 +1,7 @@
 <?php
 
 
- $plugin_options[ "tax_calculator" ] = array(  "" => "",
+  $arr_page_setting = array(  "" => "",
                             "maxP11D" => "P11D Value", 
                             "cvotr" => "Price",
                             "make" => "Manufacturer",
@@ -29,7 +29,7 @@
                             "insfifty" => "Insurance Group",
                             "ps" => "Power" 
                         );
-    $tax_calculator_structure = array(  
+    $plugin_options[ "tax_calculator" ] = array(  
             array( 
                 "description" => "The Tax Calculator tool allows users to calculate how much company car tax they will incur.",
                 "type" => "description"
