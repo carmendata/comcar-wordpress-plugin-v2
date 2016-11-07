@@ -34,6 +34,14 @@ The fuel benefit check helps drivers to decide if this perk is worthwhile by com
 
 Car details allow users to select a vehicle to get detailed specifications and options for UK vehicles.
 
+### Prices and options
+
+The Car/Van Prices and Options tool shows a pricing summary for the chosen vehicle.
+
+### Chooser
+
+This tool provides more complex search criteria for selecting a vehicle in comparison to the simpler Company Car/Van Tax Calculator.
+
 ## Installation
 
 ### Prerequisites

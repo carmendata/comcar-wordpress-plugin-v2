@@ -10,7 +10,7 @@
             array( 
                 "label" => "Car chooser override URL",
                 "name" => "chooser_car_override",
-                "desc" => "Override URL to visit prior to the calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation)",
+                "desc" => "Override URL to visit prior to the calculation - leave blank if not needed",
                 "type" => "text"
             ),
              array( 
@@ -23,7 +23,7 @@
             array( 
                 "label" => "Van chooser override URL",
                 "name" => "chooser_van_override",
-                "desc" => "Override URL to visit prior to the calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation)",
+                "desc" => "Override URL to visit prior to the calculation - leave blank if not needed",
                 "type" => "text"
             )
         );

@@ -10,7 +10,7 @@
             array( 
                 "label" => "Fuel benefit override URL",
                 "name" => "car_details_override",
-                "desc" => "Override URL to visit prior to the calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation)",
+                "desc" => "Override URL to visit prior to the calculation - leave blank if not needed",
                 "type" => "text"
             )
         );

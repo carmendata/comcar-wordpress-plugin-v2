@@ -11,7 +11,7 @@ $plugin_options["prices_and_options"] = array(
         array( 
             "label" => "Car prices and options override URL",
             "name" => "prices_and_options_car_override",
-            "desc" => "Leave blank if not needed (refer to documentation for correct redirection to final calculation)",
+            "desc" => "Override URL to visit prior to the calculation - leave blank if not needed",
             "type" => "text"
         ),
         array( 
@@ -24,7 +24,7 @@ $plugin_options["prices_and_options"] = array(
         array( 
             "label" => "Van prices and options override URL",
             "name" => "prices_and_options_van_override",
-            "desc" => "Leave blank if not needed (refer to documentation for correct redirection to final calculation)",
+            "desc" => "Override URL to visit prior to the calculation - leave blank if not needed",
             "type" => "text"
         )
     )
