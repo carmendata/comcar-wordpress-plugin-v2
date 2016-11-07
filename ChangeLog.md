@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.5.1** Updated documentation
 - **1.5.0** Added new tools 'Car chooser'
 - **1.4.0** Added new tools 'Prices and options'
 - **1.3.0** Added new tool 'Car details'
