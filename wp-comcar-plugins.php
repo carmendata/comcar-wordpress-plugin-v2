@@ -86,6 +86,8 @@ function plugin_redirection() {
     global $pagename;
     global $post;
     $post_id = $post->ID;
+    $type_vehicle = 'car';
+
 
     $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" ); 
     $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
@@ -165,25 +167,19 @@ function plugin_redirection() {
             $car_details_override= $WPcar_details_arrOptions["car_details_override"];       
             two_pages_redirection( $car_details_override, "carDetailsCode" );               
         break;
-
-        case $WPprices_and_options_arrOptions['prices_and_options_car_page']: 
-            $car_details_override= $WPprices_and_options_arrOptions["prices_and_options_car_override"];       
-            multiples_pages_redirection(  $car_details_override, "carPricesAndOptionsCode" ) ;          
-        break;
-
+        
         case $WPprices_and_options_arrOptions['prices_and_options_van_page']: 
-            $van_details_override= $WPprices_and_options_arrOptions["prices_and_options_van_override"];       
-            multiples_pages_redirection(  $van_details_override, "vanPricesAndOptionsCode" );           
+            $type_vehicle = 'van';
+        case $WPprices_and_options_arrOptions['prices_and_options_car_page']: 
+            $prices_and_options_override = $WPprices_and_options_arrOptions["prices_and_options_".$type_vehicle."_override"];       
+            multiples_pages_redirection(  $prices_and_options_override, $type_vehicle."PricesAndOptionsCode" ) ;          
         break;
 
-         case $WPchooser_arrOptions['chooser_car_page']: 
-            $chooser_override= $WPchooser_arrOptions["chooser_car_override"];    
-            multiples_pages_redirection(  $chooser_override, "carChooserCode" )  ;                      
-        break; 
-
-         case $WPchooser_arrOptions['chooser_van_page']: 
-            $chooser_override = $WPchooser_arrOptions["chooser_van_override"];    
-            multiples_pages_redirection(  $chooser_override, "json_decode" );                             
+        case $WPchooser_arrOptions['chooser_van_page']: 
+            $type_vehicle = 'van';
+        case $WPchooser_arrOptions['chooser_car_page']: 
+            $chooser_override= $WPchooser_arrOptions["chooser_".$type_vehicle."_override"];    
+            multiples_pages_redirection(  $chooser_override, $type_vehicle."carChooserCode" )  ;                      
         break; 
     }
 }
