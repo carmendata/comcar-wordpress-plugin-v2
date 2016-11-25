@@ -171,15 +171,16 @@ function createOptionsForEachNav( ) {
             switch ( $value['type'] ) {
 
                 case "description":  
-                    echo $value['description'];
+                    echo "<tr><td colspan='2'>".$value['description']."</td></tr>";
                 break;
 
                 case "note":  
-                    echo '<h5>'.$value["note"]."</h5>";
+                echo "<tr><td colspan='2'><h5>".$value["note"]."</h5></td></tr>";
+
                 break;  
 
                 case "text": 
-                    echo $std."<tr><th><label>$label</label></th><td>
+                    echo "<tr><th><label>$label</label></th><td>
                         <input type='text' placeholder='$std' name='$name' value='";            
                     if ( get_option( $name ) != "") { 
                         echo stripslashes(get_option( $name)  ) ;
@@ -198,7 +199,7 @@ function createOptionsForEachNav( ) {
                     }
 
                     echo "<label> Default </label></td></tr><tr><td></td><td>
-                            <textarea rows='4' cols='50' name='$name' >"
+                            <textarea rows='4' cols='50' name='$name' maxlength = '200'>"
                             .trim( get_option( $name ) )."</textarea></td></tr>";
                 break; 
 

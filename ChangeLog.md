@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.5.2** Limiting size of 'Cars and Vans Selector Texts' input to avoid REQUEST TOO LARGE error 
 - **1.5.1** Updated documentation
 - **1.5.0** Added new tools 'Car chooser'
 - **1.4.0** Added new tools 'Prices and options'

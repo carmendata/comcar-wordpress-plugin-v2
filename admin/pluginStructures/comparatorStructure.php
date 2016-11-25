@@ -11,7 +11,6 @@ $plugin_options["comparator" ] = array(
                 "options" => array( "For car channel" => "cars", "For van channel"=> "vans" ),
                 "type" => "checkbox"
                 ),
-          
             array( 
                 "label" => "Car channel comparator",
                 "name" => "comparator_cars_page",
@@ -19,6 +18,7 @@ $plugin_options["comparator" ] = array(
                 "desc" => "Select which page the Car Comparator Parent page will be loaded into.",
                 "type" => "select"
                 ) ,
+     
             
             array( 
                 "name" => "comparator_cars_subpage_select",
@@ -75,8 +75,13 @@ $plugin_options["comparator" ] = array(
 
             array( 
                 "name" => "comparator_cars_texts",
-                "type" => "openSection" 
+                "type" => "openSection"
                 ),
+
+            array( 
+                "description" => "<b>If you get the REQUEST TOO LARGE error try removing the text from the Cars Selector Texts and Vans Selector Texts boxes - putting too much text in the boxes causes the webservice to fail.</b>",
+                "type" => "description"
+            ),
 
             array(
                 "name" => "preSelectorText",
