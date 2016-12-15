@@ -7,12 +7,13 @@
 	if(!isset($WPComcar_msg))			{	$WPComcar_msg="";			}
 ?>
 <?php
+	global $post;
 	$WPComcar_theResultOfTheWebservice = '';
 	$WPComcar_theResultOfTheWebservice .= '<!-- Start of the output for the Comcar Tools plugin for WordPress version ' . WPComcar_PLUGINVERSION . ' -->';
 	if( strlen($WPComcar_msg) ){
 		$WPComcar_theResultOfTheWebservice .= '<p>' . $WPComcar_msg . '</p>';
 	}else{
-		$WPComcar_theResultOfTheWebservice .= $WPComcar_resultsCSS . $WPComcar_resultsJS . '<div id="WPComcar_container">' . $WPComcar_resultsHTML . '</div>';
+		$WPComcar_theResultOfTheWebservice .= $WPComcar_resultsCSS . $WPComcar_resultsJS . '<div id="WPComcar_container">' .$post->post_content. $WPComcar_resultsHTML . '</div>';
 	}
 	$WPComcar_theResultOfTheWebservice .= '<!-- End of the output for the Comcar Tools plugin for WordPress version ' . WPComcar_PLUGINVERSION . ' -->';
 ?>
