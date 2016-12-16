@@ -3,7 +3,7 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 1.5.3
+ * Version: 1.5.4
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
@@ -15,7 +15,7 @@
 // ini_set( 'error_reporting', E_ALL );
 // ini_set( 'display_errors', true );
 
-define( "WPComcar_PLUGINVERSION","1.5.3" );
+define( "WPComcar_PLUGINVERSION","1.5.4" );
 
 require_once( __DIR__."/wp-comcar-constants.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
@@ -53,25 +53,38 @@ function decodeURLParam( $str_to_decode ) {
 function two_pages_redirection( $post_to_override, $str_code ) {
     if( !empty( $_POST ) OR isset( $_GET[$str_code] ) ) {
         if( isset( $_GET[$str_code] )) {
-            $_POST =  (array) json_decode( base64_decode( $_GET[$str_code]) );  
+            $_POST =  (array)decodeFromURL( $_GET[$str_code]) ;  
         } else if ( $post_to_override ) {
-            $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+            $WPComcar_hashedData = encodeForURL($_POST );                
             header( "Location: $post_to_override?$str_code=$WPComcar_hashedData");
             exit(1);
         }  
     }
 }
 
+function encodeForURL ($stringArray) {
+    $s = strtr(base64_encode(addslashes(gzcompress(serialize(json_encode( $stringArray)),9))), '+/=', '-_,');
+    return $s;
+}
+
+function decodeFromURL ($stringArray) {
+    $s = json_decode(unserialize(gzuncompress(stripslashes(base64_decode(strtr($stringArray, '-_,', '+/='))))));
+    return $s;
+}
+
+
 
 function multiples_pages_redirection( $post_to_override, $str_code ) {
     $_POST['get_content'] = json_encode($_GET); 
+
     if( !empty( $_POST ) OR isset( $_GET[ $str_code ] ) ) {
         if( isset( $_GET[ $str_code ] )) {
-            $_POST =  (array) json_decode( base64_decode( $_GET[ $str_code ]) );  
+            $_POST =  (array)  decodeFromURL( $_GET[ $str_code ]) ;  
             $_GET = (array)json_decode($_POST['get_content']);   
+
         } else if ( $post_to_override ) {                            
             if ( $_POST['submit'] == 'Calculate' ) {
-                $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                $WPComcar_hashedData = encodeForURL( $_POST );                
                 header( "Location: $post_to_override?$str_code=$WPComcar_hashedData");
                 exit(1);
             }
@@ -179,7 +192,7 @@ function plugin_redirection() {
             $type_vehicle = 'van';
         case $WPchooser_arrOptions['chooser_car_page']: 
             $chooser_override= $WPchooser_arrOptions["chooser_".$type_vehicle."_override"];    
-            multiples_pages_redirection(  $chooser_override, $type_vehicle."carChooserCode" )  ;                      
+            multiples_pages_redirection(  $chooser_override, $type_vehicle."ChooserCode" )  ;                      
         break; 
     }
 }
