@@ -5,7 +5,7 @@
    
     switch ( $thePostId ) {
         case $WPComcar_arrOptions["chooser_car_page"]:
-            include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php' );
+            include_once ( WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php' );        
             $loadContent = true;
         break;
         case $WPComcar_arrOptions["chooser_van_page"]:
@@ -18,7 +18,6 @@
         break;
     }
 
-
     if (  $loadContent  ) {
        
         try {
@@ -26,7 +25,7 @@
             $WPComcar_ws = new SoapClient( $WPComcar_services['chooser'], array( 'cache_wsdl' => 0 ) );
             $stage = "select";
 
-            if (array_key_exists( 'taxband', $_POST )) {
+            if (array_key_exists( 'maxprice', $_POST )) {
                 $stage = "model";
             }    
        
@@ -53,7 +52,7 @@
 
 
             $_POST['stage'] = $stage;
-       
+            $_POST['type_vehicle'] = $type_vehicle;
              // Convert structure into JSON
             $WPComcar_jsonPost = json_encode(  $_POST );
             $WPComcar_jsonGet = json_encode(  $_GET );

@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.5.5** Fix tool 'Van chooser'
 - **1.5.4** Short external links
 - **1.5.3** Allow Wordpress page content to show before our tools
 - **1.5.2** Limiting size of 'Cars and Vans Selector Texts' input to avoid REQUEST TOO LARGE error 
