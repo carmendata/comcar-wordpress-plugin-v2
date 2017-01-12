@@ -14,7 +14,7 @@
 
 	$WPComcar_clk = WPComcar_CLKDEFAULTVANS;
 	$WPComcar_pubhash = WPComcar_PUBHASHDEFAULTVANS;
-	
+	$type_vehicle = "Van";
 	if (isset($WPComcar_options["clkVans"]) && strlen($WPComcar_options["clkVans"])>0){
 		$WPComcar_clk=$WPComcar_options["clkVans"];
 	}
