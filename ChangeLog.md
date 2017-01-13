@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.5.7** Added data capture for van comparator
 - **1.5.6** Added data capture for van tax calculator
 - **1.5.5** Fix tool 'Van chooser'
 - **1.5.4** Short external links
