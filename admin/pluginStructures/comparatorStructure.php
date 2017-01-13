@@ -6,12 +6,6 @@ $plugin_options["comparator" ] = array(
                 "type" => "description"
             ),
             array( 
-                "label" => "Enable comparator",
-                "name" => "pages",
-                "options" => array( "For car channel" => "cars", "For van channel"=> "vans" ),
-                "type" => "checkbox"
-                ),
-            array( 
                 "label" => "Car channel comparator",
                 "name" => "comparator_cars_page",
                 "options" => "Pages",

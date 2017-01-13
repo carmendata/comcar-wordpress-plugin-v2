@@ -117,20 +117,19 @@ function saveToolsOptions( ) {
 
     // This is a little hack necessary to match te new code with the old one
     // it is redundant info, but in the future will be deleted
+    global $arr_type_vehicles;
     $arrOptions = get_option($current_tool_name);
-    if ( isset( $arrOptions["pages"] )) {
-        foreach($arrOptions["pages"] as $key=>$page){       
-            $arr_subpages = matchPattern("#^".$_REQUEST["nav"]."_".$page."_subpage_(.*)$#i",$arrOptions);
-            $arrOptions[$page."_subpages"] =  array();
-            foreach( $arr_subpages as $label=>$value ) {
-                $subpage = str_replace( $_REQUEST["nav"]."_".$page."_subpage_","",$label );
-                $arrOptions[$page."_subpages"][$subpage] = $value;
-            }
-            update_option( $current_tool_name , $arrOptions  ); 
-        }                         
-    }  
+ 
+    foreach($arr_type_vehicles as $page){       
+        $arr_subpages = matchPattern("#^".$_REQUEST["nav"]."_".$page."_subpage_(.*)$#i",$arrOptions);
+        $arrOptions[$page."_subpages"] =  array();
+        foreach( $arr_subpages as $label=>$value ) {
+            $subpage = str_replace( $_REQUEST["nav"]."_".$page."_subpage_","",$label );
+            $arrOptions[$page."_subpages"][$subpage] = $value;
 
-                 
+        }
+        update_option( $current_tool_name , $arrOptions  ); 
+    }                                          
 }
 
 

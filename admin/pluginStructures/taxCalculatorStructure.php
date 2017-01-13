@@ -36,13 +36,6 @@
             ),
 
             array( 
-                "label" => "Enable tax calculator",
-                "name" => "pages",
-                "options" => array( "For car channel" => "cars", "For van channel"=> "vans" ),
-                "type" => "checkbox"
-                ),
-
-            array( 
                 "label" => "Car tax calculator pages",
                 "name" => "tax_calculator_cars_page",
                 "options" => "Pages",

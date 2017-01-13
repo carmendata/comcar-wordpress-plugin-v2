@@ -1,12 +1,7 @@
 <?php 
 
  $plugin_options["electric_comparator"] = array(             
-             array( 
-                "label" => "Enable electric comparator",
-                "name" => "pages",
-                "options" => array( "For car channel" => "cars" ),
-                "type" => "checkbox"
-                ),
+          
                 array( 
                 "label" => "Electric comparator page",
                 "name" => "electric_comparator_cars_page",

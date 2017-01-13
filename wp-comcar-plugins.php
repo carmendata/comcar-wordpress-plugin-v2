@@ -223,7 +223,8 @@ function activate_page_plugins( ) {
     global $thisPluginName;
     global $post;
     global $current_page;
-  
+    global $arr_type_vehicles;
+
     $thisPluginName = '';
     $idOfTheCurrentPage = get_post( $post )->ID;
 
@@ -247,19 +248,13 @@ function activate_page_plugins( ) {
         foreach( $arr_sub_pages as $key => $value ) {
           
             if ( $value == $idOfTheCurrentPage ) { 
-                if ( isset( $arrOptions["pages"] ) &&
-                    is_array( $arrOptions["pages"] ) ) {
-
-                    foreach( $arrOptions["pages"] as $page_key => $page) {        
-                        $arr_pages =  preg_match ( "#^(.*)".$page."(.*)$#i", $key );
-                        if ( $arr_pages ) {
-                            $current_page = $page;
-                            break;
-                        }
+                foreach($arr_type_vehicles as $page){              
+                    $arr_pages =  preg_match ( "#^(.*)".$page."(.*)$#i", $key );
+                    if ( $arr_pages ) {
+                        $current_page = $page;
+                        break;
                     }
-                } else {
-                    $current_page = '';
-                }
+                }     
 
                 $loadCssAndJavascript = true;         
                 add_filter( "the_content",  "getToolContent" );

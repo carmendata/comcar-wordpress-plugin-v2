@@ -18,7 +18,8 @@
                             "chooser"               => "Chooser"
                         );
 
-
+    $arr_type_vehicles = array('cars','vans');
+    
     // Include all files inside plugin structure
     $scan_result =  scandir(dirname(__FILE__).'/pluginStructures/');
     foreach ( $scan_result as $key => $value ) {  
