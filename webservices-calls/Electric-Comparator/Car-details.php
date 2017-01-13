@@ -29,8 +29,8 @@
         $WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
         // call the required functions and store the returned data
-        $WPComcar_resultsJS = $WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, $WPComcar_actionName );
-        $WPComcar_resultsHTML = $WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, '', $WPComcar_jsnDataAndConfig);
+        $WPComcar_resultsJS = fixForSsl($WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, $WPComcar_actionName ));
+        $WPComcar_resultsHTML = fixForSsl($WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, '', $WPComcar_jsnDataAndConfig));
          
         
     } catch (Exception $e) {
