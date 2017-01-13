@@ -114,6 +114,13 @@
                  "desc" => "And finally the Calculate page (the last page).",
                 "type" => "select"
             ),
+
+            array( 
+                "label" => "Calculation override URL",
+                "name" => "tax_calculator_vans_calc_override",
+                "desc" => "Override URL to visit prior to the tax calculation - leave blank if not needed (refer to documentation for correct redirection to final calculation).",
+                "type" => "text"
+            ),
             array( 
                 "name" => "tax_calculator_cars_texts",
                 "type" => "openSection" 

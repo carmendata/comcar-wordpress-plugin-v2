@@ -3,7 +3,7 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 1.5.5
+ * Version: 1.5.6
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
@@ -15,7 +15,7 @@
 // ini_set( 'error_reporting', E_ALL );
 // ini_set( 'display_errors', true );
 
-define( "WPComcar_PLUGINVERSION","1.5.5" );
+define( "WPComcar_PLUGINVERSION","1.5.6" );
 
 require_once( __DIR__."/wp-comcar-constants.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
@@ -112,14 +112,24 @@ function plugin_redirection() {
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
     switch( $post_id ) {
-        case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
-            // check for calculation redirect
-            $WPComcar_tax_calc_override = $WPComcar_arrOptions["tax_calculator_cars_calc_override"];
 
-            if( isset($_GET["taxcalculatorcode"] ) ) {
+
+        case $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] :         
+        case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
+            $data_capture_code = 'taxcalculatorcode';
+
+            if ( $post_id == $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] ) {
+                  $type_vehicle = 'van';
+                  $data_capture_code = 'vanTaxCalcCode';
+            }
+
+            // check for calculation redirect
+            $WPComcar_tax_calc_override = $WPComcar_arrOptions["tax_calculator_" . $type_vehicle . "s_calc_override"];
+
+            if( isset($_GET[ $data_capture_code ] ) ) {
 
                 // if there is encoded data put it back into the form
-                $encoded_taxcalculatorcode = htmlspecialchars( $_GET[ "taxcalculatorcode" ] );
+                $encoded_taxcalculatorcode = htmlspecialchars( $_GET[ $data_capture_code ] );
                 $decoded_taxcalculatorcode =   decodeURLParam( $encoded_taxcalculatorcode );
                 $arr_decoded = explode( "~", $decoded_taxcalculatorcode );
                 $_POST["id"] = $arr_decoded[ 0 ];
@@ -150,7 +160,7 @@ function plugin_redirection() {
                 						.$_POST["optTotal"];
 
                 $WPComcar_hashedData = bin2hex( base64_encode( $WPComcar_formData ) );
-                header( "Location: $WPComcar_tax_calc_override?taxcalculatorcode=$WPComcar_hashedData");
+                header( "Location: $WPComcar_tax_calc_override?".$data_capture_code."=$WPComcar_hashedData");
                 exit(1);
             }
 
