@@ -66,6 +66,12 @@ $plugin_options["comparator" ] = array(
                  "description" => "The Callback page (This never gets seen by users but is crucial to user flow).",
                 "type" => "select"
             ),
+            array( 
+                "label" => "Comparator override URL",
+                "name" => "comparator_vans_comp_override",
+                "desc" => "Override URL to visit prior to the comparation - leave blank if not needed (refer to documentation for correct redirection to final comparation)",
+                "type" => "text"
+            ),
 
             array( 
                 "name" => "comparator_cars_texts",

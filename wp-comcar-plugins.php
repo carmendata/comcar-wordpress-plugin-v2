@@ -112,8 +112,6 @@ function plugin_redirection() {
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
     switch( $post_id ) {
-
-
         case $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] :         
         case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
             $data_capture_code = 'taxcalculatorcode';
@@ -166,17 +164,35 @@ function plugin_redirection() {
 
         break;
 
-        case $WPComcar_arrOptions["comparator_cars_subpage_details"]:   
-            $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_cars_comp_override"];       
-              // check for calculation redirect
+        case $WPComcar_arrOptions["comparator_vans_subpage_callback"]:
+            if( isset($_GET["vanComparatorCode"])) {
+                $_POST =  (array) json_decode(base64_decode($_GET["vanComparatorCode"]));  
+            } 
+        break; 
+        case $WPComcar_arrOptions["comparator_cars_subpage_callback"]: 
             if( isset($_GET["comparatorcode"])) {
                 $_POST =  (array) json_decode(base64_decode($_GET["comparatorcode"]));  
-            } else if ( $WPComcar_comparator_override ) {
+            } 
+        break;
+
+        case $WPComcar_arrOptions["comparator_vans_subpage_details"]: 
+        case $WPComcar_arrOptions["comparator_cars_subpage_details"]: 
+
+            $data_capture_code = 'comparatorcode';
+
+            if ( $post_id == $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] ) {
+                  $type_vehicle = 'van';
+                  $data_capture_code = 'vanComparatorCode';
+            }
+
+            $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_".$type_vehicle."s_comp_override"];       
+              // check for calculation redirect
+            if ( $WPComcar_comparator_override ) {
                 if( !isset( $_POST ) ) {  
                     $_POST = $_GET;  
                 }
                 $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
-                header( "Location: $WPComcar_comparator_override?comparatorcode=$WPComcar_hashedData");
+                header( "Location: $WPComcar_comparator_override?".$data_capture_code."=$WPComcar_hashedData");
                 exit(1);
             }
         break;
@@ -206,8 +222,6 @@ function plugin_redirection() {
         break; 
     }
 }
-
-
 
 
 

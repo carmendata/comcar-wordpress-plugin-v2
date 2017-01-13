@@ -4,5 +4,5 @@
 
 	if(!isset($WPComcar_vehicleType)){    $WPComcar_vehicleType="Van";    }
 	// include code with the actual call to the web service
-	include_once 'common-callback.php';
+	include_once 'common-details.php';
 ?>
