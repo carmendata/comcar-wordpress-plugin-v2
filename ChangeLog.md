@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.5.9** Tax calculation improved i-buttons
 - **1.5.8** Fix bug with Van comparator data capture
 - **1.5.7** Added data capture for van comparator
 - **1.5.6** Added data capture for van tax calculator
