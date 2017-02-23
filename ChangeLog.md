@@ -1,6 +1,6 @@
 ChangeLog
 =========
-- **1.5.9** Tax calculation improved i-buttons
+- **1.5.9** Improve i-button display on Tax Calculation
 - **1.5.8** Fix bug with Van comparator data capture
 - **1.5.7** Added data capture for van comparator
 - **1.5.6** Added data capture for van tax calculator
@@ -18,7 +18,7 @@ ChangeLog
 - **0.20.1** Bug Fixes for admin settings
 - **0.20** Added Electric comparator tool
 - **0.19** Manage HTTPS
-- **0.18** Allow redirection to external site before Comparation
+- **0.18** Allow redirection to external site before comparisons
 - **0.17** Allow redirection to external site before Tax Calculation
 - **0.16** Added sidebar file for Comcar Wordpress Widget
 - **0.15** Bug Fix on newer versions of WP hiding settings

@@ -10,7 +10,7 @@
 		return $pageURL;
 	}
 
-
+ 
 	function matchPattern($pattern, $input) {
 	    return array_intersect_key( $input, array_flip( preg_grep( $pattern, array_keys( $input ))));
 	}

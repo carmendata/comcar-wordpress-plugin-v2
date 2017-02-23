@@ -67,5 +67,5 @@ Some resources for installing SoapClient:
 - [PHP Documentation](http://php.net/manual/en/soap.installation.php)
 
 ### Guide
-
+ 
 For a step-by-step tutorial visit [github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial](https://github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial) 
