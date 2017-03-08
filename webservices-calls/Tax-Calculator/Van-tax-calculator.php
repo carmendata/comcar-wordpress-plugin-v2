@@ -32,20 +32,10 @@
 			if(strcmp($idThePageWhereShouldLoadThePlugin,$thePostId)==0){
 				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-select.php";
 			}else if (in_array($thePostId,$arrOptions["vans_subpages"])){
-				//check if the parent is the one expected
-				if (strcmp($idThePageWhereShouldLoadThePlugin, $this->getParentId())==0){
-					$theNameOfThePage=array_search($thePostId,$arrOptions["vans_subpages"]);
-					$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-$theNameOfThePage.php";
-				}				
+				$theNameOfThePage=array_search($thePostId,$arrOptions["vans_subpages"]);
+				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-$theNameOfThePage.php";				
 			}
 		}
 
-		function getParentId(){
-			global $post;
-			$thePageParents = get_post_ancestors( $post->ID );
-	        /* Get the top Level page->ID count base 1, array base 0 so -1 */ 
-			$parentId = ($thePageParents) ? $thePageParents[count($thePageParents)-1]: $post->ID;
-			return $parentId;
-		}
 	}
 ?>

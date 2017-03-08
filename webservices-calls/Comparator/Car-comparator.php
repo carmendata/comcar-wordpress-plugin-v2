@@ -33,20 +33,9 @@
 			if (strcmp($theIdPageWhereShouldLoadThePlugin,$thePostId)==0){
 				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Comparator/Car-select.php";
 			}else if (in_array($thePostId,$arrOptions["cars_subpages"])){
-				if (strcmp($theIdPageWhereShouldLoadThePlugin, $this->getParentId())==0){
-					$theNameOfThePage=array_search($thePostId,$arrOptions["cars_subpages"]);
-					$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Comparator/Car-$theNameOfThePage.php";
-				}				
+				$theNameOfThePage=array_search($thePostId,$arrOptions["cars_subpages"]);
+				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Comparator/Car-$theNameOfThePage.php";				
 			}
-		}
-
-		function getParentId(){
-			global $post;
-			$thePageParents = get_post_ancestors( $post->ID );
-	        /* Get the top Level page->ID count base 1, array base 0 so -1 */ 
-			$parentId = ($thePageParents) ? $thePageParents[count($thePageParents)-1]: $post->ID;
-
-			return $parentId;
-		}		
+		}	
 	}
 ?>

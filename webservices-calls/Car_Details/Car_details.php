@@ -16,17 +16,10 @@
             $WPComcar_ws = new SoapClient( $WPComcar_services['carDetails'], array( 'cache_wsdl' => 0 ) );
             $stage = "select";
             
-
-
-
             if ( array_key_exists('fmake',$_POST) ) {
                 $stage = "details";
             } 
             
-
-
-
-
             $WPComcar_resultsHTML = fixForSsl( $WPComcar_ws -> GetHTML( $WPComcar_pubhash, $WPComcar_clk,$WPComcar_jsnConfig ));
             $WPComcar_resultsJS = fixForSsl( $WPComcar_ws -> GetJS( $WPComcar_pubhash, $WPComcar_clk,   $stage ) );
             $WPComcar_resultsCSS = fixForSsl( $WPComcar_ws -> GetCSS( $WPComcar_pubhash, $WPComcar_clk,   $stage ) );

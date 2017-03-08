@@ -3,7 +3,7 @@
  * Plugin Name:  Comcar Tools
  * Plugin URI: http://github.com/carmendata/comcar-wordpress-plugin/wiki
  * Description: Includes the Tax Calculator, Vehicle Comparator amd Emissions Footprint Calculator from comcar.co.uk.
- * Version: 1.5.9
+ * Version: 1.5.10
  * Author: Carmen data
  * Author URI: http://carmendata.co.uk/
  * License: GPL2
@@ -104,6 +104,7 @@ function plugin_redirection() {
 
     $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" ); 
     $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
+  
     $WPFuel_benefit_check_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     $WPcar_details_arrOptions = get_option( "WP_plugin_options_car_details" );
     $WPprices_and_options_arrOptions = get_option( "WP_plugin_options_prices_and_options" );
@@ -114,6 +115,7 @@ function plugin_redirection() {
     switch( $post_id ) {
         case $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] :         
         case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
+
             $data_capture_code = 'taxcalculatorcode';
 
             if ( $post_id == $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] ) {
@@ -243,8 +245,9 @@ function activate_page_plugins( ) {
     $thisPluginName = '';
     $idOfTheCurrentPage = get_post( $post )->ID;
 
-
+       
     foreach (  $plugin_nav as $thisPluginName => $plugin_info ) { 
+
 
         //if it is not activated jump to next 
         if ( !isset( $arrGeneralSettings["pluginsOptions"][$thisPluginName] )) {
@@ -292,12 +295,15 @@ function getToolContent(  ) {
     global $thisPluginName;
     global $current_page;
 
+
     if( is_page() && is_main_query() ) { 
         switch ( $thisPluginName ) {
             case "tax_calculator":
+
                 wp_enqueue_script('wp_ibuttons'); 
                 // Van or Car?
                 if ( $current_page =='cars' ) {
+
                     $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
                 } else {
                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";

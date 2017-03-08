@@ -31,25 +31,11 @@
             if (strcmp($theIdPageWhereShouldLoadThePlugin,$thePostId)==0){
                 $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-details.php";
             } else if (in_array($thePostId,$arrOptions["electric_comparator_cars_subpage"])) {
-                if (strcmp($theIdPageWhereShouldLoadThePlugin, $this->getParentId())==0){
-                    $theNameOfThePage=array_search($thePostId,$arrOptions["electric_comparator_cars_subpage"]);
-
-                    $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-$theNameOfThePage.php";
-                }
+                $theNameOfThePage=array_search($thePostId,$arrOptions["electric_comparator_cars_subpage"]);
+                $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-$theNameOfThePage.php";
             }
 
         }
-
-        function getParentId(){
-            global $post;
-            $thePageParents = get_post_ancestors( $post->ID );
-            /* Get the top Level page->ID count base 1, array base 0 so -1 */ 
-            $parentId = ($thePageParents) ? $thePageParents[count($thePageParents)-1]: $post->ID;
-
-            return $parentId;
-        }       
     }
-
-
 
 ?>

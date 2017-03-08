@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.5.10** Allow more than one level of page nesting
 - **1.5.9** Improve i-button display on Tax Calculation
 - **1.5.8** Fix bug with Van comparator data capture
 - **1.5.7** Added data capture for van comparator
