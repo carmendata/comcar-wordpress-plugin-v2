@@ -9,7 +9,7 @@
  * License: GPL2
  */
 
- 
+
 
 // Uncomment if you want to debug to receive warnings and errors
 // ini_set( 'error_reporting', E_ALL );
@@ -21,11 +21,16 @@ require_once( __DIR__."/wp-comcar-constants.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
 
 
-add_action( "wp", "plugin_redirection" );    
-add_action( "wp_head", "activate_page_plugins");   
+add_action( "wp", "plugin_redirection" );
+add_action( "wp_head", "activate_page_plugins");
 
 wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
 wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
+
+// stylesheet for MPG Calculator
+wp_register_style( "mpg_calculator_styles" , plugins_url( "/css/mpg_calculator_styles.css", __FILE__ ));
+// scripts for MPG Calculator
+wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpg_calculator_scripts.js", __FILE__ ));
 
 
 
@@ -33,19 +38,19 @@ wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ))
 // decode url from base64
 function decodeURLParam( $str_to_decode ) {
 	// decode string (can't use hex2bin prior to php5.4)
-    $cnt_code = strlen( $str_to_decode ); 
-    $unhexed_taxcalculatorcode = "";   
-    $i = 0; 
-    while($i < $cnt_code ) {       
-        $a = substr( $str_to_decode, $i, 2 );           
-        $c = pack( "H*", $a ); 
+    $cnt_code = strlen( $str_to_decode );
+    $unhexed_taxcalculatorcode = "";
+    $i = 0;
+    while($i < $cnt_code ) {
+        $a = substr( $str_to_decode, $i, 2 );
+        $c = pack( "H*", $a );
         if ( $i == 0 ) {
         	$unhexed_taxcalculatorcode = $c;
        	} else {
        		$unhexed_taxcalculatorcode .= $c;
-       	} 
-        $i += 2; 
-    } 
+       	}
+        $i += 2;
+    }
     return base64_decode( $unhexed_taxcalculatorcode );
 }
 
@@ -53,12 +58,12 @@ function decodeURLParam( $str_to_decode ) {
 function two_pages_redirection( $post_to_override, $str_code ) {
     if( !empty( $_POST ) OR isset( $_GET[$str_code] ) ) {
         if( isset( $_GET[$str_code] )) {
-            $_POST =  (array)decodeFromURL( $_GET[$str_code]) ;  
+            $_POST =  (array)decodeFromURL( $_GET[$str_code]) ;
         } else if ( $post_to_override ) {
-            $WPComcar_hashedData = encodeForURL($_POST );                
+            $WPComcar_hashedData = encodeForURL($_POST );
             header( "Location: $post_to_override?$str_code=$WPComcar_hashedData");
             exit(1);
-        }  
+        }
     }
 }
 
@@ -75,20 +80,20 @@ function decodeFromURL ($stringArray) {
 
 
 function multiples_pages_redirection( $post_to_override, $str_code ) {
-    $_POST['get_content'] = json_encode($_GET); 
+    $_POST['get_content'] = json_encode($_GET);
 
     if( !empty( $_POST ) OR isset( $_GET[ $str_code ] ) ) {
         if( isset( $_GET[ $str_code ] )) {
-            $_POST =  (array)  decodeFromURL( $_GET[ $str_code ]) ;  
-            $_GET = (array)json_decode($_POST['get_content']);   
+            $_POST =  (array)  decodeFromURL( $_GET[ $str_code ]) ;
+            $_GET = (array)json_decode($_POST['get_content']);
 
-        } else if ( $post_to_override ) {                            
+        } else if ( $post_to_override ) {
             if ( $_POST['submit'] == 'Calculate' ) {
-                $WPComcar_hashedData = encodeForURL( $_POST );                
+                $WPComcar_hashedData = encodeForURL( $_POST );
                 header( "Location: $post_to_override?$str_code=$WPComcar_hashedData");
                 exit(1);
             }
-        }  
+        }
     }
 }
 
@@ -102,19 +107,19 @@ function plugin_redirection() {
     $type_vehicle = 'car';
 
 
-    $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" ); 
+    $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" );
     $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
-  
+
     $WPFuel_benefit_check_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     $WPcar_details_arrOptions = get_option( "WP_plugin_options_car_details" );
     $WPprices_and_options_arrOptions = get_option( "WP_plugin_options_prices_and_options" );
     $WPchooser_arrOptions = get_option( "WP_plugin_options_chooser" );
-  
+
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
     switch( $post_id ) {
-        case $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] :         
-        case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] : 
+        case $WPComcar_arrOptions["tax_calculator_vans_subpage_calc"] :
+        case $WPComcar_arrOptions["tax_calculator_cars_subpage_calc"] :
 
             $data_capture_code = 'taxcalculatorcode';
 
@@ -151,7 +156,7 @@ function plugin_redirection() {
               	$_POST["AnnCon"]	= isset( $_POST["AnnCon"]) ? $_POST["AnnCon"] : "";
               	$_POST["frm_listID"]= isset( $_POST["frm_listID"]) ? $_POST["frm_listID"] : "";
               	$_POST["optTotal"]	= isset( $_POST["optTotal"]) ? $_POST["optTotal"] : "";
-              	 
+
                 // create formData string to encode as base64
                 $WPComcar_formData = 	$_POST["id"]."~"
                 						.$_POST["CapCon"]."~"
@@ -169,17 +174,17 @@ function plugin_redirection() {
         case $WPComcar_arrOptions["comparator_vans_subpage_callback"]:
             if( isset($_GET["vanComparatorCode"])) {
 
-                $_POST =  (array) json_decode(base64_decode($_GET["vanComparatorCode"]));  
-            } 
-        break; 
-        case $WPComcar_arrOptions["comparator_cars_subpage_callback"]: 
+                $_POST =  (array) json_decode(base64_decode($_GET["vanComparatorCode"]));
+            }
+        break;
+        case $WPComcar_arrOptions["comparator_cars_subpage_callback"]:
             if( isset($_GET["comparatorcode"])) {
-                $_POST =  (array) json_decode(base64_decode($_GET["comparatorcode"]));  
-            } 
+                $_POST =  (array) json_decode(base64_decode($_GET["comparatorcode"]));
+            }
         break;
 
-        case $WPComcar_arrOptions["comparator_vans_subpage_details"]: 
-        case $WPComcar_arrOptions["comparator_cars_subpage_details"]: 
+        case $WPComcar_arrOptions["comparator_vans_subpage_details"]:
+        case $WPComcar_arrOptions["comparator_cars_subpage_details"]:
 
             $data_capture_code = 'comparatorcode';
 
@@ -188,41 +193,41 @@ function plugin_redirection() {
                   $data_capture_code = 'vanComparatorCode';
             }
 
-            $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_".$type_vehicle."s_comp_override"];       
+            $WPComcar_comparator_override= $WPComcar_arrOptions["comparator_".$type_vehicle."s_comp_override"];
               // check for calculation redirect
             if ( $WPComcar_comparator_override ) {
-                if( !isset( $_POST ) ) {  
-                    $_POST = $_GET;  
+                if( !isset( $_POST ) ) {
+                    $_POST = $_GET;
                 }
-                $WPComcar_hashedData = base64_encode( json_encode( $_POST ));                
+                $WPComcar_hashedData = base64_encode( json_encode( $_POST ));
                 header( "Location: $WPComcar_comparator_override?".$data_capture_code."=$WPComcar_hashedData");
                 exit(1);
             }
         break;
 
-        case $WPFuel_benefit_check_arrOptions['fuel_benefit_check_page']:        
-            $fuel_benefit_override= $WPFuel_benefit_check_arrOptions["fuel_benefit_check_override"];       
-            two_pages_redirection( $fuel_benefit_override, "fuelBenefitCode" );               
+        case $WPFuel_benefit_check_arrOptions['fuel_benefit_check_page']:
+            $fuel_benefit_override= $WPFuel_benefit_check_arrOptions["fuel_benefit_check_override"];
+            two_pages_redirection( $fuel_benefit_override, "fuelBenefitCode" );
         break;
 
-        case $WPcar_details_arrOptions['car_details_page']: 
-            $car_details_override= $WPcar_details_arrOptions["car_details_override"];       
-            two_pages_redirection( $car_details_override, "carDetailsCode" );               
-        break;
-        
-        case $WPprices_and_options_arrOptions['prices_and_options_van_page']: 
-            $type_vehicle = 'van';
-        case $WPprices_and_options_arrOptions['prices_and_options_car_page']: 
-            $prices_and_options_override = $WPprices_and_options_arrOptions["prices_and_options_".$type_vehicle."_override"];       
-            multiples_pages_redirection(  $prices_and_options_override, $type_vehicle."PricesAndOptionsCode" ) ;          
+        case $WPcar_details_arrOptions['car_details_page']:
+            $car_details_override= $WPcar_details_arrOptions["car_details_override"];
+            two_pages_redirection( $car_details_override, "carDetailsCode" );
         break;
 
-        case $WPchooser_arrOptions['chooser_van_page']: 
+        case $WPprices_and_options_arrOptions['prices_and_options_van_page']:
             $type_vehicle = 'van';
-        case $WPchooser_arrOptions['chooser_car_page']: 
-            $chooser_override= $WPchooser_arrOptions["chooser_".$type_vehicle."_override"];    
-            multiples_pages_redirection(  $chooser_override, $type_vehicle."ChooserCode" )  ;                      
-        break; 
+        case $WPprices_and_options_arrOptions['prices_and_options_car_page']:
+            $prices_and_options_override = $WPprices_and_options_arrOptions["prices_and_options_".$type_vehicle."_override"];
+            multiples_pages_redirection(  $prices_and_options_override, $type_vehicle."PricesAndOptionsCode" ) ;
+        break;
+
+        case $WPchooser_arrOptions['chooser_van_page']:
+            $type_vehicle = 'van';
+        case $WPchooser_arrOptions['chooser_car_page']:
+            $chooser_override= $WPchooser_arrOptions["chooser_".$type_vehicle."_override"];
+            multiples_pages_redirection(  $chooser_override, $type_vehicle."ChooserCode" )  ;
+        break;
     }
 }
 
@@ -230,13 +235,13 @@ function plugin_redirection() {
 
 
 //this function is called once every post and will call the desired plugin function
-function activate_page_plugins( ) {           
+function activate_page_plugins( ) {
 
     $loadCssAndJavascript = false;
     $arrGeneralSettings = get_option("WP_plugin_options_general");
     require_once(dirname(__FILE__)."/admin/wp-comcar-plugins-global-objects.php");
-   
-    global $plugin_nav;        
+
+    global $plugin_nav;
     global $thisPluginName;
     global $post;
     global $current_page;
@@ -245,18 +250,18 @@ function activate_page_plugins( ) {
     $thisPluginName = '';
     $idOfTheCurrentPage = get_post( $post )->ID;
 
-       
-    foreach (  $plugin_nav as $thisPluginName => $plugin_info ) { 
+
+    foreach (  $plugin_nav as $thisPluginName => $plugin_info ) {
 
 
-        //if it is not activated jump to next 
+        //if it is not activated jump to next
         if ( !isset( $arrGeneralSettings["pluginsOptions"][$thisPluginName] )) {
             continue;
         }
 
         //options of the current plugin
         $arrOptions = get_option("WP_plugin_options_".$thisPluginName);
-  
+
         // if the arrOption is empty also jump to next one
         if ( !isset( $arrOptions ) ) {
             continue;
@@ -264,17 +269,17 @@ function activate_page_plugins( ) {
         $arr_sub_pages = matchPattern( "#^".$thisPluginName."(.*)page(.*)$#i", $arrOptions );
 
         foreach( $arr_sub_pages as $key => $value ) {
-          
-            if ( $value == $idOfTheCurrentPage ) { 
-                foreach($arr_type_vehicles as $page){              
+
+            if ( $value == $idOfTheCurrentPage ) {
+                foreach($arr_type_vehicles as $page){
                     $arr_pages =  preg_match ( "#^(.*)".$page."(.*)$#i", $key );
                     if ( $arr_pages ) {
                         $current_page = $page;
                         break;
                     }
-                }     
+                }
 
-                $loadCssAndJavascript = true;         
+                $loadCssAndJavascript = true;
                 add_filter( "the_content",  "getToolContent" );
                 break 2;
             }
@@ -296,15 +301,15 @@ function getToolContent(  ) {
     global $current_page;
 
 
-    if( is_page() && is_main_query() ) { 
+    if( is_page() && is_main_query() ) {
         switch ( $thisPluginName ) {
             case "tax_calculator":
 
-                wp_enqueue_script('wp_ibuttons'); 
+                wp_enqueue_script('wp_ibuttons');
                 // Van or Car?
                 if ( $current_page =='cars' ) {
 
-                    $path_to_include = "Tax-Calculator/Car-tax-calculator.php";                  
+                    $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
                 } else {
                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
                 }
@@ -314,59 +319,65 @@ function getToolContent(  ) {
                 if ( $current_page =='cars' ) {
                     $path_to_include = "Comparator/Car-comparator.php";
                 } else {
-                    $path_to_include = "Comparator/Van-comparator.php";                   
+                    $path_to_include = "Comparator/Van-comparator.php";
                 }
             break;
             case "footprint":
                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
             break;
-            case "electric_comparator": 
+            case "electric_comparator":
             wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons'); 
+                wp_enqueue_script('wp_ibuttons');
                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
             break;
-            case "fuelprices": 
+            case "fuelprices":
                 $path_to_include = "FuelPrices/FuelPrices.php";
             break;
             case "fuel_benefit_check":
                 // When the old tools has been changed we can put this code at the very top of the page
                 wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');  
+                wp_enqueue_script('wp_ibuttons');
                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
             break;
             case "car_details":
                 wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');  
+                wp_enqueue_script('wp_ibuttons');
 
                 $path_to_include = "Car_Details/Car_details.php";
             break;
 
             case "prices_and_options":
                 wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');  
+                wp_enqueue_script('wp_ibuttons');
 
-                $path_to_include = "prices-And-Options/prices_and_options.php";           
+                $path_to_include = "prices-And-Options/prices_and_options.php";
             break;
 
             case "chooser":
                 wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');  
+                wp_enqueue_script('wp_ibuttons');
 
-                $path_to_include = "Chooser/chooser.php";     
+                $path_to_include = "Chooser/chooser.php";
+            break;
+
+            case "mpg_calculator":
+                wp_enqueue_style('mpg_calculator_styles');
+                wp_enqueue_script('mpg_calculator_scripts');
+                $path_to_include = "MPG-Calculator/MPG-Calculator.php";
             break;
 
             default:
                 $path_to_include = "";
             break;
         }
-                     
-    	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );                 
+
+    	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );
 
         $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
 		$content = isset( $content ) ? $content : "";
         $content = $content.$WPComcar_theResultOfTheWebservice;
         return $content;
-    }   
-}  
+    }
+}
 
 ?>
