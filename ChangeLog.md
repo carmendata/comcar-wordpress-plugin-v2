@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.6.0** Added new tool 'MPG Calculator'
 - **1.5.10** Allow more than one level of page nesting
 - **1.5.9** Improve i-button display on Tax Calculation
 - **1.5.8** Fix bug with Van comparator data capture
@@ -8,7 +9,7 @@ ChangeLog
 - **1.5.5** Fix tool 'Van chooser'
 - **1.5.4** Short external links
 - **1.5.3** Allow Wordpress page content to show before our tools
-- **1.5.2** Limiting size of 'Cars and Vans Selector Texts' input to avoid REQUEST TOO LARGE error 
+- **1.5.2** Limiting size of 'Cars and Vans Selector Texts' input to avoid REQUEST TOO LARGE error
 - **1.5.1** Updated documentation
 - **1.5.0** Added new tools 'Car chooser'
 - **1.4.0** Added new tools 'Prices and options'
@@ -23,7 +24,7 @@ ChangeLog
 - **0.17** Allow redirection to external site before Tax Calculation
 - **0.16** Added sidebar file for Comcar Wordpress Widget
 - **0.15** Bug Fix on newer versions of WP hiding settings
-- **0.14** Comparator custom texts above and below the car selector and fixed information buttons. 
+- **0.14** Comparator custom texts above and below the car selector and fixed information buttons.
 - **0.13** Comparator fixes and development improvements
 - **0.12** Added compatibility with newer jQuery versions. Minimum jQuery version required for full compatibility 1.7
 - **0.11** Defined content-type in callback pages as 'application/json'
