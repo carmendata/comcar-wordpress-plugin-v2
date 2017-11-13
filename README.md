@@ -1,4 +1,4 @@
-#Comcar Tools plugin for WordPress 
+#Comcar Tools plugin for WordPress
 
 ## What does it do?
 
@@ -42,6 +42,10 @@ The Car/Van Prices and Options tool shows a pricing summary for the chosen vehic
 
 This tool provides more complex search criteria for selecting a vehicle in comparison to the simpler Company Car/Van Tax Calculator.
 
+### MPG Calculator
+
+This tool calculates miles per gallon and litres per 100km based on distance travelled and fuel used.
+
 ## Installation
 
 ### Prerequisites
@@ -67,5 +71,5 @@ Some resources for installing SoapClient:
 - [PHP Documentation](http://php.net/manual/en/soap.installation.php)
 
 ### Guide
- 
-For a step-by-step tutorial visit [github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial](https://github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial) 
+
+For a step-by-step tutorial visit [github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial](https://github.com/carmendata/comcar-wordpress-plugin/wiki/Installation-Tutorial)
