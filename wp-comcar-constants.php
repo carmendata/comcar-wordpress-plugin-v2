@@ -33,10 +33,10 @@
 	$WPComcar_currentUrl=WPComcar_curPageURL();
 	preg_match('/^d51[a-z]+/',$WPComcar_currentUrl,$WPComcar_matches);
 	if (sizeof($WPComcar_matches)==1){ //development
-		define("WPComcar_WEBSERVICEBASEURL",'http://'.$WPComcar_matches[0].'.comcar.co.uk/webservices/');
+		define("WPComcar_WEBSERVICEBASEURL",'https://'.$WPComcar_matches[0].'.comcar.co.uk/webservices/');
 		define("DEV_VM", $WPComcar_matches[0]);
 	}else{
-		define("WPComcar_WEBSERVICEBASEURL",'http://comcar.co.uk/webservices/');
+		define("WPComcar_WEBSERVICEBASEURL",'https://comcar.co.uk/webservices/');
 		define("DEV_VM", '');
 	}
 ?>
