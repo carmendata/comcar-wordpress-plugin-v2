@@ -20,19 +20,36 @@ define( "WPComcar_PLUGINVERSION","1.6.0" );
 require_once( __DIR__."/wp-comcar-constants.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
 
-
 add_action( "wp", "plugin_redirection" );
 add_action( "wp_head", "activate_page_plugins");
 
-wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
-wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
-
-// stylesheet for MPG Calculator
-wp_register_style( "mpg_calculator_styles" , plugins_url( "/css/mpg_calculator_styles.css", __FILE__ ));
-// scripts for MPG Calculator
-wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpg_calculator_scripts.js", __FILE__ ));
 
 
+add_action( 'wp_head', 'wp_buttons' );
+
+function wp_buttons() {
+    wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
+    wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
+
+    wp_enqueue_style( 'wp_ibuttons' );
+    wp_enqueue_script( 'wp_ibuttons' );
+}
+// wp_register_style( "wp_ibuttons" , plugins_url( "/css/i_buttons.css", __FILE__ ));
+// wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
+
+
+
+add_action( 'wp_head', 'mpg_scripts' );
+
+function mpg_scripts() {
+    wp_register_style( "mpg_calculator_styles" , plugins_url( "/css/mpg_calculator_styles.css", __FILE__ ));
+    wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpg_calculator_scripts.js", __FILE__ ));
+
+    wp_enqueue_style( 'mpg_calculator_styles' );
+    wp_enqueue_script( 'mpg_calculator_scripts' );
+}
+// wp_register_style( "mpg_calculator_styles" , plugins_url( "/css/mpg_calculator_styles.css", __FILE__ ));
+// wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpg_calculator_scripts.js", __FILE__ ));
 
 
 // decode url from base64
@@ -305,7 +322,7 @@ function getToolContent(  ) {
         switch ( $thisPluginName ) {
             case "tax_calculator":
 
-                wp_enqueue_script('wp_ibuttons');
+                // wp_enqueue_script('wp_ibuttons');
                 // Van or Car?
                 if ( $current_page =='cars' ) {
 
@@ -326,8 +343,8 @@ function getToolContent(  ) {
                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
             break;
             case "electric_comparator":
-            wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');
+                // wp_enqueue_style('wp_ibuttons');
+                // wp_enqueue_script('wp_ibuttons');
                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
             break;
             case "fuelprices":
@@ -335,34 +352,34 @@ function getToolContent(  ) {
             break;
             case "fuel_benefit_check":
                 // When the old tools has been changed we can put this code at the very top of the page
-                wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');
+                // wp_enqueue_style('wp_ibuttons');
+                // wp_enqueue_script('wp_ibuttons');
                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
             break;
             case "car_details":
-                wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');
+                // wp_enqueue_style('wp_ibuttons');
+                // wp_enqueue_script('wp_ibuttons');
 
                 $path_to_include = "Car_Details/Car_details.php";
             break;
 
             case "prices_and_options":
-                wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');
+                // wp_enqueue_style('wp_ibuttons');
+                // wp_enqueue_script('wp_ibuttons');
 
                 $path_to_include = "prices-And-Options/prices_and_options.php";
             break;
 
             case "chooser":
-                wp_enqueue_style('wp_ibuttons');
-                wp_enqueue_script('wp_ibuttons');
+                // wp_enqueue_style('wp_ibuttons');
+                // wp_enqueue_script('wp_ibuttons');
 
                 $path_to_include = "Chooser/chooser.php";
             break;
 
             case "mpg_calculator":
-                wp_enqueue_style('mpg_calculator_styles');
-                wp_enqueue_script('mpg_calculator_scripts');
+                // wp_enqueue_style('mpg_calculator_styles');
+                // wp_enqueue_script('mpg_calculator_scripts');
                 $path_to_include = "MPG-Calculator/MPG-Calculator.php";
             break;
 
