@@ -10,12 +10,12 @@
 		return $pageURL;
 	}
 
- 
+
 	function matchPattern($pattern, $input) {
 	    return array_intersect_key( $input, array_flip( preg_grep( $pattern, array_keys( $input ))));
 	}
-	
-	
+
+
 	//global constants
 	define("WPComcar_WEBSERVICESCALLSPATH",dirname(__FILE__)."/webservices-calls/");
 	define("WPComcar_FUNCTIONSPREFIX", "WPComcar_");
@@ -32,11 +32,11 @@
 	//check if it is development
 	$WPComcar_currentUrl=WPComcar_curPageURL();
 	preg_match('/^d51[a-z]+/',$WPComcar_currentUrl,$WPComcar_matches);
-	if (sizeof($WPComcar_matches)==1){ //development
-		define("WPComcar_WEBSERVICEBASEURL",'http://'.$WPComcar_matches[0].'.comcar.co.uk/webservices/');
-		define("DEV_VM", $WPComcar_matches[0]);
-	}else{
+	// if (sizeof($WPComcar_matches)==1){ //development
+	// 	define("WPComcar_WEBSERVICEBASEURL",'http://'.$WPComcar_matches[0].'.comcar.co.uk/webservices/');
+	// 	define("DEV_VM", $WPComcar_matches[0]);
+	// }else{
 		define("WPComcar_WEBSERVICEBASEURL",'http://comcar.co.uk/webservices/');
 		define("DEV_VM", '');
-	}
+	// }
 ?>

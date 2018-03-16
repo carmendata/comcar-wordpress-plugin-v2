@@ -17,6 +17,7 @@
                             "prices_and_options"    => "Prices and options",
                             "chooser"               => "Chooser",
                             "mpg_calculator"        => "MPG Calculator"
+                            // ,"vue_test"              => "Vue Js Test"
                         );
 
     $arr_type_vehicles = array('cars','vans');

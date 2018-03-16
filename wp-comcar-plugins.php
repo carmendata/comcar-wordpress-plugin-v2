@@ -23,8 +23,6 @@ require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
 add_action( "wp", "plugin_redirection" );
 add_action( "wp_head", "activate_page_plugins");
 
-
-
 add_action( 'wp_head', 'wp_buttons' );
 
 function wp_buttons() {
@@ -38,19 +36,32 @@ function wp_buttons() {
 // wp_register_script( "wp_ibuttons" , plugins_url( "/js/i_buttons.js", __FILE__ ));
 
 
-
 add_action( 'wp_head', 'mpg_scripts' );
 
 function mpg_scripts() {
-    wp_register_style( "mpg_calculator_styles" , plugins_url( "/css/mpg_calculator_styles.css", __FILE__ ));
-    wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpg_calculator_scripts.js", __FILE__ ));
+    global $thisPluginName;
 
-    wp_enqueue_style( 'mpg_calculator_styles' );
-    wp_enqueue_script( 'mpg_calculator_scripts' );
+    if ( $thisPluginName == "mpg_calculator" ) {
+        // wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpgcalculator/vue-build-bundle.min.js", __FILE__ ));
+        wp_register_script( "mpg_calculator_scripts" , "https://noexhaust.co.uk/fuel/mpgcalculator/dist/js/vue-build-bundle.min.js", array(),'', true);
+        wp_enqueue_script( 'mpg_calculator_scripts' );
+    }
 }
-// wp_register_style( "mpg_calculator_styles" , plugins_url( "/css/mpg_calculator_styles.css", __FILE__ ));
-// wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpg_calculator_scripts.js", __FILE__ ));
 
+
+add_action( 'wp_head', 'vue_test_scripts_and_css' );
+
+function vue_test_scripts_and_css() {
+    global $thisPluginName;
+
+    if ( $thisPluginName == "vue_test" ) {
+        wp_register_style( "vue_test_styles" , plugins_url( "/css/vue_test_styles.css", __FILE__ ));
+        wp_register_script( "vue_test_scripts" , plugins_url( "/js/vue-build-bundle.min.js", __FILE__ ));
+
+        wp_enqueue_style( 'vue_test_styles' );
+        wp_enqueue_script( 'vue_test_scripts' );
+    }
+}
 
 // decode url from base64
 function decodeURLParam( $str_to_decode ) {
@@ -378,9 +389,11 @@ function getToolContent(  ) {
             break;
 
             case "mpg_calculator":
-                // wp_enqueue_style('mpg_calculator_styles');
-                // wp_enqueue_script('mpg_calculator_scripts');
                 $path_to_include = "MPG-Calculator/MPG-Calculator.php";
+            break;
+
+            case "vue_test":
+                $path_to_include = "Vue-Test/Vue-Test.php";
             break;
 
             default:
