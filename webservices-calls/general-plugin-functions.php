@@ -32,7 +32,6 @@
 			} 		
 
 			$fixedUrl = str_replace( 'media.comcar.co.uk', 'secure.carmendata.co.uk', $fixedUrl  );
-			$fixedUrl = str_replace( 'comcar.co.uk', 'secure.carmendata.co.uk', $fixedUrl  );
 			$fixedUrl = str_replace( 'http', 'https', $fixedUrl  );
 			$fixedUrl = str_replace( 'httpss', 'https', $fixedUrl  );
 		
