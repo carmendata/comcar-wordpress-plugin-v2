@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.8.0** Moved the MPG Calculator Vue JS bundle to S3
 - **1.7.0** Added full https compatibility
 - **1.6.0** Added new tool 'MPG Calculator'
 - **1.5.10** Allow more than one level of page nesting
