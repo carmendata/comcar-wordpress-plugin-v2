@@ -43,7 +43,7 @@ function mpg_scripts() {
 
     if ( $thisPluginName == "mpg_calculator" ) {
         // wp_register_script( "mpg_calculator_scripts" , plugins_url( "/js/mpgcalculator/vue-build-bundle.min.js", __FILE__ ));
-        wp_register_script( "mpg_calculator_scripts" , "https://noexhaust.co.uk/fuel/mpgcalculator/dist/js/vue-build-bundle.min.js", array(),'', true);
+        wp_register_script( "mpg_calculator_scripts" , "https://s3-eu-west-1.amazonaws.com/assets.comcar.co.uk/wordpress/mpg-calculator/vue-build-bundle.min.js", array(),'', true);
         wp_enqueue_script( 'mpg_calculator_scripts' );
     }
 }
