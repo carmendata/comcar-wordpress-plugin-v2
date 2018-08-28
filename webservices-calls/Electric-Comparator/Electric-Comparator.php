@@ -3,7 +3,7 @@
     //create and instance of the controller and include the result in the page
     global $objWPElectricComparatorController;
     if (class_exists("WPElectricComparatorController") && !$objWPElectricComparatorController) {
-        $objWPElectricComparatorController = new WPElectricComparatorController();    
+        $objWPElectricComparatorController = new WPElectricComparatorController();
         $objWPElectricComparatorController->controller();
     }
 
@@ -30,8 +30,8 @@
 
             if (strcmp($theIdPageWhereShouldLoadThePlugin,$thePostId)==0){
                 $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-details.php";
-            } else if (in_array($thePostId,$arrOptions["electric_comparator_cars_subpage"])) {
-                $theNameOfThePage=array_search($thePostId,$arrOptions["electric_comparator_cars_subpage"]);
+            } else if (in_array($thePostId,$arrOptions["electric_comparator_cars_subpage_callback"])) {
+                $theNameOfThePage=array_search($thePostId,$arrOptions["electric_comparator_cars_subpage_callback"]);
                 $this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Electric-Comparator/Car-$theNameOfThePage.php";
             }
 

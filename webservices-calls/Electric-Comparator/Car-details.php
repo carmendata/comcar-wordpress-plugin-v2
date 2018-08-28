@@ -21,24 +21,24 @@
     $WPComcar_arrOptions=get_option("WP_plugin_options_electric_comparator");
 
     try {
-       
+
         // connect to the webservice
         $WPComcar_ws = new SoapClient($WPComcar_services['electric_comparator'], array('cache_wsdl' => 0, "Access-Control-Allow-Origin"=> '*'));
-        $WPComcar_actionName= $WPComcar_arrOptions["electric_comparator_cars_subpage"]["callback"];
+        $WPComcar_actionName= $WPComcar_arrOptions["electric_comparator_cars_subpage_callback"];
 
         $WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
 
         // call the required functions and store the returned data
         $WPComcar_resultsJS = fixForSsl($WPComcar_ws->GetJS($WPComcar_pubhash, $WPComcar_clk, $WPComcar_actionName ));
         $WPComcar_resultsHTML = fixForSsl($WPComcar_ws->GetHTML($WPComcar_pubhash, $WPComcar_clk, '', $WPComcar_jsnDataAndConfig));
-         
-        
+
+
     } catch (Exception $e) {
-  
-        // Error handling code if soap request fails 
+
+        // Error handling code if soap request fails
         $WPComcar_msg = $WPComcar_msg.'The webservice has failed loading<br />';
     }
-    
+
     include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Template/template.php');
 
 
