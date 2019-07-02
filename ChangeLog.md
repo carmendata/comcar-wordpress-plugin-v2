@@ -1,5 +1,6 @@
 ChangeLog
 =========
+- **1.8.2** Fixed url encoding issue when using sidebar (which the widget requires)
 - **1.8.1** Changed 'comcar.co.uk' to 'legacy.comcar.co.uk', plus bug fixes
 - **1.8.0** Moved the MPG Calculator Vue JS bundle to S3
 - **1.7.0** Added full https compatibility
