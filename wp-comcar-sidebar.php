@@ -8,5 +8,5 @@
 
 	include $plugin_dir . 'webservices-calls/Tax-Calculator/Car-select.php';
 
-	echo $WPComcar_resultsHTML;
+	echo urldecode($WPComcar_resultsHTML);
 ?>
