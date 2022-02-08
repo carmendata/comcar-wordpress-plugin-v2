@@ -134,14 +134,14 @@ function plugin_redirection() {
     $type_vehicle = 'car';
 
 
-    $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator" );
-    $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator" );
-
     $WPFuel_benefit_check_arrOptions = get_option( "WP_plugin_options_fuel_benefit_check" );
     $WPcar_details_arrOptions = get_option( "WP_plugin_options_car_details" );
     $WPprices_and_options_arrOptions = get_option( "WP_plugin_options_prices_and_options" );
     $WPchooser_arrOptions = get_option( "WP_plugin_options_chooser" );
 
+    // get taxcalc and comparator options and merge - default to empty arrays for first install
+    $WPTax_calc_arrOptions = get_option( "WP_plugin_options_tax_calculator", array() );
+    $WPComparator_arrOptions = get_option( "WP_plugin_options_comparator", array() );
     $WPComcar_arrOptions = array_merge ( $WPTax_calc_arrOptions, $WPComparator_arrOptions );
 
     switch( $post_id ) {
