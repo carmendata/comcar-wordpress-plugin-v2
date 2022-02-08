@@ -1,9 +1,5 @@
-
 <?php
-
     // build options to enable or disable navs
-
-
     foreach ( $plugin_nav as $key => $value ) {
         if ( $key != 'general' ) {
             $nav_options[$value] = $key; 
