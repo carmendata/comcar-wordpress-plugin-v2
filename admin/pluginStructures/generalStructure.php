@@ -8,11 +8,11 @@
     
    $plugin_options["general"] = array(
         array( 
-                "description" => "Please insert the ID and public hash for your own car and/or van channel. Channels are available to customers of Carmen Data Ltd. To become a customer see <a target='_blank' href='http://carmendata.co.uk/'>carmendata.co.uk</a>",
+                "description" => "Please insert the ID and publisher hash for your own car and/or van channel. Channels are available to customers of Carmen Data Ltd. To become a customer see <a target='_blank' href='http://carmendata.co.uk/'>carmendata.co.uk</a>",
                 "type" => "description"
         ),
         array( 
-                "note" => "Note: If the ID and public hash fields are left blank the plugin will default to use our demo channels. These demo channels will only provide data on a limited selection of vehicle manufacturers. Which manufacturers are included will change randomly each month.",
+                "note" => "Note: If the ID and publisher hash fields are left blank the plugin will default to use our demo channels. These demo channels will only provide data on a limited selection of vehicle manufacturers. Which manufacturers are included will change randomly each month.",
                 "type" => "note"
         ),
         array( 
@@ -21,8 +21,8 @@
                 "type" => "text"
         ),
         array( 
-                "label" => "Car Channel Public hash",
-                "desc" => "The public hash delivered with the car channel",
+                "label" => "Car Channel Publisher hash",
+                "desc" => "The publisher hash delivered with the car channel",
                 "name" => "pushCars",
                 "type" => "text"
         ),
@@ -32,8 +32,8 @@
                 "type" => "text"
         ),
         array( 
-                "label" => "Van Channel Public hash",
-                "desc" => "The public hash delivered with the van channel",
+                "label" => "Van Channel Publisher hash",
+                "desc" => "The publisher hash delivered with the van channel",
                 "name" => "pushVans",
                 "type" => "text"
         ),
