@@ -94,21 +94,21 @@ function wp_comcar_plugin_setting_markup($args) {
             echo "<input id='".$setting_full_name."' name='".$settings_section_name."[".$setting_full_name."]' type='text' value='" . esc_attr( $value ) . "' />";
     }
 }
-/*---------------------------------------------------
-add settings page to menu
-----------------------------------------------------*/
+/**
+ * add settings page to wordpress menu
+ */
 function wp_comcar_plugins_setting_html() {
     add_menu_page( 
         "Comcar tools",
         "Comcar tools settings",
         "manage_options",
         "wp_comcar_plugins_settings",
-        "printAdminPageHTML",
+        "wp_comcar_plugins_print_page",
         plugins_url("/img/comcar_logo.png",__FILE__)
     );
 }
 
-function printAdminPageHTML() {
+function wp_comcar_plugins_print_page() {
     global $wp_comcar_plugins_settings_array;
 
     // check user capabilities
@@ -156,17 +156,6 @@ function printAdminPageHTML() {
             </div>
         </form>
     ';
-                
-    // foreach( $plugin_nav as $arrKey => $arr_title ) {
-
-    //     $str_function_name = "WP_plugin_options_".$arrKey;
-    //     $class_activation = "";
-    //     if ( strcmp( $arrKey, "general" ) == 0 ) {
-    //         $class_activation =  "nav-tab-active";
-    //     }
-    //     echo "<a name = $arrKey class='nav-tab WPComcar_subTab $class_activation $arrKey ' data-targettab= $str_function_name > $arr_title </a>";
-    // }
-    // echo "</h2></div>";
  }
 
 
@@ -174,111 +163,7 @@ function printAdminPageHTML() {
 
 
 
-
-
-
-
-
-
-
-
-
-function saveToolsOptions( ) {
-
-    global $plugin_options;
-    $parent_name =  "";
-    $current_tool_name = "WP_plugin_options_".$_REQUEST["nav"];
-
-
-    // Delete all options to avoid problems if we change some id o name
-    // and the old one still there
-    delete_option( $current_tool_name );
-
-    // Loop over all options inside the tool that we are saving
-    foreach ( $plugin_options[ $_REQUEST["nav"] ] as $value ) {
-
-        $obj_opt = get_option( $current_tool_name );
-        $desc = isset( $value["desc"] ) ? $value["desc"] : "";
-
-        // This is used if you want that the object generated have a
-        // parent call $value['name'] and any kind of info ( checkbox, text,
-        // selector..) will be included as a children of this openSection name
-        if ( $value["type"] == "openSection" ) {
-            $parent_name =  $value["name"];
-            $obj_opt[$parent_name] = array();
-            update_option( $current_tool_name ,  $obj_opt );
-        } else if(  $value["type"] == "closeSection" ) {
-            // set parent name as "" to indicate that the next
-            // option don't have parent
-            $parent_name = "";
-            continue;
-        }
-
-        // Are we inside of a section, if it is like this store
-        // the current option as children
-        if ( $parent_name != "" && $value["type"] != "openSection" ) {
-            if ( $value["name"] != "" ) {
-                $value_to_update = isset($_REQUEST[ $value["name"]]) ?$_REQUEST[ $value["name"]]:"";
-                $obj_opt[$parent_name][$value["name"]] = $value_to_update;
-                update_option( $current_tool_name ,  $obj_opt );
-            }
-        }
-
-
-        if (    isset( $value["name"] )
-                && $value["type"] != "checkbox"
-                && $value["type"] != "openSection" ) {
-
-            $value_to_update = isset($_REQUEST[ $value["name"]]) ?$_REQUEST[ $value["name"]]:"";
-            $obj_opt[$value["name"]] = $value_to_update;
-
-            // We update options twice because we have two objects of options
-            // the first one $current_tool_name will be read from wp-comcar-plugins.php
-            // and have to has same structrue as old code to match it
-
-            // the other update_option is used to store and show the inputs values
-            // inside admin panel.
-            update_option( $current_tool_name ,  $obj_opt );
-            update_option( $value["name"], $value_to_update );
-
-        } else if ( $value["type"] == "checkbox" ) {
-            $obj_opt[$value["name"]]= array();
-            // the checkboxes has to be treated diferent as the rest of the inputs
-
-            foreach ( $value["options"] as $label => $option ) {
-                if ( isset( $_REQUEST[ $_REQUEST["nav"]."_".$option ] )) {
-                    update_option( $_REQUEST["nav"]."_".$option, $_REQUEST[ $_REQUEST["nav"]."_".$option ] );
-                    array_push(   $obj_opt[$value["name"]], $option );
-                    $obj_opt[$value["name"]][$option]  = $_REQUEST[ $_REQUEST["nav"]."_".$option ];
-
-                } else {
-
-                    unset( $obj_opt[$option] );
-                    delete_option(  $_REQUEST["nav"]."_".$option );
-                }
-            }
-            update_option( $current_tool_name , $obj_opt  );
-        }
-    }
-
-    // This is a little hack necessary to match te new code with the old one
-    // it is redundant info, but in the future will be deleted
-    global $arr_type_vehicles;
-    $arrOptions = get_option($current_tool_name);
-
-    foreach($arr_type_vehicles as $page){
-        $arr_subpages = matchPattern("#^".$_REQUEST["nav"]."_".$page."_subpage_(.*)$#i",$arrOptions);
-        $arrOptions[$page."_subpages"] =  array();
-        foreach( $arr_subpages as $label=>$value ) {
-            $subpage = str_replace( $_REQUEST["nav"]."_".$page."_subpage_","",$label );
-            $arrOptions[$page."_subpages"][$subpage] = $value;
-
-        }
-        update_option( $current_tool_name , $arrOptions  );
-    }
-}
-
-
+ 
 
 
 /*---------------------------------------------------
