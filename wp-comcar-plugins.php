@@ -15,6 +15,7 @@
 
 define( "WPComcar_PLUGINVERSION","1.8.2" );
 
+require_once( __DIR__."/admin/wp-comcar-plugins-global-objects.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin.php" );
 require_once( __DIR__."/wp-comcar-plugins-content.php" );
 

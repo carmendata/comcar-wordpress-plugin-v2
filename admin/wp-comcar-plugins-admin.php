@@ -11,22 +11,53 @@ add_action( "admin_menu", "wp_comcar_plugins_setting_html" );
  * load JS/CSS and prepare any admin settings
  */
 function wp_comcar_plugins_settings_init(){
-    // include JS and CSS
+    global $wp_comcar_plugins_settings_array;
+
+    // include JS and CSS scripts
     wp_register_script( "panel_script" , plugins_url( "/js/wp-comcar-plugins-admin.js", __FILE__ ), array('jquery'));
     wp_register_style( "panel_style" , plugins_url( "/css/wp-comcar-plugins-admin.css", __FILE__ ));
 
+    // render them to the header
     wp_enqueue_script("panel_script");
     wp_enqueue_style("panel_style");
 
-    // register a new setting for "reading" page
-    register_setting( 'wp_comcar_plugins_options', 'wp_comcar_plugins_options', 'wp_comcar_plugins_options_validate' );
-    
-    add_settings_section( 'main_settings', 'Main Settings', 'wp_comcar_plugin_section_main_text', 'wp_comcar_plugins' );
-
-    add_settings_field( 'wp_comcar_plugin_setting_pubhash', 'Pubhash', 'wp_comcar_plugin_setting_pubhash', 'wp_comcar_plugins', 'main_settings' );
+    // loop settings array in wp-comcar-plugins-global-objects and setup sections and register settings
+    foreach($wp_comcar_plugins_settings_array as $group) {
+        // work out the settings secton name, e.g. foo_settings
+        $settings_section_name = $group['name'].'_settings';
+        // create the settings_section
+        add_settings_section(
+            $settings_section_name,
+            $group['title'],
+            'wp_comcar_plugin_section_title',
+            $settings_section_name
+        );
+        // for each section, setup each field, this will be used to build the markup in the settings admin page
+        foreach($group['settings'] as $setting) {
+            $setting_full_name = $settings_section_name.'_'.$setting['name'];
+            add_settings_field(
+                $setting_full_name,
+                $setting['title'],
+                'wp_comcar_plugin_setting_markup',
+                $settings_section_name,
+                $settings_section_name,
+                array(
+                    $settings_section_name,
+                    $setting_full_name,
+                    $setting['type']
+                )
+            );
+        }
+        // "register" the settings_section, this allows it to be saved on the form submission
+        register_setting(
+            $settings_section_name,
+            $settings_section_name
+            // 'wp_comcar_plugins_settings_validate'
+        );
+    }
 }
 
-function wp_comcar_plugins_options_validate( $input ) {
+function wp_comcar_plugins_settings_validate( $input ) {
     $newinput['pubhash'] = trim( $input['pubhash'] );
     // if ( ! preg_match( '/^[a-z0-9]{32}$/i', $newinput['api_key'] ) ) {
         // $newinput['api_key'] = '';
@@ -35,18 +66,33 @@ function wp_comcar_plugins_options_validate( $input ) {
     return $newinput;
 }
 
-function wp_comcar_plugin_section_main_text() {
-    echo '<p>Set Main plugin settings</p>';
+function wp_comcar_plugin_section_title($args) {
+    // args are id, title, callback
+    switch($args['id']) {
+        case 'company_car_tax_settings':
+            echo '<p>These settings are used only for the '.$args["title"].' section';
+            break;
+        default:
+            echo '<p>Set '.$args["title"].' settings</p>';
+    }
 }
 
-function wp_comcar_plugin_setting_api_key() {
-    $options = get_option( 'wp_comcar_plugins_options' );
-    echo "<input id='wp_comcar_plugin_setting_api_key' name='wp_comcar_plugins_options[api_key]' type='text' value='" . esc_attr( $options['api_key'] ) . "' />";
-}
-function wp_comcar_plugin_setting_pubhash() {
-    $options = get_option( 'wp_comcar_plugins_options' );
-    $pubhash = array_key_exists( 'pubhash' , $options ) ? $options['pubhash'] : '';
-    echo "<input id='wp_comcar_plugin_setting_pubhash' name='wp_comcar_plugins_options[pubhash]' type='text' value='" . esc_attr( $pubhash ) . "' />";
+function wp_comcar_plugin_setting_markup($args) {
+    // args should contain seciton name, setting name, setting type
+    $settings_section_name = $args[0];
+    $setting_full_name = $args[1];
+    $setting_type = $args[2];
+
+    $options = get_option($settings_section_name);
+    $value = array_key_exists( $setting_full_name, $options ) ? $options[$setting_full_name] : '';
+    switch($setting_type) {
+        case 'integer':
+            echo "<input id='".$setting_full_name."' name='".$settings_section_name."[".$setting_full_name."]' type='numeric' value='" . esc_attr( $value ) . "' />";
+            break;
+        default:
+            // assume text input
+            echo "<input id='".$setting_full_name."' name='".$settings_section_name."[".$setting_full_name."]' type='text' value='" . esc_attr( $value ) . "' />";
+    }
 }
 /*---------------------------------------------------
 add settings page to menu
@@ -63,11 +109,13 @@ function wp_comcar_plugins_setting_html() {
 }
 
 function printAdminPageHTML() {
+    global $wp_comcar_plugins_settings_array;
+
     // check user capabilities
     if (!current_user_can('manage_options')) {
         return;
     }
-  
+
     echo '
         <form action="options.php" method="post">
             <div class="wrap wp-comcar-plugins">
@@ -79,50 +127,18 @@ function printAdminPageHTML() {
                 <div class="tab-content-wrapper">
                     <div class="tab-content tab-content-main tab-content-active">
         ';
-        settings_fields( 'wp_comcar_plugins_options' );
-        echo do_settings_sections( 'wp_comcar_plugins' );
-        echo submit_button( 'Save Settings' );
-        echo '
-            <br />
+        // settings_fields( 'wp_comcar_plugins_settings' );
+        // echo do_settings_sections( 'wp_comcar_plugins_settings' );
 
-                        Default settings:
-                        <br />car channel ID
-                        <br />car channel pub hash
-                        <br />van channel ID
-                        <br />van channel pub hash
-                        <br />car tax page
-                        <br />van tax page
-                        <br />comparator page
-                        <br />electric comparator page (I think we dropped this?)
-                        <br />co<sub>2</sub> footprint page
-                        <br />fuel prices page
-                        <br />fuel benefit check page
-                        <br />car details page
-                        <br />prices and options page
-                        <br />chooser page
-                        <br />mpg calculator page
-                    </div>
-                    <div class="tab-content tab-content-car-tax-calculator">
-                        Car Tax specific settings
-                        <br />calculation override URL
-                        <br />model page settings column dropdown
-                        <br />model page settings column list
-                        <br />model page settings column headers
-                        <br />Capital Contributions field label (checkbox)
-                        <br />Annual contributions field label (checkbox)
-                        <br />Intro to the Vehicle Options section (checkbox)
-                        <br />Specify vehicle options button text (checkbox)
-                        <br />Specify vehicle options button hint (checkbox)
-                        <br />Quick calculation button text (checkbox)
-                        <br />Quick calculation button hint (checkbox)
-                    </div>
-                    <div class="tab-content tab-content-van-tax-calculator">
-                        Van Tax specific settings
-                        <br />calculation override URL
-                        <br />model page settings column dropdown
-                        <br />model page settings column list
-                        <br />model page settings column headers
-                    </div>
+        foreach($wp_comcar_plugins_settings_array as $group) {
+            $settings_section_name = $group['name'].'_settings';
+            settings_fields($settings_section_name);
+            echo do_settings_sections($settings_section_name);
+        }
+        
+        echo submit_button( 'Save Settings' );
+        
+        echo '
                 </div>
             </div>
         </form>
