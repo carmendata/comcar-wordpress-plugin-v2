@@ -9,6 +9,7 @@ add_action( "admin_menu", "wp_comcar_plugins_setting_html" );
 
 /**
  * load JS/CSS and prepare any admin settings
+ * then build settings sections and fields and register as wordpress options
  */
 function wp_comcar_plugins_settings_init(){
     global $wp_comcar_plugins_settings_array;
@@ -57,6 +58,20 @@ function wp_comcar_plugins_settings_init(){
     }
 }
 
+/**
+ * add settings page to wordpress menu
+ */
+function wp_comcar_plugins_setting_html() {
+    add_menu_page( 
+        "Comcar tools",
+        "Comcar tools settings",
+        "manage_options",
+        "wp_comcar_plugins_settings",
+        "wp_comcar_plugins_print_page",
+        plugins_url("/img/comcar_logo.png",__FILE__)
+    );
+}
+
 function wp_comcar_plugins_settings_validate( $input ) {
     $newinput['pubhash'] = trim( $input['pubhash'] );
     // if ( ! preg_match( '/^[a-z0-9]{32}$/i', $newinput['api_key'] ) ) {
@@ -66,6 +81,7 @@ function wp_comcar_plugins_settings_validate( $input ) {
     return $newinput;
 }
 
+// print a section title
 function wp_comcar_plugin_section_title($args) {
     // args are id, title, callback
     switch($args['id']) {
@@ -77,6 +93,7 @@ function wp_comcar_plugin_section_title($args) {
     }
 }
 
+// print markup for a single setting
 function wp_comcar_plugin_setting_markup($args) {
     // args should contain seciton name, setting name, setting type
     $settings_section_name = $args[0];
@@ -95,20 +112,8 @@ function wp_comcar_plugin_setting_markup($args) {
             echo "<input id='".$setting_full_name."' name='".$settings_section_name."[".$setting_full_name."]' type='text' value='" . esc_attr( $value ) . "' />";
     }
 }
-/**
- * add settings page to wordpress menu
- */
-function wp_comcar_plugins_setting_html() {
-    add_menu_page( 
-        "Comcar tools",
-        "Comcar tools settings",
-        "manage_options",
-        "wp_comcar_plugins_settings",
-        "wp_comcar_plugins_print_page",
-        plugins_url("/img/comcar_logo.png",__FILE__)
-    );
-}
 
+// print the entire admin page markup (including settings and sections)
 function wp_comcar_plugins_print_page() {
     global $wp_comcar_plugins_settings_array;
 
