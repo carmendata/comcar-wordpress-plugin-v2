@@ -24,7 +24,7 @@ function wp_comcar_plugins_settings_init(){
     // loop settings array in wp-comcar-plugins-global-objects and setup sections and register settings
     foreach($wp_comcar_plugins_settings_array as $group) {
         // work out the settings secton name, e.g. foo_settings
-        $settings_section_name = $group['name'].'_settings';
+        $settings_section_name = 'wp_comcar_plugins_'.$group['name'].'_settings';
         // create the settings_section
         add_settings_section(
             $settings_section_name,
@@ -84,6 +84,7 @@ function wp_comcar_plugin_setting_markup($args) {
     $setting_type = $args[2];
 
     $options = get_option($settings_section_name);
+
     $value = array_key_exists( $setting_full_name, $options ) ? $options[$setting_full_name] : '';
     switch($setting_type) {
         case 'integer':
@@ -116,11 +117,10 @@ function wp_comcar_plugins_print_page() {
         return;
     }
 
-    // start from and tab nav structure
+    // start tab nav
     echo '
-        <form action="options.php" method="post">
-            <div class="wrap wp-comcar-plugins">
-                <nav class="nav-tab-wrapper">
+        <div class="wrap wp-comcar-plugins">
+            <nav class="nav-tab-wrapper">
     ';
 
     // add nav buttons
@@ -131,31 +131,34 @@ function wp_comcar_plugins_print_page() {
 
     // close nav and start tab wrapper
     echo '
-                </nav>
-                <div class="tab-content-wrapper">
+            </nav>
+            <div class="tab-content-wrapper">
     ';
 
     // print each setting section and fields
     foreach($wp_comcar_plugins_settings_array as $index => $group) {
         // build the setting group name
-        $settings_section_name = $group['name'].'_settings';
+        $settings_section_name = 'wp_comcar_plugins_'.$group['name'].'_settings';
         // set the active class for the first item in the array, page load will show the tab at index[0]
         $settings_active_class = $index ? '' : ' tab-content-active';
         // print the tab and settings content
-        echo '<div class="tab-content tab-content-'.$group['name'].$settings_active_class.'">';
-            settings_fields($settings_section_name);
-            echo do_settings_sections($settings_section_name);
-        echo '</div>';
+        echo '
+            <div class="tab-content tab-content-'.$group['name'].$settings_active_class.'">
+                <form action="options.php" method="post">
+        ';
+                // output section and fields
+                settings_fields($settings_section_name);
+                echo do_settings_sections($settings_section_name);
+                // print submit button
+                echo submit_button( 'Save Settings' );
+        echo '
+                </form>
+            </div>
+        ';
     }
     
-    // print submit button
-    echo submit_button( 'Save Settings' );
-        
-    // close form
-    echo '
-            </div>
-        </form>
-    ';
+    // close main plugin div
+    echo '</div>';
  }
 
 
@@ -163,7 +166,7 @@ function wp_comcar_plugins_print_page() {
 
 
 
- 
+
 
 
 /*---------------------------------------------------
