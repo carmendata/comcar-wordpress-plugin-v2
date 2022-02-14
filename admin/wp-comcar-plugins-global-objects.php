@@ -30,7 +30,7 @@
 
 $wp_comcar_plugins_settings_array = array(
     array(
-        "title" => "Main",
+        "title" => "Main Settings",
         "name" => "main",
         "settings" => array(
             array(

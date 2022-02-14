@@ -116,30 +116,43 @@ function printAdminPageHTML() {
         return;
     }
 
+    // start from and tab nav structure
     echo '
         <form action="options.php" method="post">
             <div class="wrap wp-comcar-plugins">
                 <nav class="nav-tab-wrapper">
-                    <a href="#" data-target="main" class="nav-tab nav-tab-active">Main Settings</a>
-                    <a href="#" data-target="car-tax-calculator" class="nav-tab">Car Tax Calculator</a>
-                    <a href="#" data-target="van-tax-calculator" class="nav-tab">Van Tax Calculator</a>
+    ';
+
+    // add nav buttons
+    foreach($wp_comcar_plugins_settings_array as $index => $group) {
+        $tab_active_class = $index ? '' : ' nav-tab-active';
+        echo '<a href="#" data-target="'.$group['name'].'" class="nav-tab'.$tab_active_class.'">'.$group['title'].'</a>';
+    }
+
+    // close nav and start tab wrapper
+    echo '
                 </nav>
                 <div class="tab-content-wrapper">
-                    <div class="tab-content tab-content-main tab-content-active">
-        ';
-        // settings_fields( 'wp_comcar_plugins_settings' );
-        // echo do_settings_sections( 'wp_comcar_plugins_settings' );
+    ';
 
-        foreach($wp_comcar_plugins_settings_array as $group) {
-            $settings_section_name = $group['name'].'_settings';
+    // print each setting section and fields
+    foreach($wp_comcar_plugins_settings_array as $index => $group) {
+        // build the setting group name
+        $settings_section_name = $group['name'].'_settings';
+        // set the active class for the first item in the array, page load will show the tab at index[0]
+        $settings_active_class = $index ? '' : ' tab-content-active';
+        // print the tab and settings content
+        echo '<div class="tab-content tab-content-'.$group['name'].$settings_active_class.'">';
             settings_fields($settings_section_name);
             echo do_settings_sections($settings_section_name);
-        }
+        echo '</div>';
+    }
+    
+    // print submit button
+    echo submit_button( 'Save Settings' );
         
-        echo submit_button( 'Save Settings' );
-        
-        echo '
-                </div>
+    // close form
+    echo '
             </div>
         </form>
     ';
