@@ -44,6 +44,90 @@ $wp_comcar_plugins_settings_array = array(
                 "name" => "car_channel_pubhash",
                 "description" => "Provided by Carmen Data Ltd",
                 "type" => "string"
+            ),
+            array(
+                "title" => "Van Channel ID",
+                "name" => "van_channel_id",
+                "description" => "Provided by Carmen Data Ltd",
+                "type" => "integer"
+            ),
+            array(
+                "title" => "Van Channel Pubhash",
+                "name" => "van_channel_pubhash",
+                "description" => "Provided by Carmen Data Ltd",
+                "type" => "string"
+            )
+        )
+    ),
+    array(
+        "title" => "Pages",
+        "name" => "pages",
+        "settings" => array(
+            array(
+                "title" => "Company Car Tax",
+                "name" => "company_car_tax",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Company Van Tax",
+                "name" => "company_van_Tax",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Comparator",
+                "name" => "comparator",
+                "description" => "",
+                "type" => "pages"
+            ),
+            // array(
+            //     "title" => "electric comparator page (I think we dropped this?)",
+            //     "name" => "electric comparator page (I think we dropped this?)",
+            //     "description" => "",
+            //     "type" => "pages",
+            // ),
+            array(
+                "title" => "CO<sub>2</sub> footprint",
+                "name" => "co2_footprint",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Fuel Prices",
+                "name" => "fuel_prices",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Fuel Benefit Check",
+                "name" => "fuel_benefit_check",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Car Details",
+                "name" => "car_details",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Prices and Options",
+                "name" => "prices_and_options",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "Chooser",
+                "name" => "chooser",
+                "description" => "",
+                "type" => "pages"
+            ),
+            array(
+                "title" => "MPG Calculator",
+                "name" => "mpg calculator",
+                "description" => "",
+                "type" => "pages"
             )
         )
     ),
@@ -61,31 +145,21 @@ $wp_comcar_plugins_settings_array = array(
                 "title" => "Model Page column selector",
                 "name" => "model_page_column_selector",
                 "description" => "Select a column from the drop down to add to the column list for the model page",
-                "type" => "select",
+                "type" => "string",
+                "values" => ["foo","bar"]
+            ),
+            array(
+                "title" => "Model Page column list",
+                "name" => "model_page_column_list",
+                "description" => "List of columns to show on the model page",
+                "type" => "string",
                 "values" => ["foo","bar"]
             )
         )
     )
 );
 
-// <br />car channel ID
-// <br />car channel pub hash
-// <br />van channel ID
-// <br />van channel pub hash
-// <br />car tax page
-// <br />van tax page
-// <br />comparator page
-// <br />electric comparator page (I think we dropped this?)
-// <br />co<sub>2</sub> footprint page
-// <br />fuel prices page
-// <br />fuel benefit check page
-// <br />car details page
-// <br />prices and options page
-// <br />chooser page
-// <br />mpg calculator page
-
 // Car Tax specific settings
-// <br />model page settings column dropdown
 // <br />model page settings column list
 // <br />model page settings column headers
 // <br />Capital Contributions field label (checkbox)

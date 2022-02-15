@@ -52,8 +52,8 @@ function wp_comcar_plugins_settings_init(){
         // "register" the settings_section, this allows it to be saved on the form submission
         register_setting(
             $settings_section_name,
-            $settings_section_name
-            // 'wp_comcar_plugins_settings_validate'
+            $settings_section_name,
+            'wp_comcar_plugins_settings_validate'
         );
     }
 }
@@ -73,13 +73,19 @@ function wp_comcar_plugins_setting_html() {
 }
 
 function wp_comcar_plugins_settings_validate( $input ) {
-    $newinput['pubhash'] = trim( $input['pubhash'] );
-    // if ( ! preg_match( '/^[a-z0-9]{32}$/i', $newinput['api_key'] ) ) {
-        // $newinput['api_key'] = '';
-    // }
+    // array for storing validated options
+    $output = array();
+ 
+    foreach( $input as $key => $value ) {
+       // process value if it's set
+       if( isset( $input[$key] ) ) {
+         // Strip all HTML and PHP tags and properly handle quoted strings
+         $output[$key] = strip_tags( stripslashes( $input[ $key ] ) );
+       }
+    }
 
-    return $newinput;
-}
+   return $output;
+ }
 
 // print a section title
 function wp_comcar_plugin_section_title($args) {
