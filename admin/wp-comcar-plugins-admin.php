@@ -113,6 +113,19 @@ function wp_comcar_plugin_setting_markup($args) {
         case 'integer':
             echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" pattern="[0-9]*" title="Only use numbers 0-9" type="numeric" value="'.esc_attr( $value ).'" />';
             break;
+        case 'pages':
+            echo '
+                <select name="'.$settings_section_name.'['.$setting_full_name.']">
+                    <option value="">Select page...</option>
+            ';
+            
+            foreach(get_pages() as $page) {
+                $selected = $value == $page->ID ? 'selected' : '';
+                echo '<option value="'.$page->ID.'" '.$selected.'>'.$page->post_title.'</option>';
+            }
+
+            echo '</select>';
+            break;
         default:
             // assume text input
             echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" type="numeric" value="'.esc_attr( $value ).'" />';
