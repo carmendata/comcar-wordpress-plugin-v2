@@ -111,11 +111,11 @@ function wp_comcar_plugin_setting_markup($args) {
     $value = array_key_exists( $setting_full_name, $options ) ? $options[$setting_full_name] : '';
     switch($setting_type) {
         case 'integer':
-            echo "<input id='".$setting_full_name."' name='".$settings_section_name."[".$setting_full_name."]' type='numeric' value='" . esc_attr( $value ) . "' />";
+            echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" pattern="[0-9]*" title="Only use numbers 0-9" type="numeric" value="'.esc_attr( $value ).'" />';
             break;
         default:
             // assume text input
-            echo "<input id='".$setting_full_name."' name='".$settings_section_name."[".$setting_full_name."]' type='text' value='" . esc_attr( $value ) . "' />";
+            echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" type="numeric" value="'.esc_attr( $value ).'" />';
     }
 }
 
