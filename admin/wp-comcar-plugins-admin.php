@@ -45,7 +45,8 @@ function wp_comcar_plugins_settings_init(){
                 array(
                     $settings_section_name,
                     $setting_full_name,
-                    $setting['type']
+                    $setting['type'],
+                    array_key_exists('values', $setting) ? $setting['values'] : array()
                 )
             );
         }
@@ -101,10 +102,11 @@ function wp_comcar_plugin_section_title($args) {
 
 // print markup for a single setting
 function wp_comcar_plugin_setting_markup($args) {
-    // args should contain seciton name, setting name, setting type
+    // args should contain seciton name, setting name, setting type, (optional) setting values for dropdown
     $settings_section_name = $args[0];
     $setting_full_name = $args[1];
     $setting_type = $args[2];
+    $setting_values = $args[3];
 
     $options = get_option($settings_section_name);
 
@@ -126,6 +128,19 @@ function wp_comcar_plugin_setting_markup($args) {
 
             echo '</select>';
             break;
+        case 'array':
+                echo '
+                    <select name="'.$settings_section_name.'['.$setting_full_name.']">
+                        <option value="">Select option...</option>
+                ';
+                
+                foreach($setting_values as $setting_value) {
+                    $selected = $value == $setting_value ? 'selected' : '';
+                    echo '<option '.$selected.'>'.$setting_value.'</option>';
+                }
+    
+                echo '</select>';
+                break;
         default:
             // assume text input
             echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" type="numeric" value="'.esc_attr( $value ).'" />';
