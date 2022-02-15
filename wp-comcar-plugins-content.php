@@ -295,92 +295,111 @@ function getToolContent( $content ) {
 //     global $current_page;
     // load the post data into the function
     global $post;
+    global $wp_comcar_plugins_pages;
 
     // default to no additional content to return
     $tool_content = '';
 
     // we only want to process pages, not posts
     if( is_page() && is_main_query() ) {
-        $tool_content='<p>Tool content could not be loaded</p>';
+        /*
+         * we don't want to process pages outside of those specified in the comcar plugin pages array
+         * so we check if the current post ID matches any of the IDs set in our plugin settings
+         */
+        $page_settings = get_option('wp_comcar_plugins_pages_settings');
+        /*
+         * get the comcar page options,
+         * check if any of the keys have been set in the db,
+         * filter out any that haven't,
+         * return just the array of IDs that have been set
+         */
+        $comcar_page_ids = array_filter(array_map(function($plugin_page) use ($page_settings) {
+            $plugin_page_name = 'wp_comcar_plugins_pages_settings_'.$plugin_page['name'];
+            return $page_settings[$plugin_page_name];
+        }, $wp_comcar_plugins_pages));
+        // only process plugin content if the post ID is saved as one of the comcar plugin page settings
+        if(array_search( strval($post->ID), $comcar_page_ids) === true) {
 
-        var_dump($post);
-//         switch ( $thisPluginName ) {
-//             case "tax_calculator":
+            $tool_content='<p>Tool content could not be loaded</p>';
 
-//                 // wp_enqueue_script('wp_ibuttons');
-//                 // Van or Car?
-//                 if ( $current_page =='cars' ) {
+    //         switch ( $thisPluginName ) {
+    //             case "tax_calculator":
 
-//                     $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
-//                 } else {
-//                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
-//                 }
-//             break;
-//             case "comparator":
-//                 // Van or Car?
-//                 if ( $current_page =='cars' ) {
-//                     $path_to_include = "Comparator/Car-comparator.php";
-//                 } else {
-//                     $path_to_include = "Comparator/Van-comparator.php";
-//                 }
-//             break;
-//             case "footprint":
-//                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
-//             break;
-//             case "electric_comparator":
-//                 // wp_enqueue_style('wp_ibuttons');
-//                 // wp_enqueue_script('wp_ibuttons');
-//                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
-//             break;
-//             case "fuelprices":
-//                 $path_to_include = "FuelPrices/FuelPrices.php";
-//             break;
-//             case "fuel_benefit_check":
-//                 // When the old tools has been changed we can put this code at the very top of the page
-//                 // wp_enqueue_style('wp_ibuttons');
-//                 // wp_enqueue_script('wp_ibuttons');
-//                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
-//             break;
-//             case "car_details":
-//                 // wp_enqueue_style('wp_ibuttons');
-//                 // wp_enqueue_script('wp_ibuttons');
+    //                 // wp_enqueue_script('wp_ibuttons');
+    //                 // Van or Car?
+    //                 if ( $current_page =='cars' ) {
 
-//                 $path_to_include = "Car_Details/Car_details.php";
-//             break;
+    //                     $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
+    //                 } else {
+    //                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
+    //                 }
+    //             break;
+    //             case "comparator":
+    //                 // Van or Car?
+    //                 if ( $current_page =='cars' ) {
+    //                     $path_to_include = "Comparator/Car-comparator.php";
+    //                 } else {
+    //                     $path_to_include = "Comparator/Van-comparator.php";
+    //                 }
+    //             break;
+    //             case "footprint":
+    //                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
+    //             break;
+    //             case "electric_comparator":
+    //                 // wp_enqueue_style('wp_ibuttons');
+    //                 // wp_enqueue_script('wp_ibuttons');
+    //                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
+    //             break;
+    //             case "fuelprices":
+    //                 $path_to_include = "FuelPrices/FuelPrices.php";
+    //             break;
+    //             case "fuel_benefit_check":
+    //                 // When the old tools has been changed we can put this code at the very top of the page
+    //                 // wp_enqueue_style('wp_ibuttons');
+    //                 // wp_enqueue_script('wp_ibuttons');
+    //                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
+    //             break;
+    //             case "car_details":
+    //                 // wp_enqueue_style('wp_ibuttons');
+    //                 // wp_enqueue_script('wp_ibuttons');
 
-//             case "prices_and_options":
-//                 // wp_enqueue_style('wp_ibuttons');
-//                 // wp_enqueue_script('wp_ibuttons');
+    //                 $path_to_include = "Car_Details/Car_details.php";
+    //             break;
 
-//                 $path_to_include = "prices-And-Options/prices_and_options.php";
-//             break;
+    //             case "prices_and_options":
+    //                 // wp_enqueue_style('wp_ibuttons');
+    //                 // wp_enqueue_script('wp_ibuttons');
 
-//             case "chooser":
-//                 // wp_enqueue_style('wp_ibuttons');
-//                 // wp_enqueue_script('wp_ibuttons');
+    //                 $path_to_include = "prices-And-Options/prices_and_options.php";
+    //             break;
 
-//                 $path_to_include = "Chooser/chooser.php";
-//             break;
+    //             case "chooser":
+    //                 // wp_enqueue_style('wp_ibuttons');
+    //                 // wp_enqueue_script('wp_ibuttons');
 
-//             case "mpg_calculator":
-//                 $path_to_include = "MPG-Calculator/MPG-Calculator.php";
-//             break;
+    //                 $path_to_include = "Chooser/chooser.php";
+    //             break;
 
-//             case "vue_test":
-//                 $path_to_include = "Vue-Test/Vue-Test.php";
-//             break;
+    //             case "mpg_calculator":
+    //                 $path_to_include = "MPG-Calculator/MPG-Calculator.php";
+    //             break;
 
-//             default:
-//                 $path_to_include = "";
-//             break;
-//         }
+    //             case "vue_test":
+    //                 $path_to_include = "Vue-Test/Vue-Test.php";
+    //             break;
 
-//     	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );
+    //             default:
+    //                 $path_to_include = "";
+    //             break;
+    //         }
 
-//         $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
-// 		$content = isset( $content ) ? $content : "";
-//         $content = $content.$WPComcar_theResultOfTheWebservice;
-//         return $content;
+    //     	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );
+
+    //         $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
+    // 		$content = isset( $content ) ? $content : "";
+    //         $content = $content.$WPComcar_theResultOfTheWebservice;
+    //         return $content;
+        }
     }
 
     // return original content with tool content added on after

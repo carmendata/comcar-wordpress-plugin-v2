@@ -2,6 +2,68 @@
 /**
  * Array of options (with types, values description) used to build plugin admin interface
  */
+$wp_comcar_plugins_pages = array(
+    array(
+        "title" => "Company Car Tax",
+        "name" => "company_car_tax",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Company Van Tax",
+        "name" => "company_van_Tax",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Comparator",
+        "name" => "comparator",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "CO<sub>2</sub> footprint",
+        "name" => "co2_footprint",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Fuel Prices",
+        "name" => "fuel_prices",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Fuel Benefit Check",
+        "name" => "fuel_benefit_check",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Car Details",
+        "name" => "car_details",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Prices and Options",
+        "name" => "prices_and_options",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "Chooser",
+        "name" => "chooser",
+        "description" => "",
+        "type" => "pages"
+    ),
+    array(
+        "title" => "MPG Calculator",
+        "name" => "mpg calculator",
+        "description" => "",
+        "type" => "pages"
+    )
+);
 
 $wp_comcar_plugins_settings_array = array(
     array(
@@ -37,68 +99,7 @@ $wp_comcar_plugins_settings_array = array(
     array(
         "title" => "Pages",
         "name" => "pages",
-        "settings" => array(
-            array(
-                "title" => "Company Car Tax",
-                "name" => "company_car_tax",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Company Van Tax",
-                "name" => "company_van_Tax",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Comparator",
-                "name" => "comparator",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "CO<sub>2</sub> footprint",
-                "name" => "co2_footprint",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Fuel Prices",
-                "name" => "fuel_prices",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Fuel Benefit Check",
-                "name" => "fuel_benefit_check",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Car Details",
-                "name" => "car_details",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Prices and Options",
-                "name" => "prices_and_options",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "Chooser",
-                "name" => "chooser",
-                "description" => "",
-                "type" => "pages"
-            ),
-            array(
-                "title" => "MPG Calculator",
-                "name" => "mpg calculator",
-                "description" => "",
-                "type" => "pages"
-            )
-        )
+        "settings" => $wp_comcar_plugins_pages
     ),
     array(
         "title" => "Company Car Tax",
