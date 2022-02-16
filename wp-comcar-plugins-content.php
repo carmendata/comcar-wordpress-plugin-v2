@@ -297,33 +297,40 @@ function getToolContent( $content ) {
     global $post;
     global $wp_comcar_plugins_pages;
 
-    // default to no additional content to return
-    $tool_content = '';
-
     // we only want to process pages, not posts
-    if( is_page() && is_main_query() ) {
-        /*
-         * we don't want to process pages outside of those specified in the comcar plugin pages array
-         * so we check if the current post ID matches any of the IDs set in our plugin settings
-         */
-        $page_settings = get_option('wp_comcar_plugins_pages_settings');
-        /*
-         * get the comcar page options,
-         * check if any of the keys have been set in the db,
-         * filter out any that haven't,
-         * return just the array of IDs that have been set
-         */
-        $comcar_page_ids = array_filter(array_map(function($plugin_page) use ($page_settings) {
+    if( !is_page() || !is_main_query() ) {
+        return $content;
+    }
+    
+    /*
+     * we don't want to process pages outside of those specified in the comcar plugin pages array
+     * so we check if the current post ID matches any of the IDs set in our plugin settings
+     */
+
+    // get all the IDs of pages we've set in the plugin admin "Pages" section
+    $page_settings = get_option('wp_comcar_plugins_pages_settings');
+    $comcar_page_ids = array_map(function($plugin_page) use ($page_settings) {
             $plugin_page_name = 'wp_comcar_plugins_pages_settings_'.$plugin_page['name'];
             return $page_settings[$plugin_page_name];
-        }, $wp_comcar_plugins_pages));
-        // only process plugin content if the post ID is saved as one of the comcar plugin page settings
-        if(array_search( strval($post->ID), $comcar_page_ids) !== false) {
+        }, $wp_comcar_plugins_pages);
+    // try to get the index of the current page ID from the comcar_page_ids array
+    $comcar_page_id = array_search($post->ID, $comcar_page_ids);
 
-            $tool_content='<p>Tool content could not be loaded</p>';
+    // if we couldn't find an ID, return the original content
+    if($comcar_page_id === false) {
+        return $content;
+    }
 
-    //         switch ( $thisPluginName ) {
-    //             case "tax_calculator":
+    // get the page information
+    $comcar_plugin_page = $wp_comcar_plugins_pages[$comcar_page_id];
+
+    // prepare empty variable to load page content
+    $tool_content = '';
+
+    switch($comcar_plugin_page['name']) {
+        case "company_car_tax":
+            $tool_content = 'company car tax';
+            break;
 
     //                 // wp_enqueue_script('wp_ibuttons');
     //                 // Van or Car?
@@ -399,7 +406,6 @@ function getToolContent( $content ) {
     // 		$content = isset( $content ) ? $content : "";
     //         $content = $content.$WPComcar_theResultOfTheWebservice;
     //         return $content;
-        }
     }
 
     // return original content with tool content added on after
