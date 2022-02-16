@@ -1,39 +1,21 @@
 <?php 
-	//create and instance of the controller and include the result in the page
-	global $objWPComcarCarTaxCalculatorController;
-	if (class_exists("WPComcarCarTaxCalculatorController") && !$objWPComcarCarTaxCalculatorController) {
-	    $objWPComcarCarTaxCalculatorController = new WPComcarCarTaxCalculatorController();	
-	    $objWPComcarCarTaxCalculatorController->controller();
+	switch($plugin_call_stage) {
+		case 1:
+			$wp_comcar_plugins_results_html = 'Load the select stage';
+			break;
+		case 2:
+			$wp_comcar_plugins_results_html = 'Load the derivative list stage';
+			break;
+		case 3:
+			$wp_comcar_plugins_results_html = 'Load the options stage';
+			break;
+		case 4:
+			$wp_comcar_plugins_results_html = 'Load the calculation stage';
+			break;
+		default:
+			$wp_comcar_plugins_results_html = 'Invalid stage loaded';
 	}
                 
 	//include the page
-	include_once($objWPComcarCarTaxCalculatorController->thePageToInclude);
-
-	class WPComcarCarTaxCalculatorController{
-
-		public $thePageToInclude;
-
-		function __construct(){
-
-		}
-
-		function controller(){
-    
-			global $post;
-			$thePostId=$post->ID;
-
-			//decide what page to load
-			//parent or subpage?
-
-			$arrOptions = get_option('WP_plugin_options_tax_calculator');
- 			$idThePageWhereShouldLoadThePlugin=$arrOptions["tax_calculator_cars_page"];
-
-			if (strcmp($idThePageWhereShouldLoadThePlugin,$thePostId)==0){			     
-				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-select.php";
-			}else if (in_array($thePostId,$arrOptions["cars_subpages"])){
-				$theNameOfThePage=array_search($thePostId,$arrOptions["cars_subpages"]);
-				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Car-$theNameOfThePage.php";								
-			}
-		}	
-	}
+	// include_once($objWPComcarCarTaxCalculatorController->thePageToInclude);
 ?>

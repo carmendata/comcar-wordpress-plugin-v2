@@ -316,27 +316,26 @@ function getToolContent( $content ) {
     // try to get the index of the current page ID from the comcar_page_ids array
     $comcar_page_id = array_search($post->ID, $comcar_page_ids);
 
-    // if we couldn't find an ID, return the original content
+    // if we couldn't find an ID, then this page is not assigned to a plugin, return the original content
     if($comcar_page_id === false) {
         return $content;
     }
 
-    // get the page information
+    // get the comcar plugin page setting information
     $comcar_plugin_page = $wp_comcar_plugins_pages[$comcar_page_id];
 
-    // prepare empty variable to load page content
-    $tool_content = '';
+    // if no URL stage is set, default to 1
+    $plugin_call_stage = array_key_exists('stage', $_GET) ? $_GET['stage'] : 1;
 
     switch($comcar_plugin_page['name']) {
         case "company_car_tax":
-            $tool_content = 'company car tax';
+            $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
             break;
 
     //                 // wp_enqueue_script('wp_ibuttons');
     //                 // Van or Car?
     //                 if ( $current_page =='cars' ) {
 
-    //                     $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
     //                 } else {
     //                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
     //                 }
@@ -399,17 +398,37 @@ function getToolContent( $content ) {
     //                 $path_to_include = "";
     //             break;
     //         }
-
-    //     	include_once( WPComcar_WEBSERVICESCALLSPATH.$path_to_include );
-
-    //         $WPComcar_theResultOfTheWebservice=isset($WPComcar_theResultOfTheWebservice) ? $WPComcar_theResultOfTheWebservice : "";
-    // 		$content = isset( $content ) ? $content : "";
-    //         $content = $content.$WPComcar_theResultOfTheWebservice;
-    //         return $content;
     }
 
-    // return original content with tool content added on after
-    return $content.$tool_content;
+    // default empty results
+    $wp_comcar_plugins_results_css  = "";
+    $wp_comcar_plugins_results_js   = "";
+    $wp_comcar_plugins_results_html = "";
+    $wp_comcar_plugins_results_msg  = "";
+
+    // prepare content to return
+    $plugin_content = '';
+
+    // make calls to web service
+    $plugin_content .= '<!-- Calling the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.' -->';
+    include_once( WP_COMCAR_PLUGINS_WEBSERVICECONTENT.$path_to_include );
+
+    $plugin_content .= '<!-- Start of the output for the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.' -->';
+    
+    // print out any error or status messages, followed by original content
+    if( strlen($wp_comcar_plugins_results_msg) ){
+        $plugin_content .= '<p>'.$wp_comcar_plugins_results_msg.'</p>';
+    }else{
+        // if there were no messages, print the original page content then tool content
+        $plugin_content .= $wp_comcar_plugins_results_css
+            .$wp_comcar_plugins_results_js
+            .'<div id="wp-comcar-plugins-container">'
+            .urldecode($wp_comcar_plugins_results_html)
+            .'</div>';
+    }
+    $plugin_content .= '<!-- End of the output for the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.', original page content follows -->';
+
+    return $content.$plugin_content;
 }
 
 ?>

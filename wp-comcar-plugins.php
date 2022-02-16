@@ -13,7 +13,15 @@
 // ini_set( 'error_reporting', E_ALL );
 // ini_set( 'display_errors', true );
 
-define( "WPComcar_PLUGINVERSION","1.8.2" );
+define("WP_COMCAR_PLUGINS_PLUGINVERSION","2.0.0");
+define("WP_COMCAR_PLUGINS_WEBSERVICECONTENT",dirname(__FILE__)."/webservices-calls/");
+
+define(
+    "WP_COMCAR_PLUGIN_URL",
+    getenv('WORDPRESS_PLUGIN_URL') === false
+        ? 'https://legacy.comcar.co.uk'
+        : getenv('WORDPRESS_PLUGIN_URL')
+);
 
 require_once( __DIR__."/admin/wp-comcar-plugins-global-objects.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin.php" );
