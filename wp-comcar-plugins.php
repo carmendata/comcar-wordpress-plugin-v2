@@ -16,10 +16,13 @@
 define("WP_COMCAR_PLUGINS_PLUGINVERSION","2.0.0");
 define("WP_COMCAR_PLUGINS_WEBSERVICECONTENT",dirname(__FILE__)."/webservices-calls/");
 
+/* TODO: take this out, the yaml file should have sorted it */
+putenv("WORDPRESS_PLUGIN_URL=http://192.168.1.140/webservices/");
+
 define(
     "WP_COMCAR_PLUGIN_URL",
     getenv('WORDPRESS_PLUGIN_URL') === false
-        ? 'https://legacy.comcar.co.uk'
+        ? 'https://legacy.comcar.co.uk/webservices/'
         : getenv('WORDPRESS_PLUGIN_URL')
 );
 

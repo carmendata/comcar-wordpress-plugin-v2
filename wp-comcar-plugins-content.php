@@ -327,9 +327,15 @@ function getToolContent( $content ) {
     // if no URL stage is set, default to 1
     $plugin_call_stage = array_key_exists('stage', $_GET) ? $_GET['stage'] : 1;
 
+    // get main settings
+    $main_settings = get_option('wp_comcar_plugins_main_settings');
+    // var_dump($main_settings);
+    $plugin_call_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
+    $plugin_call_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
+
     switch($comcar_plugin_page['name']) {
         case "company_car_tax":
-            $path_to_include = "Tax-Calculator/Car-tax-calculator.php";
+            $path_to_include = "Car-Tax-Calculator/Car-tax-calculator.php";
             break;
 
     //                 // wp_enqueue_script('wp_ibuttons');
