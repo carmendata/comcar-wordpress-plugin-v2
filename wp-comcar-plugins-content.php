@@ -318,7 +318,7 @@ function getToolContent( $content ) {
             return $page_settings[$plugin_page_name];
         }, $wp_comcar_plugins_pages));
         // only process plugin content if the post ID is saved as one of the comcar plugin page settings
-        if(array_search( strval($post->ID), $comcar_page_ids) === true) {
+        if(array_search( strval($post->ID), $comcar_page_ids) !== false) {
 
             $tool_content='<p>Tool content could not be loaded</p>';
 
