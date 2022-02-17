@@ -4,7 +4,7 @@
 			include_once('Car-select.php');
 			break;
 		case 2:
-			$wp_comcar_plugins_results_html = 'Load the derivative list stage';
+			include_once('Car-model.php');
 			break;
 		case 3:
 			$wp_comcar_plugins_results_html = 'Load the options stage';
