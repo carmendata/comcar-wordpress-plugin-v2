@@ -16,10 +16,7 @@ $wp_comcar_plugins_results_js   = "";
 $wp_comcar_plugins_results_html = "";
 $wp_comcar_plugins_results_msg  = "";
 
-try {
-	// connect to the webservice
-	$wp_comcar_plugins_ws = new SoapClient(WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl', array('cache_wsdl' => 0));
-	
+try {	
 	// call the required functions and store the returned data
 	$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
 		$plugin_call_channel_pubhash,

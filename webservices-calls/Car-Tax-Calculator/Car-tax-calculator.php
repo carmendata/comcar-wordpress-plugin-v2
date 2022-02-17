@@ -1,4 +1,7 @@
 <?php 
+// connect to the webservice
+$wp_comcar_plugins_ws = new SoapClient(WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl', array('cache_wsdl' => 0));
+
 switch($plugin_call_stage) {
 	case 1:
 		include_once('Car-select.php');
