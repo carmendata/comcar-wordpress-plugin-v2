@@ -32,13 +32,13 @@ try {
 			$plugin_call_channel_pubhash,
 			$plugin_call_channel_id,
 			$plugin_call_stage,
-			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?')."?stage=3",
+			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
 			$_GET['fjs_make'].','.$_GET['fjs_model'].'~'.$fueltype
 		);
 	}
 } catch ( Exception $wp_comcar_plugins_err ) {
 	// Append to error handling msg if SOAP request fails 
 	$wp_comcar_plugins_results_msg .= 'The webservice failed to load the model list<br />';
-	var_dump($wp_comcar_plugins_err);
+	// var_dump($wp_comcar_plugins_err);
 }
 ?>

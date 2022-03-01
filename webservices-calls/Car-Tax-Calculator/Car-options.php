@@ -4,18 +4,13 @@
 
 // defaults in case the page is visited without URL parameters
 if(!isset($_GET['vehicle_id']))     {  $_GET['vehicle_id'] = '';  }
-if(!isset($_GET['capcon']))  {  $_GET['capcon'] = '';  }
-if(!isset($_GET['anncon']))  {  $_GET['anncon'] = '';  }
-
-// defaults in case the page is visited without a form submission from stage 2 
-if(!isset($_POST['vehicle_id']))    {  $_POST['vehicle_id'] = isset($_GET['id']) ? $_GET['id'] : "" ;  }
-if(!isset($_POST['capcon'])) {  $_POST['capcon'] = $_GET['capcon'];  }
-if(!isset($_POST['anncon'])) {  $_POST['anncon'] = $_GET['anncon'];  }
+if(!isset($_GET['capcon']))  		{  $_GET['capcon'] = '';  }
+if(!isset($_GET['anncon']))  		{  $_GET['anncon'] = '';  }
 
 // get vehicle id
-$wp_comcar_plugins_vehicle_id = $_POST['vehicle_id'];
-$wp_comcar_plugins_capcon = $_POST['capcon'];
-$wp_comcar_plugins_anncon = $_POST['anncon'];
+$wp_comcar_plugins_vehicle_id = $_GET['vehicle_id'];
+$wp_comcar_plugins_capcon = $_GET['capcon'];
+$wp_comcar_plugins_anncon = $_GET['anncon'];
 
 $wp_comcar_plugins_results_css  = "";
 $wp_comcar_plugins_results_js   = "";
@@ -46,7 +41,7 @@ try {
 		$plugin_call_channel_pubhash,
 		$plugin_call_channel_id,
 		$plugin_call_stage,
-		"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?')."?stage=4",
+		"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
 		"$wp_comcar_plugins_vehicle_id~$wp_comcar_plugins_capcon~$wp_comcar_plugins_anncon"
 	);
 

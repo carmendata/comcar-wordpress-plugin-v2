@@ -329,7 +329,7 @@ function getToolContent( $content ) {
 
     // get main settings
     $main_settings = get_option('wp_comcar_plugins_main_settings');
-    // var_dump($main_settings);
+
     $plugin_call_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
     $plugin_call_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
 

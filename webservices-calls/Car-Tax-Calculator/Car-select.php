@@ -36,10 +36,7 @@ try {
 		$plugin_call_channel_pubhash,
 		$plugin_call_channel_id,
 		$plugin_call_stage,
-		"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?')."?stage=2",
-		json_encode(array(
-			"formMethod"=>"GET"
-		))
+		"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?')
 	);
 } catch ( Exception $wp_comcar_plugins_err ) {
 	// Append to error handling msg if SOAP request fails 
