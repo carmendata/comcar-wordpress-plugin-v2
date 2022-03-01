@@ -20,7 +20,7 @@ switch($plugin_call_stage) {
 		include_once('Car-options.php');
 		break;
 	case 4:
-		$wp_comcar_plugins_results_html = 'Load the calculation stage';
+		include_once('Car-calc.php');
 		break;
 	default:
 		$wp_comcar_plugins_results_html = 'Invalid stage loaded';
