@@ -415,6 +415,24 @@ function getToolContent( $content ) {
     // prepare content to return
     $plugin_content = '';
 
+    // setup webservice call options
+    $wp_comcar_plugin_ws_options = array(
+        'cache_wsdl' => 0
+    );
+
+    // for dev mode, allow unsigned CERTS for local development
+    if(WP_COMCAR_DEV_MODE) {
+        $wp_comcar_plugin_context = stream_context_create(array(
+            'ssl' => array(
+                // set some SSL/TLS specific options
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        ));
+        $wp_comcar_plugin_ws_options['stream_context'] = $wp_comcar_plugin_context;
+    }
+
     // make calls to web service
     $plugin_content .= '<!-- Calling the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.' -->';
     include_once( WP_COMCAR_PLUGINS_WEBSERVICECONTENT.$path_to_include );

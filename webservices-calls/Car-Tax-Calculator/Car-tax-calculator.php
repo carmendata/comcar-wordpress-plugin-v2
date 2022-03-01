@@ -1,6 +1,14 @@
 <?php 
+// update the URL
+$wp_comcar_plugin_ws_options['uri'] =WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl';
+$wp_comcar_plugin_ws_options['location'] =WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl';
+
 // connect to the webservice
-$wp_comcar_plugins_ws = new SoapClient(WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl', array('cache_wsdl' => 0));
+$wp_comcar_plugins_ws = new SoapClient(
+	// WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl',
+	NULL,
+	$wp_comcar_plugin_ws_options
+);
 
 switch($plugin_call_stage) {
 	case 1:
