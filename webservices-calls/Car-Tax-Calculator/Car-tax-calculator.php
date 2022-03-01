@@ -5,7 +5,6 @@ $wp_comcar_plugin_ws_options['location'] =WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?ws
 
 // connect to the webservice
 $wp_comcar_plugins_ws = new SoapClient(
-	// WP_COMCAR_PLUGIN_URL . 'TaxCalc.cfc?wsdl',
 	NULL,
 	$wp_comcar_plugin_ws_options
 );
