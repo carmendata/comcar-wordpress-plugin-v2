@@ -11,6 +11,9 @@
 	if(!isset($_POST['frm_listID'])) {  $_POST['frm_listID']="";  }
 	if(!isset($_POST['optTotal']))   {  $_POST['optTotal']="";  }
 
+	// remove trailing slash from option list
+	$_POST['frm_listID'] = preg_replace('/,$/','',$_POST['frm_listID']);
+
 	// get $_POST data
 	$wp_comcar_plugins_options_form_data = "";
 	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['id']."~";
@@ -20,13 +23,6 @@
 	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['optTotal'];
 
 	try {
-		$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
-			$plugin_call_channel_pubhash,
-			$plugin_call_channel_id,
-			$plugin_call_stage,
-			''
-		);
-
 		$wp_comcar_plugins_results_html	= $wp_comcar_plugins_ws->GetHTML(
 			$plugin_call_channel_pubhash,
 			$plugin_call_channel_id,
