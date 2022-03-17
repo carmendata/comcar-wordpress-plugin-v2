@@ -17,17 +17,17 @@ define("WP_COMCAR_PLUGINS_PLUGINVERSION","2.0.0");
 define("WP_COMCAR_PLUGINS_WEBSERVICECONTENT",dirname(__FILE__)."/webservices-calls/");
 
 define(
-    "WP_COMCAR_PLUGIN_URL",
-    getenv('WORDPRESS_PLUGIN_URL') === false
+    "WP_COMCAR_PLUGIN_WS_URL",
+    getenv('WP_COMCAR_PLUGIN_WS_URL') === false
         ? 'https://legacy.comcar.co.uk/webservices/'
-        : getenv('WORDPRESS_PLUGIN_URL')
+        : getenv('WP_COMCAR_PLUGIN_WS_URL')
 );
 
 define(
-    "WP_COMCAR_DEV_MODE",
-    getenv('WP_COMCAR_DEV_MODE') === false
+    "WP_COMCAR_PLUGIN_DEV_MODE",
+    getenv('WP_COMCAR_PLUGIN_DEV_MODE') === false
         ? false
-        : getenv('WP_COMCAR_DEV_MODE')
+        : getenv('WP_COMCAR_PLUGIN_DEV_MODE')
 );
 
 require_once( __DIR__."/admin/wp-comcar-plugins-global-objects.php" );

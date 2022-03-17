@@ -9,54 +9,54 @@ $wp_comcar_plugins_pages = array(
         "description" => "",
         "type" => "pages"
     ),
-    array(
-        "title" => "Company Van Tax",
-        "name" => "company_van_Tax",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "Comparator",
-        "name" => "comparator",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "CO<sub>2</sub> footprint",
-        "name" => "co2_footprint",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "Fuel Prices",
-        "name" => "fuel_prices",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "Fuel Benefit Check",
-        "name" => "fuel_benefit_check",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "Car Details",
-        "name" => "car_details",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "Prices and Options",
-        "name" => "prices_and_options",
-        "description" => "",
-        "type" => "pages"
-    ),
-    array(
-        "title" => "Chooser",
-        "name" => "chooser",
-        "description" => "",
-        "type" => "pages"
-    ),
+    // array(
+    //     "title" => "Company Van Tax",
+    //     "name" => "company_van_Tax",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "Comparator",
+    //     "name" => "comparator",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "CO<sub>2</sub> footprint",
+    //     "name" => "co2_footprint",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "Fuel Prices",
+    //     "name" => "fuel_prices",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "Fuel Benefit Check",
+    //     "name" => "fuel_benefit_check",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "Car Details",
+    //     "name" => "car_details",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "Prices and Options",
+    //     "name" => "prices_and_options",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
+    // array(
+    //     "title" => "Chooser",
+    //     "name" => "chooser",
+    //     "description" => "",
+    //     "type" => "pages"
+    // ),
     array(
         "title" => "MPG Calculator",
         "name" => "mpg calculator",
@@ -82,18 +82,18 @@ $wp_comcar_plugins_settings_array = array(
                 "description" => "Provided by Carmen Data Ltd",
                 "type" => "string"
             ),
-            array(
-                "title" => "Van Channel ID",
-                "name" => "van_channel_id",
-                "description" => "Provided by Carmen Data Ltd",
-                "type" => "integer"
-            ),
-            array(
-                "title" => "Van Channel Pubhash",
-                "name" => "van_channel_pubhash",
-                "description" => "Provided by Carmen Data Ltd",
-                "type" => "string"
-            )
+            // array(
+            //     "title" => "Van Channel ID",
+            //     "name" => "van_channel_id",
+            //     "description" => "Provided by Carmen Data Ltd",
+            //     "type" => "integer"
+            // ),
+            // array(
+            //     "title" => "Van Channel Pubhash",
+            //     "name" => "van_channel_pubhash",
+            //     "description" => "Provided by Carmen Data Ltd",
+            //     "type" => "string"
+            // )
         )
     ),
     array(
@@ -105,12 +105,12 @@ $wp_comcar_plugins_settings_array = array(
         "title" => "Company Car Tax",
         "name" => "company_car_tax",
         "settings" => array(
-            array(
-                "title" => "Calculation Override URL",
-                "name" => "calculation_override_url",
-                "description" => "Intemediary page to send users to before revealing the tax calculation",
-                "type" => "string"
-            ),
+            // array(
+            //     "title" => "Calculation Override URL",
+            //     "name" => "calculation_override_url",
+            //     "description" => "Intemediary page to send users to before revealing the tax calculation",
+            //     "type" => "string"
+            // ),
             array(
                 "title" => "Model Page column selector",
                 "name" => "model_page_column_selector",

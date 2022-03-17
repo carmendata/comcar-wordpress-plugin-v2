@@ -421,7 +421,7 @@ function getToolContent( $content ) {
     );
 
     // for dev mode, allow unsigned CERTS for local development
-    if(WP_COMCAR_DEV_MODE) {
+    if(WP_COMCAR_PLUGIN_DEV_MODE) {
         $wp_comcar_plugin_context = stream_context_create(array(
             'ssl' => array(
                 // set some SSL/TLS specific options
