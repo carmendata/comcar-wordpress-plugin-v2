@@ -400,9 +400,9 @@ function getToolContent( $content ) {
     //                 $path_to_include = "Vue-Test/Vue-Test.php";
     //             break;
 
-    //             default:
-    //                 $path_to_include = "";
-    //             break;
+                default:
+                    $path_to_include = "";
+                break;
     //         }
     }
 
@@ -435,7 +435,11 @@ function getToolContent( $content ) {
 
     // make calls to web service
     $plugin_content .= '<!-- Calling the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.' -->';
-    include_once( WP_COMCAR_PLUGINS_WEBSERVICECONTENT.$path_to_include );
+    if($path_to_include != "") {
+        include_once( WP_COMCAR_PLUGINS_WEBSERVICECONTENT.$path_to_include );
+    } else {
+        echo 'Plugin content has not been configured yet';
+    }
 
     $plugin_content .= '<!-- Start of the output for the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.' -->';
     
