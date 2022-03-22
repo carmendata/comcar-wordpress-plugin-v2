@@ -24,12 +24,6 @@ try {
 		$plugin_call_channel_id,
 		$plugin_call_stage
 	);
-	$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
-		$plugin_call_channel_pubhash,
-		$plugin_call_channel_id,
-		$plugin_call_stage,
-		''
-	);
 
 	//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
 	// $wp_comcar_plugins_arrOptions=get_option("WP_plugin_options_tax_calculator");
