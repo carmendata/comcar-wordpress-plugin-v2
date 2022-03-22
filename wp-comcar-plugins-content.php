@@ -449,10 +449,10 @@ function getToolContent( $content ) {
     }else{
         // if there were no messages, print the original page content then tool content
         $plugin_content .= $wp_comcar_plugins_results_css
-            .$wp_comcar_plugins_results_js
             .'<div id="wp-comcar-plugins-container">'
             .urldecode($wp_comcar_plugins_results_html)
-            .'</div>';
+            .'</div>'
+            .$wp_comcar_plugins_results_js;
     }
     $plugin_content .= '<!-- End of the output for the Comcar Tools Wordpress plugin v'.WP_COMCAR_PLUGINS_PLUGINVERSION.', original page content follows -->';
 
