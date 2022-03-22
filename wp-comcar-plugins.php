@@ -38,12 +38,6 @@ require_once( __DIR__."/wp-comcar-plugins-content.php" );
 
 add_filter( "the_content",  "getToolContent" );
 
-
-
-
-// require_once( __DIR__."/wp-comcar-constants.php" );
-// require_once( __DIR__."/admin/wp-comcar-plugins-admin-html.php" );
-
 // add_action( "wp", "plugin_redirection" );
 // add_action( "wp_head", "activate_page_plugins");
 
