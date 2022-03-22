@@ -41,6 +41,5 @@ try {
 } catch ( Exception $wp_comcar_plugins_err ) {
 	// Append to error handling msg if SOAP request fails 
 	$wp_comcar_plugins_results_msg .= 'The webservice failed to load the selector<br />';
-	// var_dump($wp_comcar_plugins_err);
 }
 ?>

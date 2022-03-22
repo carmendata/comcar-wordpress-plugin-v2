@@ -1,13 +1,9 @@
 <?php
-	// defaults in case the page is visited without a $_POST submission from stage 1
-	if(!isset($_GET['car']))         {  $_GET['car']="";  }
-	if(!isset($_POST['car']))        {  $_POST['car']=$_GET['car'];  }
-
-	if(!isset($_GET['id']))          {  $_GET['id']=$_POST['car'];  }
-	if(!isset($_POST['id']))         {  $_POST['id']=$_GET['id'];  }
-
-	if(!isset($_POST['CapCon']))     {  $_POST['CapCon']="";  }
-	if(!isset($_POST['AnnCon']))     {  $_POST['AnnCon']="";  }
+	// vehicle ID, anncon and capcon will be sent in URL $_GET
+	// but coming from the options page will submit a form that will contain option data
+	// vehicle_ID at the very least must be supplied
+	if(!isset($_GET['anncon'])) {  $_GET['anncon']="";  }
+	if(!isset($_GET['capcon']))   {  $_GET['capcon']="";  }
 	if(!isset($_POST['frm_listID'])) {  $_POST['frm_listID']="";  }
 	if(!isset($_POST['optTotal']))   {  $_POST['optTotal']="";  }
 
@@ -16,9 +12,9 @@
 
 	// get $_POST data
 	$wp_comcar_plugins_options_form_data = "";
-	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['id']."~";
-	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['CapCon']."~";
-	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['AnnCon']."~";
+	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_GET['vehicle_id']."~";
+	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_GET['capcon']."~";
+	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_GET['anncon']."~";
 	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['frm_listID']."~";
 	$wp_comcar_plugins_options_form_data = $wp_comcar_plugins_options_form_data.$_POST['optTotal'];
 
