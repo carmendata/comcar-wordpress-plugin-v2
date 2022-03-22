@@ -32,7 +32,6 @@
 			$plugin_call_channel_id,
 			$plugin_call_stage
 		);
-		var_dump($wp_comcar_plugins_results_js);
 	} catch (Exception $wp_comcar_plugins_e) {
 		// Error handling code if soap request fails
 		$wp_comcar_plugins_results_msg .= 'The webservice failed to load the Calculation<br />';
