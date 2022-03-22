@@ -26,6 +26,15 @@ try {
 	$fueltype = array_key_exists('fjs_fueltype',$_GET) ? $_GET['fjs_fueltype'] : 'ANY';
 	$fueltype = $fueltype === "" ? "ANY" : $fueltype;
 
+	// build config object
+	$company_car_tax_settings = get_option('wp_comcar_plugins_company_car_tax_settings');
+	$company_car_tax_model_page_column_list = $company_car_tax_settings['wp_comcar_plugins_company_car_tax_settings_model_page_column_list'];
+	$obj_config = array(
+		'attributes' => $company_car_tax_model_page_column_list
+	);
+
+	$json_config = json_encode($obj_config);
+
 	// if we don't have enough data we can't load the model page
 	if($required_data_present) {
 		$wp_comcar_plugins_results_html = $wp_comcar_plugins_ws->GetHTML(
@@ -33,7 +42,7 @@ try {
 			$plugin_call_channel_id,
 			$plugin_call_stage,
 			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
-			$_GET['fjs_make'].','.$_GET['fjs_model'].'~'.$fueltype
+			$_GET['fjs_make'].','.$_GET['fjs_model'].'~'.$fueltype.'~'.$json_config
 		);
 
 		$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
