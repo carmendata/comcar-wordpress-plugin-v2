@@ -46,6 +46,7 @@ function wp_comcar_plugins_settings_init(){
                     $settings_section_name,
                     $setting_full_name,
                     $setting['type'],
+                    array_key_exists('dont_save', $setting) ? $setting['dont_save'] : array(),
                     array_key_exists('values', $setting) ? $setting['values'] : array()
                 )
             );
@@ -106,18 +107,27 @@ function wp_comcar_plugin_setting_markup($args) {
     $settings_section_name = $args[0];
     $setting_full_name = $args[1];
     $setting_type = $args[2];
-    $setting_values = $args[3];
+    $setting_dont_save = $args[3];
+    $setting_values = $args[4];
 
     $options = get_option($settings_section_name);
 
     $value = array_key_exists( $setting_full_name, $options ) ? $options[$setting_full_name] : '';
+
+    // if dont_save=true, don't give the element a name so it's not saved
+    if($setting_dont_save) {
+        $input_name = 'data-name="'.$settings_section_name.'['.$setting_full_name.']"';
+    } else {
+        $input_name = 'name="'.$settings_section_name.'['.$setting_full_name.']"';
+    }
+
     switch($setting_type) {
         case 'integer':
-            echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" pattern="[0-9]*" type="numeric" title="Only use numbers 0-9" type="numeric" value="'.esc_attr( $value ).'" />';
+            echo '<input id="'.$setting_full_name.'" '.$input_name.' pattern="[0-9]*" type="numeric" title="Only use numbers 0-9" type="numeric" value="'.esc_attr( $value ).'" />';
             break;
         case 'pages':
             echo '
-                <select name="'.$settings_section_name.'['.$setting_full_name.']">
+                <select '.$input_name.'>
                     <option value="">Select page...</option>
             ';
             
@@ -129,9 +139,10 @@ function wp_comcar_plugin_setting_markup($args) {
             echo '</select>';
             break;
         case 'array':
+                $selected = $value == '' ? 'selected' : '';
                 echo '
-                    <select name="'.$settings_section_name.'['.$setting_full_name.']">
-                        <option value="">Select option...</option>
+                    <select '.$input_name.'>
+                        <option value="" '.$selected.'>Select option...</option>
                 ';
                 
                 foreach($setting_values as $option_key => $option_title) {
@@ -143,7 +154,7 @@ function wp_comcar_plugin_setting_markup($args) {
                 break;
         default:
             // assume text input
-            echo '<input id="'.$setting_full_name.'" name="'.$settings_section_name.'['.$setting_full_name.']" value="'.esc_attr( $value ).'" />';
+            echo '<input id="'.$setting_full_name.'" '.$input_name.' value="'.esc_attr( $value ).'" />';
     }
 }
 
