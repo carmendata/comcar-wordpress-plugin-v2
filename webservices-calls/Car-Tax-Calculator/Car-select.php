@@ -17,21 +17,14 @@ $wp_comcar_plugins_results_html = "";
 $wp_comcar_plugins_results_msg  = "";
 
 try {	
-	// call the required functions and store the returned data
+	// get the page JS
 	$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
 		$plugin_call_channel_pubhash,
 		$plugin_call_channel_id,
 		1
 	);
 	
-	//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-	// $WPComcar_arrOptions=get_option("WP_plugin_options_tax_calculator");
-	// $WPComcar_vehicleTypeForIncluding=strtolower($WPComcar_vehicleType.'s');		
-	// $WPComcar_actionName= $WPComcar_arrOptions[$WPComcar_vehicleTypeForIncluding."_subpages"]["model"];
-
-	// $WPComcar_actionName= WPComcar_getPageUrlById($WPComcar_actionName);
-
-	// $wp_comcar_plugins_results_html = fixForSsl( $wp_comcar_plugins_ws->GetHTML( $WPComcar_pubhash, $WPComcar_clk, 1, $WPComcar_actionName, $WPComcar_jsnConfig ));
+	// get the page HTML
 	$wp_comcar_plugins_results_html = $wp_comcar_plugins_ws->GetHTML(
 		$plugin_call_channel_pubhash,
 		$plugin_call_channel_id,

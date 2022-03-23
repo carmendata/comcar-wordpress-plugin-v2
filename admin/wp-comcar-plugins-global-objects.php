@@ -53,7 +53,7 @@ $wp_comcar_plugins_pages = array(
     // ),
     array(
         "title" => "MPG Calculator",
-        "name" => "mpg calculator",
+        "name" => "mpg_calculator",
         "description" => "",
         "type" => "pages"
     )

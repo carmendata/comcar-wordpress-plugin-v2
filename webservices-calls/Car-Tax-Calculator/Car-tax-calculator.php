@@ -26,6 +26,4 @@ switch($plugin_call_stage) {
 		$wp_comcar_plugins_results_html = 'Invalid stage loaded';
 }
 			
-//include the page
-// include_once($objWPComcarCarTaxCalculatorController->thePageToInclude);
 ?>
