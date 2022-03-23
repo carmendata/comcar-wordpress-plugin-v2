@@ -50,73 +50,30 @@ function getToolContent( $content ) {
         case "company_car_tax":
             $path_to_include = "Car-Tax-Calculator/Car-tax-calculator.php";
             break;
-
-    //                 // wp_enqueue_script('wp_ibuttons');
-    //                 // Van or Car?
-    //                 if ( $current_page =='cars' ) {
-
-    //                 } else {
-    //                     $path_to_include = "Tax-Calculator/Van-tax-calculator.php";
-    //                 }
-    //             break;
+        case "mpg_calculator":
+            $path_to_include = "MPG-Calculator/MPG-Calculator.php";
+            break;
     //             case "comparator":
-    //                 // Van or Car?
-    //                 if ( $current_page =='cars' ) {
-    //                     $path_to_include = "Comparator/Car-comparator.php";
-    //                 } else {
-    //                     $path_to_include = "Comparator/Van-comparator.php";
-    //                 }
+    //                  $path_to_include = "Comparator/Comparator.php";
     //             break;
     //             case "footprint":
     //                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
-    //             break;
-    //             case "electric_comparator":
-    //                 // wp_enqueue_style('wp_ibuttons');
-    //                 // wp_enqueue_script('wp_ibuttons');
-    //                 $path_to_include = "Electric-Comparator/Electric-Comparator.php";
     //             break;
     //             case "fuelprices":
     //                 $path_to_include = "FuelPrices/FuelPrices.php";
     //             break;
     //             case "fuel_benefit_check":
-    //                 // When the old tools has been changed we can put this code at the very top of the page
-    //                 // wp_enqueue_style('wp_ibuttons');
-    //                 // wp_enqueue_script('wp_ibuttons');
     //                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
     //             break;
     //             case "car_details":
-    //                 // wp_enqueue_style('wp_ibuttons');
-    //                 // wp_enqueue_script('wp_ibuttons');
-
     //                 $path_to_include = "Car_Details/Car_details.php";
     //             break;
-
     //             case "prices_and_options":
-    //                 // wp_enqueue_style('wp_ibuttons');
-    //                 // wp_enqueue_script('wp_ibuttons');
-
     //                 $path_to_include = "prices-And-Options/prices_and_options.php";
     //             break;
-
-    //             case "chooser":
-    //                 // wp_enqueue_style('wp_ibuttons');
-    //                 // wp_enqueue_script('wp_ibuttons');
-
-    //                 $path_to_include = "Chooser/chooser.php";
-    //             break;
-
-    //             case "mpg_calculator":
-    //                 $path_to_include = "MPG-Calculator/MPG-Calculator.php";
-    //             break;
-
-    //             case "vue_test":
-    //                 $path_to_include = "Vue-Test/Vue-Test.php";
-    //             break;
-
-                default:
-                    $path_to_include = "";
-                break;
-    //         }
+        default:
+            $path_to_include = "";
+        break;
     }
 
     // default empty results

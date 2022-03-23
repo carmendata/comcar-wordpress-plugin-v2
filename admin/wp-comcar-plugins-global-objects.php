@@ -51,12 +51,6 @@ $wp_comcar_plugins_pages = array(
     //     "description" => "",
     //     "type" => "pages"
     // ),
-    // array(
-    //     "title" => "Chooser",
-    //     "name" => "chooser",
-    //     "description" => "",
-    //     "type" => "pages"
-    // ),
     array(
         "title" => "MPG Calculator",
         "name" => "mpg calculator",
