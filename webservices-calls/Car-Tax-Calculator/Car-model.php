@@ -32,7 +32,7 @@ try {
 
 	// check for "order by" and direction
 	if(array_key_exists('orderBy',$_GET)) {
-		$obj_config['orderBY'] = $_GET['orderBy'];
+		$obj_config['orderBy'] = $_GET['orderBy'];
 	};
 	if(array_key_exists('orderDir',$_GET)) {
 		$obj_config['orderDir'] = $_GET['orderDir'];
