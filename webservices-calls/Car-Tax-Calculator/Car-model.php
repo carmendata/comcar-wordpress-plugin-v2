@@ -14,14 +14,11 @@ try {
 	
 	// check the make and model are present
 	$required_data_present = true;
-	if(!array_key_exists('fjs_make',$_GET)) {
-		$wp_comcar_plugins_results_msg .= "A make needs to be selected, please go back to the select stage";
+	if(!array_key_exists('MakeModel',$_GET)) {
+		$wp_comcar_plugins_results_msg .= "A make and model needs to be selected, please go back to the select stage";
 		$required_data_present = false;
 	}
-	if(!array_key_exists('fjs_model',$_GET)) {
-		$wp_comcar_plugins_results_msg .= "A model needs to be selected, please go back to the select stage";
-		$required_data_present = false;
-	}
+	
 	// default fueltype to "ANY" if we don't have one
 	$fueltype = array_key_exists('fjs_fueltype',$_GET) ? $_GET['fjs_fueltype'] : 'ANY';
 	$fueltype = $fueltype === "" ? "ANY" : $fueltype;
@@ -33,6 +30,14 @@ try {
 		'attributes' => $company_car_tax_model_page_column_list
 	);
 
+	// check for "order by" and direction
+	if(array_key_exists('orderBy',$_GET)) {
+		$obj_config['orderBY'] = $_GET['orderBy'];
+	};
+	if(array_key_exists('orderDir',$_GET)) {
+		$obj_config['orderDir'] = $_GET['orderDir'];
+	};
+
 	$json_config = json_encode($obj_config);
 
 	// if we don't have enough data we can't load the model page
@@ -42,7 +47,7 @@ try {
 			$plugin_call_channel_id,
 			$plugin_call_stage,
 			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
-			$_GET['fjs_make'].','.$_GET['fjs_model'].'~'.$fueltype.'~'.$json_config
+			$_GET['MakeModel'].'~'.$fueltype.'~'.$json_config
 		);
 
 		$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
