@@ -46,7 +46,9 @@ function wp_comcar_plugins_settings_init(){
                     $settings_section_name,
                     $setting_full_name,
                     $setting['type'],
-                    array_key_exists('dont_save', $setting) ? $setting['dont_save'] : array(),
+                    array_key_exists('dont_save', $setting) ? $setting['dont_save'] : false,
+                    array_key_exists('readonly', $setting) ? $setting['readonly'] : false,
+                    array_key_exists('custom_logic', $setting) ? $setting['custom_logic'] : '',
                     array_key_exists('values', $setting) ? $setting['values'] : array()
                 )
             );
@@ -108,7 +110,9 @@ function wp_comcar_plugin_setting_markup($args) {
     $setting_full_name = $args[1];
     $setting_type = $args[2];
     $setting_dont_save = $args[3];
-    $setting_values = $args[4];
+    $setting_readonly = $args[4];
+    $setting_custom_logic = $args[5];
+    $setting_values = $args[6];
 
     $options = get_option($settings_section_name);
 
@@ -121,40 +125,50 @@ function wp_comcar_plugin_setting_markup($args) {
         $input_name = 'name="'.$settings_section_name.'['.$setting_full_name.']"';
     }
 
-    switch($setting_type) {
-        case 'integer':
-            echo '<input id="'.$setting_full_name.'" '.$input_name.' pattern="[0-9]*" type="numeric" title="Only use numbers 0-9" type="numeric" value="'.esc_attr( $value ).'" />';
-            break;
-        case 'pages':
-            echo '
-                <select '.$input_name.'>
-                    <option value="">Select page...</option>
-            ';
-            
-            foreach(get_pages() as $page) {
-                $selected = $value == $page->ID ? 'selected' : '';
-                echo '<option value="'.$page->ID.'" '.$selected.'>'.$page->post_title.'</option>';
-            }
+    // disable setting if told to, only works for text based inputs
+    $input_readonly = '';
+    if($setting_readonly) {
+        $input_readonly = 'readonly="readonly"';
+    }
 
-            echo '</select>';
-            break;
-        case 'array':
-                $selected = $value == '' ? 'selected' : '';
+    if($setting_custom_logic != '') {
+        include_once( __DIR__."/custom_setting_logic/".$setting_custom_logic.".php" );
+    } else {
+        switch($setting_type) {
+            case 'integer':
+                echo '<input class="wp_comcar_plugins_setting wp_comcar_plugins_setting-input" id="'.$setting_full_name.'" '.$input_name.' '.$input_readonly.' pattern="[0-9]*" type="numeric" title="Only use numbers 0-9" type="numeric" value="'.esc_attr( $value ).'" />';
+                break;
+            case 'pages':
                 echo '
-                    <select '.$input_name.'>
-                        <option value="" '.$selected.'>Select option...</option>
+                    <select class="wp_comcar_plugins_setting wp_comcar_plugins_setting-select" '.$input_name.'>
+                        <option value="">Select page...</option>
                 ';
                 
-                foreach($setting_values as $option_key => $option_title) {
-                    $selected = $value == $option_key ? 'selected' : '';
-                    echo '<option value="'.$option_key.'" '.$selected.'>'.$option_title.'</option>';
+                foreach(get_pages() as $page) {
+                    $selected = $value == $page->ID ? 'selected' : '';
+                    echo '<option value="'.$page->ID.'" '.$selected.'>'.$page->post_title.'</option>';
                 }
-    
+
                 echo '</select>';
                 break;
-        default:
-            // assume text input
-            echo '<input id="'.$setting_full_name.'" '.$input_name.' value="'.esc_attr( $value ).'" />';
+            case 'array':
+                    $selected = $value == '' ? 'selected' : '';
+                    echo '
+                        <select class="wp_comcar_plugins_setting wp_comcar_plugins_setting-select" '.$input_name.'>
+                            <option value="" '.$selected.'>Select option...</option>
+                    ';
+                    
+                    foreach($setting_values as $option_key => $option_title) {
+                        $selected = $value == $option_key ? 'selected' : '';
+                        echo '<option value="'.$option_key.'" '.$selected.'>'.$option_title.'</option>';
+                    }
+        
+                    echo '</select>';
+                    break;
+            default:
+                // assume text input
+                echo '<input class="wp_comcar_plugins_setting wp_comcar_plugins_setting-input" id="'.$setting_full_name.'" '.$input_name.' '.$input_readonly.' value="'.esc_attr( $value ).'" />';
+        }
     }
 }
 

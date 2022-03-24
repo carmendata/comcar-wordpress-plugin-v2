@@ -5,78 +5,18 @@
 	display: block;
 }
 
-/* .content_options .options_table textarea {
-    resize: none;
-    height: 30px;
-} */
+.wp_comcar_plugins_setting {
+	width: 100%;
+	max-width: 900px;
+}
 
-/* div.WPComcar_error{
-	padding:1em;
-	float:left;
-	width:100%;
-
-	-webkit-box-sizing:border-box;
-	   -moz-box-sizing:border-box;
-			box-sizing:border-box;
-
-	clear:left;
-} */
-
-/* ------------ Tabs ------------ */
-
-/* .WPComcar_subTab{
-	cursor: pointer;
-} */
-
-/* .WPComcar_subTab.WPComcar_disableSubTab, 
-.WPComcar_subTab.WPComcar_disableSubTab:hover{
-	background-color: #e4e4e4;
-	cursor: default;
-	color: #BBB;
-} */
-
-/* .WPComcar_disableSubTab:before{
-	content: 'Disabled';
-	position: absolute;
-	font-size: 9px;
-	height: 8px;
-	line-height: 8px;
-	background-color: #888;
-	color: #FFF;
-	margin: -6px 0 0 -11px;
-	display: block;
-	padding: 4px;
-} */
-
-/* .WPComcar_disableSubTab:focus{
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-} */
-
-/* .content_options .options_table tr th {
-	vertical-align: top;
-	float:left;
-} */
-
-/* .content_options .options_table tr input[type='checkbox'] {
-
-	height:25px;
-	width:25px;
-	padding:0;
-	margin:0;
-	vertical-align: middle;
-	text-align: center;
-} */
-
-/* .content_options .options_table tr select,
-.content_options .options_table tr input[type='text']{
-	height:35px;
-	width:400px;
-} */
-
-/* .content_options .options_table tr > td,
-.content_options .options_table tr > th{
-	padding-top:10px;
-} */
-
+.wp_comcar_plugins_setting-model_list_item {
+	width: 100%;
+	margin-bottom: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: thin solid #CCC;
+}
+.wp_comcar_plugins_setting-model_list_item label span {
+	display: inline-block;
+	width: 200px;
+}

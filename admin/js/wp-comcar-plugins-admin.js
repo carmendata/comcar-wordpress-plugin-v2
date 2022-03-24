@@ -19,4 +19,7 @@ jQuery(document).ready(function($){
         $('#wp_comcar_plugins_company_car_tax_settings_model_page_column_list').val(current_val.join(','));
     });
 
+    // custom javscript for model_page_column_list and model_page_column_heading settings
+    console.log('admin.js');
+
 });

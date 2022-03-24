@@ -102,9 +102,10 @@ $wp_comcar_plugins_settings_array = array(
             array(
                 "title" => "Model Page column selector",
                 "name" => "model_page_column_selector",
-                "description" => "Select a column from the drop down to add to the column list for the model page",
+                "description" => "Select a column from to add to the column list for the model page",
                 "dont_save" => true,
                 "type" => "array",
+                "custom_logic" => "model_page_column_selector",
                 "values" => array(
                     "bik" => "BIK",
                     "bodyStyle" => "Bodystyle",
@@ -138,7 +139,15 @@ $wp_comcar_plugins_settings_array = array(
                 "title" => "Model Page column list",
                 "name" => "model_page_column_list",
                 "description" => "List of columns to show on the model page",
-                "type" => "string"
+                "type" => "string",
+                "readonly" => true
+            ),
+            array(
+                "title" => "Model Page column headings",
+                "name" => "model_page_column_headings",
+                "description" => "Titles for columns to show on the model page",
+                "type" => "string",
+                "readonly" => true
             )
         )
     )
