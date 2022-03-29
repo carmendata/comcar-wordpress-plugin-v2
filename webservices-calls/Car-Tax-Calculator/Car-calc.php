@@ -35,6 +35,5 @@
 	} catch (Exception $wp_comcar_plugins_e) {
 		// Error handling code if soap request fails
 		$wp_comcar_plugins_results_msg .= 'The webservice failed to load the Calculation<br />';
-		var_dump($wp_comcar_plugins_e);
 	}
 ?>

@@ -1,7 +1,4 @@
 <?php
-// Vehicle type ('Car' or 'Van'). The variable is defined in either 'Car-options.php' or 'Van-options.php'
-// if(!isset($wp_comcar_plugins_vehicleType)){    $wp_comcar_plugins_vehicleType="Car";    }
-
 // defaults in case the page is visited without URL parameters
 if(!isset($_GET['vehicle_id']))     {  $_GET['vehicle_id'] = '';  }
 if(!isset($_GET['capcon']))  		{  $_GET['capcon'] = '';  }
@@ -25,12 +22,6 @@ try {
 		$plugin_call_stage
 	);
 
-	//CHANGE THE FORM SUBMISSION TO THE NEXT PAGE in Wordpress
-	// $wp_comcar_plugins_arrOptions=get_option("WP_plugin_options_tax_calculator");
-	// $wp_comcar_plugins_vehicleTypeForIncluding=strtolower($wp_comcar_plugins_vehicleType.'s');		
-	// $wp_comcar_plugins_actionName= $wp_comcar_plugins_arrOptions[$wp_comcar_plugins_vehicleTypeForIncluding."_subpages"]["calc"];
-	// $wp_comcar_plugins_actionName= wp_comcar_plugins_getPageUrlById($wp_comcar_plugins_actionName);
-	
 	$wp_comcar_plugins_results_html	= $wp_comcar_plugins_ws->GetHTML(
 		$plugin_call_channel_pubhash,
 		$plugin_call_channel_id,

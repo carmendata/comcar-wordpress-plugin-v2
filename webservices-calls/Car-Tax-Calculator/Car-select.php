@@ -1,16 +1,4 @@
 <?php
-// include authentication and other required variables
-// include_once (WPComcar_WEBSERVICESCALLSPATH.'Carmen-Data-Web-Services-Common-Files/requiredForCarTools.php');
-
-// Vehicle type ('Car' or 'Van'). The variable is defined in either 'Car-select.php' or 'Van-select.php'
-// if(!isset($WPComcar_vehicleType)){    $WPComcar_vehicleType="Car";    }
-
-// $WPComcar_objConfig = array();
-// $WPComcar_objConfig['formMethod'] = 'get'; // Must be "get" or "post", anything else will be rejected
-
-// Convert structure into JSON
-// $WPComcar_jsnConfig = json_encode($WPComcar_objConfig);
-
 $wp_comcar_plugins_results_css  = "";
 $wp_comcar_plugins_results_js   = "";
 $wp_comcar_plugins_results_html = "";
