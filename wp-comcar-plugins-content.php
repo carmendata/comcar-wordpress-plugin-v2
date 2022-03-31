@@ -50,6 +50,9 @@ function getToolContent( $content ) {
         case "company_car_tax":
             $path_to_include = "Car-Tax-Calculator/Car-tax-calculator.php";
             break;
+        case "company_van_tax":
+            $path_to_include = "Van-Tax-Calculator/Van-tax-calculator.php";
+            break;
         case "mpg_calculator":
             $path_to_include = "MPG-Calculator/MPG-Calculator.php";
             break;
@@ -58,18 +61,6 @@ function getToolContent( $content ) {
     //             break;
     //             case "footprint":
     //                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
-    //             break;
-    //             case "fuelprices":
-    //                 $path_to_include = "FuelPrices/FuelPrices.php";
-    //             break;
-    //             case "fuel_benefit_check":
-    //                 $path_to_include = "Fuel-Benefit-check/Fuel-benefit-check.php";
-    //             break;
-    //             case "car_details":
-    //                 $path_to_include = "Car_Details/Car_details.php";
-    //             break;
-    //             case "prices_and_options":
-    //                 $path_to_include = "prices-And-Options/prices_and_options.php";
     //             break;
         default:
             $path_to_include = "";

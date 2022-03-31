@@ -1,41 +1,29 @@
 <?php 
-	
-	//create and instance of the controller and include the result in the page
-	global $objWPComcarVanTaxCalculatorController;
-	if (class_exists("WPComcarVanTaxCalculatorController") && !$objWPComcarVanTaxCalculatorController) {
-	    $objWPComcarVanTaxCalculatorController = new WPComcarVanTaxCalculatorController();	
-	    $objWPComcarVanTaxCalculatorController->controller();
-	}
+// update the URL
+$wp_comcar_plugin_ws_options['uri'] =WP_COMCAR_PLUGIN_WS_URL . 'TaxCalc.cfc?wsdl';
+$wp_comcar_plugin_ws_options['location'] =WP_COMCAR_PLUGIN_WS_URL . 'TaxCalc.cfc?wsdl';
 
-	//include the page
-	include_once($objWPComcarVanTaxCalculatorController->thePageToInclude);
+// connect to the webservice
+$wp_comcar_plugins_ws = new SoapClient(
+	NULL,
+	$wp_comcar_plugin_ws_options
+);
 
-	class WPComcarVanTaxCalculatorController{
-
-		public $thePageToInclude;
-
-		function __construct(){
-
-		}
-
-		function controller(){
-
-			global $post;
-			$thePostId=$post->ID;
-
-			//decide what page to load
-			//parent or subpage?
-			$arrOptions = get_option('WP_plugin_options_tax_calculator');
-
-			$idThePageWhereShouldLoadThePlugin=$arrOptions["tax_calculator_vans_page"];
+switch($plugin_call_stage) {
+	case 1:
+		include_once('Car-select.php');
+		break;
+	case 2:
+		include_once('Car-model.php');
+		break;
+	case 3:
+		include_once('Car-options.php');
+		break;
+	case 4:
+		include_once('Car-calc.php');
+		break;
+	default:
+		$wp_comcar_plugins_results_html = 'Invalid stage loaded';
+}
 			
-			if(strcmp($idThePageWhereShouldLoadThePlugin,$thePostId)==0){
-				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-select.php";
-			}else if (in_array($thePostId,$arrOptions["vans_subpages"])){
-				$theNameOfThePage=array_search($thePostId,$arrOptions["vans_subpages"]);
-				$this->thePageToInclude=WPComcar_WEBSERVICESCALLSPATH."Tax-Calculator/Van-$theNameOfThePage.php";				
-			}
-		}
-
-	}
 ?>
