@@ -8,7 +8,7 @@
                 echo '<span>' . $option_title . '</span>';
                 echo '<input class="wp_comcar_plugins_setting wp_comcar_plugins_setting-model_list_checkbox" type="checkbox" value="'.$option_key.'" />';
             echo '</label>';
-            echo '<input type="text" value="'.$option_title.'" />';
+            echo '<input class="wp_comcar_plugins_setting-model_list_textinput" type="text" value="'.$option_title.'" />';
         echo '</div>';
     }
     echo '</div>';

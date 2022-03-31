@@ -12,10 +12,21 @@ jQuery(document).ready(function($){
     });
 
     // use the Company Car Tax "Model Page column selector" to populate the "Model page column list"
-    $('[data-name="wp_comcar_plugins_company_car_tax_settings[wp_comcar_plugins_company_car_tax_settings_model_page_column_selector]"]').on('change',function(){
+    $('.wp_comcar_plugins_setting-model_list .wp_comcar_plugins_setting-model_list_checkbox').on('change',function(){
+        console.log('clicked',this.checked);
         // get current val, turn into array, filter to remove empty values, add new value to the end
         var current_val = $('#wp_comcar_plugins_company_car_tax_settings_model_page_column_list').val().split(',').filter(el => el);
-        current_val.push(this.value);
+
+        // make sure the item is not in the current list, if it is, remove it
+        var this_val = this.value;
+        var this_val_index = current_val.indexOf(this_val);
+        if(this_val_index !== -1) {
+            current_val.splice(this_val_index,1);
+        }
+        // if the checkbox is checked, add the value
+        if(this.checked) {
+            current_val.push(this.value);
+        }
         $('#wp_comcar_plugins_company_car_tax_settings_model_page_column_list').val(current_val.join(','));
     });
 
