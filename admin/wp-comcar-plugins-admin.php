@@ -1,9 +1,9 @@
 <?php
 // require_once( "wp-comcar-plugins-global-objects.php") ;
 
-/*---------------------------------------------------
-add actions
-----------------------------------------------------*/
+/**
+ * add actions
+ */
 add_action( "admin_init", "wp_comcar_plugins_settings_init" );
 add_action( "admin_menu", "wp_comcar_plugins_setting_html" );
 
@@ -91,7 +91,9 @@ function wp_comcar_plugins_settings_validate( $input ) {
    return $output;
  }
 
-// print a section title
+/**
+ * print a section title
+ */
 function wp_comcar_plugin_section_title($args) {
     // args are id, title, callback
     switch($args['id']) {
@@ -103,7 +105,9 @@ function wp_comcar_plugin_section_title($args) {
     }
 }
 
-// print markup for a single setting
+/**
+ * print markup for a single setting
+ */
 function wp_comcar_plugin_setting_markup($args) {
     // args should contain seciton name, setting name, setting type, (optional) setting values for dropdown
     $settings_section_name = $args[0];
@@ -172,7 +176,9 @@ function wp_comcar_plugin_setting_markup($args) {
     }
 }
 
-// print the entire admin page markup (including settings and sections)
+/**
+ * print the entire admin page markup (including settings and sections)
+ */
 function wp_comcar_plugins_print_page() {
     global $wp_comcar_plugins_settings_array;
 
@@ -225,18 +231,9 @@ function wp_comcar_plugins_print_page() {
     echo '</div>';
  }
 
-
-
-
-
-
-
-
-
-/*---------------------------------------------------
-Plugin setting output
-----------------------------------------------------*/
-
+/**
+ * Plugin setting output
+ */
 function createOptionsForEachNav( ) {
     global $plugin_options;
     $message = "";
@@ -280,7 +277,7 @@ function createOptionsForEachNav( ) {
                     echo "<tr><th><label>$label</label></th><td>
                         <input type='text' placeholder='$std' name='$name' value='";
                     if ( get_option( $name ) != "") {
-                        echo stripslashes(get_option( $name)  ) ;
+                        echo stripslashes(get_option($name)) ;
                     }
                     echo "'/><p>  $desc</p></td></tr>";
                 break;
