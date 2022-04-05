@@ -1,6 +1,7 @@
 // custom javscript for model_page_column_list and model_page_column_heading settings
 jQuery(document).ready(function($){
     function saveValuesToForm() {
+        console.log(arr_model_columns);
         $column_list.val(arr_model_columns.map((column) => column.name));
         $column_headings.val(arr_model_columns.map((column) => column.heading));
     }
@@ -51,9 +52,13 @@ jQuery(document).ready(function($){
 	var arr_column_headings = current_column_headings.split(',');
 	
 	// map the lists to an array of objects
-	var arr_model_columns = arr_column_list.map((column, index) => {
+	var arr_model_columns = arr_column_list
+        .filter((column) => $('.wp_comcar_plugins_setting-model_list_checkbox--' + column).length )
+        .map((column, index) => {
         // make sure any items are ticked and update the heading if it differs from the default
         $checkbox = $('.wp_comcar_plugins_setting-model_list_checkbox--' + column);
+
+        // tick checkbox
         $checkbox.prop('checked', true);
 
         // get the heading if it is defined
@@ -63,6 +68,7 @@ jQuery(document).ready(function($){
         var heading = (typeof heading_from_input !== 'undefined' && heading_from_input !== '' ? heading_from_input : heading_default);
         $heading.val(heading);
 
+        // add the column
         return {
             name: column,
             heading
