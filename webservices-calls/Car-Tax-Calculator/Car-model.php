@@ -43,16 +43,16 @@ try {
 	// if we don't have enough data we can't load the model page
 	if($required_data_present) {
 		$wp_comcar_plugins_results_html = $wp_comcar_plugins_ws->GetHTML(
-			$plugin_call_channel_pubhash,
-			$plugin_call_channel_id,
+			$plugin_call_car_channel_pubhash,
+			$plugin_call_car_channel_id,
 			$plugin_call_stage,
 			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
 			$_GET['MakeModel'].'~'.$fueltype.'~'.$json_config
 		);
 
 		$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
-			$plugin_call_channel_pubhash,
-			$plugin_call_channel_id,
+			$plugin_call_car_channel_pubhash,
+			$plugin_call_car_channel_id,
 			$plugin_call_stage,
 		);
 	}

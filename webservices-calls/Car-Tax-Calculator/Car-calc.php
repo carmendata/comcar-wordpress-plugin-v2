@@ -21,15 +21,15 @@
 
 	try {
 		$wp_comcar_plugins_results_html	= $wp_comcar_plugins_ws->GetHTML(
-			$plugin_call_channel_pubhash,
-			$plugin_call_channel_id,
+			$plugin_call_car_channel_pubhash,
+			$plugin_call_car_channel_id,
 			$plugin_call_stage,
 			"",
 			$wp_comcar_plugins_options_form_data
 		);
 		$wp_comcar_plugins_results_js	= $wp_comcar_plugins_ws->GetJS(
-			$plugin_call_channel_pubhash,
-			$plugin_call_channel_id,
+			$plugin_call_car_channel_pubhash,
+			$plugin_call_car_channel_id,
 			$plugin_call_stage
 		);
 	} catch (Exception $wp_comcar_plugins_e) {

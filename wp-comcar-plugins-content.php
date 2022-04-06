@@ -43,8 +43,10 @@ function getToolContent( $content ) {
     // get main settings
     $main_settings = get_option('wp_comcar_plugins_main_settings');
 
-    $plugin_call_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
-    $plugin_call_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
+    $plugin_call_car_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
+    $plugin_call_car_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
+    $plugin_call_van_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
+    $plugin_call_van_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
 
     switch($comcar_plugin_page['name']) {
         case "company_car_tax":
@@ -56,9 +58,6 @@ function getToolContent( $content ) {
         case "mpg_calculator":
             $path_to_include = "MPG-Calculator/MPG-Calculator.php";
             break;
-    //             case "comparator":
-    //                  $path_to_include = "Comparator/Comparator.php";
-    //             break;
     //             case "footprint":
     //                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
     //             break;
