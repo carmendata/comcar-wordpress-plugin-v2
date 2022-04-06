@@ -38,7 +38,7 @@ try {
 		$obj_config['orderDir'] = $_GET['orderDir'];
 	};
 
-	$json_config = json_encode($obj_config);
+	$json_config = urlencode(json_encode($obj_config));
 
 	// if we don't have enough data we can't load the model page
 	if($required_data_present) {
