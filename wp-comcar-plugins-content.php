@@ -45,8 +45,8 @@ function getToolContent( $content ) {
 
     $plugin_call_car_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
     $plugin_call_car_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
-    $plugin_call_van_channel_id         = $main_settings['wp_comcar_plugins_main_settings_car_channel_id'];
-    $plugin_call_van_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_car_channel_pubhash'];
+    $plugin_call_van_channel_id         = $main_settings['wp_comcar_plugins_main_settings_van_channel_id'];
+    $plugin_call_van_channel_pubhash    = $main_settings['wp_comcar_plugins_main_settings_van_channel_pubhash'];
 
     switch($comcar_plugin_page['name']) {
         case "company_car_tax":
