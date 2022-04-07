@@ -1,12 +1,14 @@
 // custom javscript for model_page_column_list and model_page_column_heading settings
 jQuery(document).ready(function($){
     function saveValuesToForm() {
-        // column list
-        $column_list['car'].val(arr_model_columns['car'].map((column) => column.name));
-        $column_list['van'].val(arr_model_columns['van'].map((column) => column.name));
-        // column headings
-        $column_headings['car'].val(arr_model_columns['car'].map((column) => column.heading));
-        $column_headings['van'].val(arr_model_columns['van'].map((column) => column.heading));
+        var arr_types = ['car','van'];
+        for(var i in arr_types) {
+            var type = arr_types[i];
+            // column list
+            $($column_list[type]).val(arr_model_columns[type].map((column) => column.name));
+            // column headings
+            $($column_headings[type]).val(arr_model_columns[type].map((column) => column.heading));
+        }
     }
 
     function getSettingListType(setting_name) {
@@ -39,7 +41,6 @@ jQuery(document).ready(function($){
         console.log('clicked',this.checked,this.value);
         var setting_name = $(this).closest('.wp_comcar_plugins_setting-model_list').data('setting');
         var car_or_van = getSettingListType(setting_name);
-        console.log('car or van', car_or_van);
         
         // always remove from arr_model_columns
         var items_to_remove = arr_model_columns[car_or_van].filter((item) => item.name === this.value);
@@ -72,7 +73,6 @@ jQuery(document).ready(function($){
     var arr_types = ['car','van'];
     for(var i in arr_types) {
         var type = arr_types[i];
-        console.log('type',type);
 
         $column_list[type] = $('#wp_comcar_plugins_company_'+type+'_tax_settings_model_page_column_list')[0];
         $column_headings[type] = $('#wp_comcar_plugins_company_'+type+'_tax_settings_model_page_column_headings')[0];
@@ -86,8 +86,6 @@ jQuery(document).ready(function($){
         
         // get the checkbox setting container
         $checkbox_container = $($column_list[type]).closest('form').find('.wp_comcar_plugins_setting-model_list');
-
-        console.log($checkbox_container);
 
         arr_model_columns[type] = arr_column_list[type]
             .filter((column) => $checkbox_container.find('.wp_comcar_plugins_setting-model_list_checkbox--' + column).length )
