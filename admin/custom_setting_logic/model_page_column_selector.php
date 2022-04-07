@@ -3,7 +3,7 @@
      * custom logic to populate model_page_column_list and model_page_column_headings
 	 * start all fields disabled, enable once JS logic finishes
 	 */
-	echo '<div class="wp_comcar_plugins_setting wp_comcar_plugins_setting-model_list">';
+	echo '<div class="wp_comcar_plugins_setting wp_comcar_plugins_setting-model_list" data-setting="'.$setting_full_name.'">';
     foreach($setting_values as $option_key => $option_title) {
         $selected = $value == $option_key ? 'selected' : '';
         echo '<div class="wp_comcar_plugins_setting wp_comcar_plugins_setting-model_list_item">';

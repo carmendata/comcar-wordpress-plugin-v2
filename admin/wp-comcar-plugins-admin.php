@@ -97,6 +97,7 @@ function wp_comcar_plugins_settings_validate( $input ) {
 function wp_comcar_plugin_section_title($args) {
     // args are id, title, callback
     switch($args['id']) {
+        case 'company_van_tax_settings':
         case 'company_car_tax_settings':
             echo '<p>These settings are used only for the '.$args["title"].' section';
             break;
@@ -136,7 +137,7 @@ function wp_comcar_plugin_setting_markup($args) {
     }
 
     if($setting_custom_logic != '') {
-        include_once( __DIR__."/custom_setting_logic/".$setting_custom_logic.".php" );
+        include( __DIR__."/custom_setting_logic/".$setting_custom_logic.".php" );
     } else {
         switch($setting_type) {
             case 'integer':
