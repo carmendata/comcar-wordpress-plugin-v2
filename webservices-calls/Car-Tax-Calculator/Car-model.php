@@ -7,8 +7,8 @@ $wp_comcar_plugins_results_msg  = "";
 try {
 	// call the required functions and store the returned data
 	$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
-		$plugin_call_channel_pubhash,
-		$plugin_call_channel_id,
+		$plugin_call_car_channel_pubhash,
+		$plugin_call_car_channel_id,
 		1
 	);
 	
