@@ -19,9 +19,10 @@ try {
 	// build config object
 	$company_van_tax_settings = get_option('wp_comcar_plugins_company_van_tax_settings');
 	$company_van_tax_model_page_column_list = $company_van_tax_settings['wp_comcar_plugins_company_van_tax_settings_model_page_column_list'];
+	$company_van_tax_model_page_column_headings = $company_van_tax_settings['wp_comcar_plugins_company_van_tax_settings_model_page_column_headings'];
 	$obj_config = array(
-		'model_list' => $company_van_tax_model_page_column_list,
-		'model_headers' => $company_van_tax_model_page_column_list
+		'model_column_list' => $company_van_tax_model_page_column_list,
+		'model_column_headers' => $company_van_tax_model_page_column_headings
 	);
 
 	// check for "order by" and direction
