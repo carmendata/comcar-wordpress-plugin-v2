@@ -20,7 +20,8 @@ try {
 	$company_van_tax_settings = get_option('wp_comcar_plugins_company_van_tax_settings');
 	$company_van_tax_model_page_column_list = $company_van_tax_settings['wp_comcar_plugins_company_van_tax_settings_model_page_column_list'];
 	$obj_config = array(
-		'attributes' => $company_van_tax_model_page_column_list
+		'model_list' => $company_van_tax_model_page_column_list,
+		'model_headers' => $company_van_tax_model_page_column_list
 	);
 
 	// check for "order by" and direction
@@ -42,15 +43,10 @@ try {
 			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
 			$_GET['MakeModel'].'~'.$fueltype.'~'.$json_config
 		);
-
-		$wp_comcar_plugins_results_js = $wp_comcar_plugins_ws->GetJS(
-			$plugin_call_van_channel_pubhash,
-			$plugin_call_van_channel_id,
-			$plugin_call_stage,
-		);
 	}
 } catch ( Exception $wp_comcar_plugins_err ) {
 	// Append to error handling msg if SOAP request fails 
 	$wp_comcar_plugins_results_msg .= 'The webservice failed to load the model list<br />';
+	// var_dump($wp_comcar_plugins_err);
 }
 ?>

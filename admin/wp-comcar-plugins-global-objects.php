@@ -141,7 +141,6 @@ $wp_comcar_plugins_settings_array = array(
                     "make" => "Manufacturer",
                     "model" => "Model",
                     "fuelConsumptionDf" => "MPG",
-                    "p11d" => "P11D Value", 
                     "payload" => "Payload",
                     "ps" => "Power",
                     "roof" => "Roof height",
