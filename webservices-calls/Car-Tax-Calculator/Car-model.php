@@ -26,8 +26,10 @@ try {
 	// build config object
 	$company_car_tax_settings = get_option('wp_comcar_plugins_company_car_tax_settings');
 	$company_car_tax_model_page_column_list = $company_car_tax_settings['wp_comcar_plugins_company_car_tax_settings_model_page_column_list'];
+	$company_car_tax_model_page_column_headings = $company_car_tax_settings['wp_comcar_plugins_company_car_tax_settings_model_page_column_headings'];
 	$obj_config = array(
-		'attributes' => $company_car_tax_model_page_column_list
+		'model_column_list' => $company_car_tax_model_page_column_list,
+		'model_column_headers' => $company_car_tax_model_page_column_headings
 	);
 
 	// check for "order by" and direction
