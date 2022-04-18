@@ -58,9 +58,9 @@ function getToolContent( $content ) {
         case "mpg_calculator":
             $path_to_include = "MPG-Calculator/MPG-Calculator.php";
             break;
-    //             case "footprint":
-    //                 $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
-    //             break;
+        case "co2_footprint":
+            $path_to_include = "Footprint-Calculator/Footprint-Calculator.php";
+        break;
         default:
             $path_to_include = "";
         break;
