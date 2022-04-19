@@ -20,7 +20,7 @@ define("WP_COMCAR_PLUGINS_WEBSERVICECONTENT",dirname(__FILE__)."/webservices-cal
 define(
     "WP_COMCAR_PLUGIN_WS_URL",
     getenv('WP_COMCAR_PLUGIN_WS_URL') === false
-        ? 'https://legacy.comcar.co.uk/webservices/'
+        ? 'https://wordpress-api.comcar.co.uk/webservices/'
         : getenv('WP_COMCAR_PLUGIN_WS_URL')
 );
 
