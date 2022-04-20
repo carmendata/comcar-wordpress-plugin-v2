@@ -4,13 +4,17 @@
 
 This plugin includes the following tools:
 
-### Tax calculator
+### Company Car/Van Tax calculators
 
 The Tax Calculator tool allows users to calculate how much company car or van tax they will incur.
 
 ### MPG Calculator
 
 This tool calculates miles per gallon and litres per 100km based on distance travelled and fuel used.
+
+### CO2 Footprint Calculator
+
+The Footprint Calculator tool is a simple way to allow users to calculate their CO2 tailpipe emissions based on fuel used, cost of fuel or distance travelled.
 
 ## Installation
 
