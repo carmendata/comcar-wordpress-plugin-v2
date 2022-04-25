@@ -26,7 +26,7 @@ try {
 		$plugin_call_car_channel_pubhash,
 		$plugin_call_car_channel_id,
 		$plugin_call_stage,
-		"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
+		"https://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
 		"$wp_comcar_plugins_vehicle_id~$wp_comcar_plugins_capcon~$wp_comcar_plugins_anncon"
 	);
 

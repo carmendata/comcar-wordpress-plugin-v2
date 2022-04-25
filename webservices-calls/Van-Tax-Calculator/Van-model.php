@@ -41,7 +41,7 @@ try {
 			$plugin_call_van_channel_pubhash,
 			$plugin_call_van_channel_id,
 			$plugin_call_stage,
-			"http://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
+			"https://$_SERVER[HTTP_HOST]".strtok($_SERVER["REQUEST_URI"], '?'),
 			$_GET['MakeModel'].'~'.$fueltype.'~'.$json_config
 		);
 	}
