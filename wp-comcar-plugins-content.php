@@ -4,8 +4,7 @@
  * @content the original content of the post or page
  */
 function getToolContent( $content ) {
-//     global $thisPluginName;
-//     global $current_page;
+
     // load the post data into the function
     global $post;
     global $wp_comcar_plugins_pages;
