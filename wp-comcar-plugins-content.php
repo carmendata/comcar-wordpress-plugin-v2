@@ -1,5 +1,15 @@
 <?php
 /**
+ * handle CSS and JS for the plugin
+ */
+function getCSSAndJS() {
+    wp_register_style( 'wp_comcar_plugin_css', plugins_url('/css/i_button.css', __FILE__ ) );
+    wp_enqueue_style( 'wp_comcar_plugin_css' );
+    wp_register_script( 'wp_comcar_plugin_js', plugins_url('/js/i_button.js', __FILE__ ) );
+    wp_enqueue_script( 'wp_comcar_plugin_js' );
+}
+
+/**
  * load the webservice content
  * @content the original content of the post or page
  */
