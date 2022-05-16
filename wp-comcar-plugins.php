@@ -31,5 +31,6 @@ require_once( __DIR__."/admin/wp-comcar-plugins-global-objects.php" );
 require_once( __DIR__."/admin/wp-comcar-plugins-admin.php" );
 require_once( __DIR__."/wp-comcar-plugins-content.php" );
 
+add_action('wp_enqueue_scripts', 'getCSSAndJS');
 add_filter( "the_content",  "getToolContent" );
 ?>
