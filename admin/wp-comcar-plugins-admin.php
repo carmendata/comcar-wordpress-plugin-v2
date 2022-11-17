@@ -119,7 +119,7 @@ function wp_comcar_plugin_setting_markup($args) {
     $setting_custom_logic = $args[5];
     $setting_values = $args[6];
 
-    $options = get_option($settings_section_name);
+    $options = get_option($settings_section_name, {});
 
     $value = array_key_exists( $setting_full_name, $options ) ? $options[$setting_full_name] : '';
 
