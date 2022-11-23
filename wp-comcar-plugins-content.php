@@ -19,8 +19,8 @@ function getToolContent( $content ) {
     global $post;
     global $wp_comcar_plugins_pages;
 
-    // we only want to process pages, not posts
-    if( !is_page() || !is_main_query() ) {
+    // we only want to process pages, not posts, sidebars, footers etc
+    if( !is_page() || !is_main_query() || !in_the_loop() ) {
         return $content;
     }
     
